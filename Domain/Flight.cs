@@ -3,13 +3,13 @@ namespace AirportTicketBookingSystem.Domain;
 public class Flight(
     int id,
     DateTime departureDate,
-    Airport departureAirport,
-    Airport arrivalAirport)
+    string departureAirportId,
+    string arrivalAirportId)
 {
     public int Id { get; } = id;
     public DateTime DepartureDate { get; set; } = departureDate;
-    public Airport DepartureAirport { get; set; } = departureAirport;
-    public Airport ArrivalAirport { get; set; } = arrivalAirport;
+    public string DepartureAirportId { get; set; } = departureAirportId;
+    public string ArrivalAirportId { get; set; } = arrivalAirportId;
     public Dictionary<FlightClass, decimal> ClassPrices { get; set; } = [];
     public List<Booking> Bookings { get; set; } = [];
 
