@@ -37,6 +37,12 @@ public class CsvFileService<T> : IFileService<T>, IDisposable
         return Task.CompletedTask;
     }
 
+    public void Append(T entity)
+    {
+        Cache.Add(entity);
+        CacheIsDirty = true;
+    }
+
     public bool Replace(T oldEntity, T newEntity)
     {
         var i = Cache.IndexOf(oldEntity);
