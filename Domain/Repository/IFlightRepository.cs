@@ -11,4 +11,6 @@ public interface IFlightRepository
     public Flight? GetById(int flightId);
 
     public IEnumerable<Flight> Search(FlightSearchCriteria criteria);
+
+    public IEnumerable<Flight> Filter(IEnumerable<Flight> flights, FlightSearchCriteria criteria);
 }

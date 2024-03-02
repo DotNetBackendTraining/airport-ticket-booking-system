@@ -9,4 +9,6 @@ public interface IAirportRepository
     public Airport? GetById(string id);
 
     public IEnumerable<Airport> Search(AirportSearchCriteria criteria);
+
+    public IEnumerable<Airport> Filter(IEnumerable<Airport> airports, AirportSearchCriteria criteria);
 }
