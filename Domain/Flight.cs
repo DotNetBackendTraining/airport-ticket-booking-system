@@ -11,7 +11,6 @@ public class Flight(
     public string DepartureAirportId { get; set; } = departureAirportId;
     public string ArrivalAirportId { get; set; } = arrivalAirportId;
     public Dictionary<FlightClass, decimal> ClassPrices { get; set; } = [];
-    public List<Booking> Bookings { get; set; } = [];
 
     public override bool Equals(object? obj) =>
         obj is Flight other && Id == other.Id;
