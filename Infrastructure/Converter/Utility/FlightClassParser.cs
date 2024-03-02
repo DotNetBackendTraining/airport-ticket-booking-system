@@ -1,9 +1,8 @@
 using AirportTicketBookingSystem.Domain;
-using AirportTicketBookingSystem.Infrastructure.Utility;
 
-namespace AirportTicketBookingSystem.Infrastructure.Converter;
+namespace AirportTicketBookingSystem.Infrastructure.Converter.Utility;
 
-public static class FlightClassConversionHelper
+public static class FlightClassParser
 {
     private static string RemoveFlightClassPrefixOrThrow(string flightClassStr)
     {

@@ -1,4 +1,4 @@
-namespace AirportTicketBookingSystem.Domain;
+namespace AirportTicketBookingSystem.Infrastructure.Converter.Utility;
 
 public static class CsvConstants
 {

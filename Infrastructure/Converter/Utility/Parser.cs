@@ -1,6 +1,6 @@
 using System.Globalization;
 
-namespace AirportTicketBookingSystem.Infrastructure.Utility;
+namespace AirportTicketBookingSystem.Infrastructure.Converter.Utility;
 
 /// <summary>
 /// Provides utility methods for parsing different data types from strings with strict format requirements.

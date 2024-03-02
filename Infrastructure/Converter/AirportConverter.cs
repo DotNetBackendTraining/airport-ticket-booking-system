@@ -1,6 +1,6 @@
 using AirportTicketBookingSystem.Domain;
 using AirportTicketBookingSystem.Domain.Contract;
-using AirportTicketBookingSystem.Infrastructure.Utility;
+using AirportTicketBookingSystem.Infrastructure.Converter.Utility;
 
 namespace AirportTicketBookingSystem.Infrastructure.Converter;
 

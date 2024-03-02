@@ -1,7 +1,7 @@
 using System.Text;
 using AirportTicketBookingSystem.Domain;
 using AirportTicketBookingSystem.Domain.Contract;
-using AirportTicketBookingSystem.Infrastructure.Utility;
+using AirportTicketBookingSystem.Infrastructure.Converter.Utility;
 
 namespace AirportTicketBookingSystem.Infrastructure.Converter;
 
@@ -18,7 +18,7 @@ public class FlightConverter : ICsvEntityConverter<Flight>
         Dictionary<FlightClass, decimal> classPrices = new();
         for (var i = 4; i < parts.Length; i++)
         {
-            var (flightClass, price) = FlightClassConversionHelper.ParseFullFlightClassAndPriceOrThrow(parts[i]);
+            var (flightClass, price) = FlightClassParser.ParseFullFlightClassAndPriceOrThrow(parts[i]);
             classPrices[flightClass] = price;
         }
 
