@@ -1,4 +1,4 @@
-namespace AirportTicketBookingSystem.service;
+namespace AirportTicketBookingSystem.Service;
 
 /// <summary>
 /// Provides static methods for reading from and writing to CSV files.
