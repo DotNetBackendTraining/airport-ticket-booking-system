@@ -6,7 +6,7 @@ public interface IAirportRepository
 {
     void Add(Airport airport);
 
-    public Airport GetById(string id);
+    public Airport? GetById(string id);
 
     public IEnumerable<Airport> Search(AirportSearchCriteria criteria);
 }

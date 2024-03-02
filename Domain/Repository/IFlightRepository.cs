@@ -8,7 +8,7 @@ public interface IFlightRepository
 
     public Task AddAllAsync(IEnumerable<Flight> flights);
 
-    public Flight GetById(int flightId);
+    public Flight? GetById(int flightId);
 
     public IEnumerable<Flight> Search(FlightSearchCriteria criteria);
 }

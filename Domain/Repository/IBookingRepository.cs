@@ -10,7 +10,7 @@ public interface IBookingRepository
 
     public void Delete(int flightId, int passengerId);
 
-    public Booking GetById(int flightId, int passengerId);
+    public Booking? GetById(int flightId, int passengerId);
 
     public IEnumerable<Booking> Search(BookingSearchCriteria criteria);
 }
