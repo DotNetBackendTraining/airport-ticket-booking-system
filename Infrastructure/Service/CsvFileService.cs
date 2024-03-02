@@ -1,6 +1,6 @@
 using AirportTicketBookingSystem.Domain.Contract;
 
-namespace AirportTicketBookingSystem.Service;
+namespace AirportTicketBookingSystem.Infrastructure.Service;
 
 public class CsvFileService<T>(
     string filepath,
