@@ -6,9 +6,9 @@ public interface IBookingRepository
 {
     public void Add(Booking booking);
 
-    public void Update(Booking booking);
+    public bool Update(Booking booking);
 
-    public void Delete(int flightId, int passengerId);
+    public bool Delete(int flightId, int passengerId);
 
     public Booking? GetById(int flightId, int passengerId);
 
