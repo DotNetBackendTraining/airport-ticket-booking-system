@@ -11,13 +11,10 @@ public class BookingConverter : ICsvEntityConverter<Booking>
         var parts = Parser.SplitToLengthOrThrow(csvLine, 3);
         var flightId = Parser.ParseOrThrowInt(parts[0]);
         var passengerId = Parser.ParseOrThrowInt(parts[1]);
-        var flightClass = FlightClassParser.ParseFullFlightClassOrThrow(parts[2]);
+        var flightClass = Parser.ParseFlightClassOrThrow(parts[2]);
         return Booking.Create(flightId, passengerId, flightClass);
     }
 
-    public string EntityToCsv(Booking entity)
-    {
-        const string prefix = CsvConstants.FlightClassPrefix;
-        return $"{entity.FlightId},{entity.PassengerId},{prefix}{entity.BookingClass}";
-    }
+    public string EntityToCsv(Booking entity) =>
+        $"{entity.FlightId},{entity.PassengerId},{entity.BookingClass}";
 }

@@ -1,4 +1,5 @@
 using System.Globalization;
+using AirportTicketBookingSystem.Domain;
 
 namespace AirportTicketBookingSystem.Infrastructure.Converter.Utility;
 
@@ -94,5 +95,12 @@ public static class Parser
             throw new FormatException(
                 $"Unable to split '{str}' into at least {minNumberOfParts} parts separated by '{splitter}'.");
         return parts;
+    }
+
+    public static FlightClass ParseFlightClassOrThrow(string flightClassStr)
+    {
+        if (!Enum.TryParse<FlightClass>(flightClassStr, true, out var flightClass))
+            throw new FormatException($"Unable to determine flight class of '{flightClassStr}'");
+        return flightClass;
     }
 }

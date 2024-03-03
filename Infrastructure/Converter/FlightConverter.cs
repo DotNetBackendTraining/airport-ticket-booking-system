@@ -7,21 +7,29 @@ namespace AirportTicketBookingSystem.Infrastructure.Converter;
 
 public class FlightConverter : ICsvEntityConverter<Flight>
 {
+    private static Dictionary<FlightClass, decimal> ParseFlightClassPricePairsOrThrow(string flightClassStr)
+    {
+        var parts = flightClassStr.Split(CsvConstants.FlightClassPriceDelimiter);
+        Dictionary<FlightClass, decimal> res = new();
+        foreach (var part in parts)
+        {
+            var subs = Parser.SplitToLengthOrThrow(part, 2, CsvConstants.FlightClassPriceDelimiter);
+            var flightClass = Parser.ParseFlightClassOrThrow(subs[0]);
+            var price = Parser.ParseOrThrowDecimal(subs[1]);
+            res[flightClass] = price;
+        }
+
+        return res;
+    }
+
     public Flight CsvToEntity(string csvLine)
     {
-        var parts = Parser.SplitToMinLengthOrThrow(csvLine, 4);
+        var parts = Parser.SplitToLengthOrThrow(csvLine, 5);
         var id = Parser.ParseOrThrowInt(parts[0]);
         var departureDate = Parser.ParseOrThrowDate(parts[1], CsvConstants.FlightDepartureDateTimeFormat);
         var departureAirportId = parts[2];
         var arrivalAirportId = parts[3];
-
-        Dictionary<FlightClass, decimal> classPrices = new();
-        for (var i = 4; i < parts.Length; i++)
-        {
-            var (flightClass, price) = FlightClassParser.ParseFullFlightClassAndPriceOrThrow(parts[i]);
-            classPrices[flightClass] = price;
-        }
-
+        var classPrices = ParseFlightClassPricePairsOrThrow(parts[4]);
         return Flight.Create(id, departureDate, departureAirportId, arrivalAirportId, classPrices);
     }
 
@@ -35,13 +43,11 @@ public class FlightConverter : ICsvEntityConverter<Flight>
         sb.Append(entity.DepartureAirportId);
         sb.Append(',');
         sb.Append(entity.ArrivalAirportId);
+        sb.Append(',');
 
-        foreach (var kvp in entity.ClassPrices)
-        {
-            sb.Append(',');
-            sb.Append(CsvConstants.FlightClassPrefix);
-            sb.Append($"{kvp.Key}{CsvConstants.FlightClassPriceSplitterChar}{kvp.Value}");
-        }
+        var fields = entity.ClassPrices.Select(
+            kvp => $"{kvp.Key}{CsvConstants.FlightClassPriceDelimiter}{kvp.Value}");
+        sb.Append(string.Join(CsvConstants.FlightClassFieldsDelimiter, fields));
 
         return sb.ToString();
     }
