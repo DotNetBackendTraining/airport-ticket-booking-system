@@ -2,13 +2,19 @@ using AirportTicketBookingSystem.Domain.Contract;
 
 namespace AirportTicketBookingSystem.Infrastructure.Service;
 
-public class CsvFileService<TEntity>(
-    string filepath,
-    ICsvEntityConverter<TEntity> csvEntityConverter
-) : IFileService<TEntity>
+public class CsvFileService<TEntity> : IFileService<TEntity>
 {
-    private string Filepath { get; } = filepath;
-    private ICsvEntityConverter<TEntity> Converter { get; } = csvEntityConverter;
+    private string Filepath { get; }
+    private ICsvEntityConverter<TEntity> Converter { get; }
+    private string Header { get; }
+
+    public CsvFileService(string filepath,
+        ICsvEntityConverter<TEntity> csvEntityConverter)
+    {
+        Filepath = filepath;
+        Converter = csvEntityConverter;
+        Header = File.ReadLines(Filepath).Take(1).ToList()[0];
+    }
 
     public IEnumerable<TEntity> ReadAll()
     {
@@ -20,6 +26,6 @@ public class CsvFileService<TEntity>(
     public async Task WriteAllAsync(IEnumerable<TEntity> entities)
     {
         var csvLines = entities.Select(entity => Converter.EntityToCsv(entity));
-        await File.WriteAllLinesAsync(Filepath, csvLines);
+        await File.WriteAllLinesAsync(Filepath, Enumerable.Repeat(Header, 1).Concat(csvLines));
     }
 }
