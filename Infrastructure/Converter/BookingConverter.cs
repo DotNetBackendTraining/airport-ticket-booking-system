@@ -12,7 +12,7 @@ public class BookingConverter : ICsvEntityConverter<Booking>
         var flightId = Parser.ParseOrThrowInt(parts[0]);
         var passengerId = Parser.ParseOrThrowInt(parts[1]);
         var flightClass = FlightClassParser.ParseFullFlightClassOrThrow(parts[2]);
-        return new Booking(flightId, passengerId, flightClass);
+        return Booking.Create(flightId, passengerId, flightClass);
     }
 
     public string EntityToCsv(Booking entity)

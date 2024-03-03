@@ -12,7 +12,7 @@ public class AirportConverter : ICsvEntityConverter<Airport>
         var id = parts[0];
         var name = Parser.UnquoteOrThrowString(parts[1], CsvConstants.AirportNameQuoteChar);
         var country = parts[2];
-        return new Airport(id, name, country);
+        return Airport.Create(id, name, country);
     }
 
     public string EntityToCsv(Airport airport)

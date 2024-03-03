@@ -22,7 +22,7 @@ public class FlightConverter : ICsvEntityConverter<Flight>
             classPrices[flightClass] = price;
         }
 
-        return new Flight(id, departureDate, departureAirportId, arrivalAirportId) { ClassPrices = classPrices };
+        return Flight.Create(id, departureDate, departureAirportId, arrivalAirportId, classPrices);
     }
 
     public string EntityToCsv(Flight entity)
