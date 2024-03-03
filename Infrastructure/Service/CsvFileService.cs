@@ -2,10 +2,10 @@ using AirportTicketBookingSystem.Domain.Contract;
 
 namespace AirportTicketBookingSystem.Infrastructure.Service;
 
-public class CsvFileService<T> : IFileService<T>, IDisposable
+public class CsvFileService<TEntity> : IFileService<TEntity>, IDisposable
 {
     public CsvFileService(string filepath,
-        ICsvEntityConverter<T> csvEntityConverter)
+        ICsvEntityConverter<TEntity> csvEntityConverter)
     {
         Filepath = filepath;
         Converter = csvEntityConverter;
@@ -13,11 +13,11 @@ public class CsvFileService<T> : IFileService<T>, IDisposable
     }
 
     private string Filepath { get; }
-    private ICsvEntityConverter<T> Converter { get; }
-    private List<T> Cache { get; }
+    private ICsvEntityConverter<TEntity> Converter { get; }
+    private List<TEntity> Cache { get; }
     private bool CacheIsDirty { get; set; }
 
-    private List<T> LoadData()
+    private List<TEntity> LoadData()
     {
         if (!File.Exists(Filepath))
             throw new FileNotFoundException($"The file {Filepath} was not found.");
@@ -28,22 +28,22 @@ public class CsvFileService<T> : IFileService<T>, IDisposable
             .ToList();
     }
 
-    public IEnumerable<T> ReadAll() => Cache;
+    public IEnumerable<TEntity> ReadAll() => Cache;
 
-    public Task AppendAsync(IEnumerable<T> entities)
+    public Task AppendAsync(IEnumerable<TEntity> entities)
     {
         Cache.AddRange(entities);
         CacheIsDirty = true;
         return Task.CompletedTask;
     }
 
-    public void Append(T entity)
+    public void Append(TEntity entity)
     {
         Cache.Add(entity);
         CacheIsDirty = true;
     }
 
-    public bool Replace(T oldEntity, T newEntity)
+    public bool Replace(TEntity oldEntity, TEntity newEntity)
     {
         var i = Cache.IndexOf(oldEntity);
         if (i == -1) return false;
@@ -51,7 +51,7 @@ public class CsvFileService<T> : IFileService<T>, IDisposable
         return CacheIsDirty = true;
     }
 
-    public bool Remove(T entity)
+    public bool Remove(TEntity entity)
     {
         if (Cache.Remove(entity))
             return CacheIsDirty = true;

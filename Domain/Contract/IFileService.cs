@@ -1,10 +1,10 @@
 namespace AirportTicketBookingSystem.Domain.Contract;
 
-public interface IFileService<T>
+public interface IFileService<TEntity>
 {
-    public IEnumerable<T> ReadAll();
-    public Task AppendAsync(IEnumerable<T> entities);
-    public void Append(T entity);
-    public bool Replace(T oldEntity, T newEntity);
-    public bool Remove(T entity);
+    public IEnumerable<TEntity> ReadAll();
+    public Task AppendAsync(IEnumerable<TEntity> entities);
+    public void Append(TEntity entity);
+    public bool Replace(TEntity oldEntity, TEntity newEntity);
+    public bool Remove(TEntity entity);
 }
