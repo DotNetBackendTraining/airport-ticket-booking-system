@@ -11,10 +11,7 @@ public class AirportRepository(
 {
     private ISimpleDatabaseService<Airport> DatabaseService { get; } = databaseService;
 
-    public void Add(Airport airport)
-    {
-        DatabaseService.Add(airport);
-    }
+    public void Add(Airport airport) => DatabaseService.Add(airport);
 
     public Airport? GetById(string id)
     {

@@ -10,10 +10,7 @@ public class PassengerRepository(
 {
     private ISimpleDatabaseService<Passenger> DatabaseService { get; } = databaseService;
 
-    public void Add(Passenger passenger)
-    {
-        DatabaseService.Add(passenger);
-    }
+    public void Add(Passenger passenger) => DatabaseService.Add(passenger);
 
     public Passenger? GetById(int id)
     {

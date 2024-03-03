@@ -17,13 +17,10 @@ public class FlightRepository(
 
     public void Add(Flight flight)
     {
+        foreach (var id in new[] { flight.DepartureAirportId, flight.ArrivalAirportId })
+            if (AirportRepository.GetById(id) == null)
+                throw new InvalidOperationException($"Airport with ID '{id}' was not found in the repository");
         DatabaseService.Add(flight);
-    }
-
-    public Task AddAllAsync(IEnumerable<Flight> flights)
-    {
-        foreach (var flight in flights) DatabaseService.Add(flight);
-        return Task.CompletedTask;
     }
 
     public Flight? GetById(int flightId)

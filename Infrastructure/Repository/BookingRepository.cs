@@ -7,29 +7,32 @@ namespace AirportTicketBookingSystem.Infrastructure.Repository;
 
 public class BookingRepository(
     ISimpleDatabaseService<Booking> databaseService,
-    IFlightRepository flightRepository
+    IFlightRepository flightRepository,
+    IPassengerRepository passengerRepository
 ) : IBookingRepository
 {
     private ISimpleDatabaseService<Booking> DatabaseService { get; } = databaseService;
 
     private IFlightRepository FlightRepository { get; } = flightRepository;
 
+    private IPassengerRepository PassengerRepository { get; } = passengerRepository;
+
     public void Add(Booking booking)
     {
+        if (PassengerRepository.GetById(booking.PassengerId) == null)
+            throw new InvalidOperationException(
+                $"Passenger with ID '{booking.PassengerId}' was not found for the booking '{booking}'");
+
+        if (FlightRepository.GetById(booking.FlightId) == null)
+            throw new InvalidOperationException(
+                $"Flight with ID '{booking.FlightId}' was not found for the booking '{booking}'");
+
         DatabaseService.Add(booking);
     }
 
-    public bool Update(Booking booking)
-    {
-        DatabaseService.Update(booking);
-        return true;
-    }
+    public void Update(Booking booking) => DatabaseService.Update(booking);
 
-    public bool Delete(int flightId, int passengerId)
-    {
-        var booking = GetById(flightId, passengerId);
-        return booking != null && DatabaseService.Delete(booking);
-    }
+    public bool Delete(Booking booking) => DatabaseService.Delete(booking);
 
     public Booking? GetById(int flightId, int passengerId)
     {

@@ -18,11 +18,11 @@ public class ClientService(
 
     public bool UpdateBooking(Booking updatedBooking)
     {
-        return BookingRepository.Update(updatedBooking);
+        throw new NotImplementedException();
     }
 
     public bool CancelBooking(int flightId, int passengerId)
     {
-        return BookingRepository.Delete(flightId, passengerId);
+        throw new NotImplementedException();
     }
 }
