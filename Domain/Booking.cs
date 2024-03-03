@@ -1,9 +1,17 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace AirportTicketBookingSystem.Domain;
 
 public class Booking(int flightId, int passengerId, FlightClass bookingClass)
 {
+    [Key]
+    [Range(1, int.MaxValue, ErrorMessage = "ID must be a positive integer.")]
     public int FlightId { get; } = flightId;
+
+    [Key]
+    [Range(1, int.MaxValue, ErrorMessage = "ID must be a positive integer.")]
     public int PassengerId { get; } = passengerId;
+
     public FlightClass BookingClass { get; set; } = bookingClass;
 
     public override bool Equals(object? obj) =>
