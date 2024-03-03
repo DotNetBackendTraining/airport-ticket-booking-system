@@ -5,20 +5,20 @@ using AirportTicketBookingSystem.Domain.Repository;
 namespace AirportTicketBookingSystem.Infrastructure.Repository;
 
 public class PassengerRepository(
-    IFileService<Passenger> fileService
+    ISimpleDatabaseService<Passenger> databaseService
 ) : IPassengerRepository
 {
-    private IFileService<Passenger> FileService { get; } = fileService;
+    private ISimpleDatabaseService<Passenger> DatabaseService { get; } = databaseService;
 
     public void Add(Passenger passenger)
     {
-        FileService.Append(passenger);
+        DatabaseService.Add(passenger);
     }
 
     public Passenger? GetById(int id)
     {
-        return FileService
-            .ReadAll()
+        return DatabaseService
+            .GetAll()
             .FirstOrDefault(p => p.Id == id);
     }
 }

@@ -7,34 +7,35 @@ using AirportTicketBookingSystem.Domain.Repository;
 namespace AirportTicketBookingSystem.Infrastructure.Repository;
 
 public class FlightRepository(
-    IFileService<Flight> fileService,
+    ISimpleDatabaseService<Flight> databaseService,
     IAirportRepository airportRepository
 ) : IFlightRepository
 {
-    private IFileService<Flight> FileService { get; } = fileService;
+    private ISimpleDatabaseService<Flight> DatabaseService { get; } = databaseService;
 
     private IAirportRepository AirportRepository { get; } = airportRepository;
 
     public void Add(Flight flight)
     {
-        FileService.Append(flight);
+        DatabaseService.Add(flight);
     }
 
-    public async Task AddAllAsync(IEnumerable<Flight> flights)
+    public Task AddAllAsync(IEnumerable<Flight> flights)
     {
-        await FileService.AppendAsync(flights);
+        foreach (var flight in flights) DatabaseService.Add(flight);
+        return Task.CompletedTask;
     }
 
     public Flight? GetById(int flightId)
     {
-        return FileService
-            .ReadAll()
+        return DatabaseService
+            .GetAll()
             .FirstOrDefault(f => f.Id == flightId);
     }
 
     public IEnumerable<Flight> Search(FlightSearchCriteria criteria)
     {
-        return Filter(FileService.ReadAll(), criteria);
+        return Filter(DatabaseService.GetAll(), criteria);
     }
 
     public IEnumerable<Flight> Filter(IEnumerable<Flight> flights, FlightSearchCriteria criteria)

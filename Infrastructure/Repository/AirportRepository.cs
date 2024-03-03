@@ -6,26 +6,26 @@ using AirportTicketBookingSystem.Domain.Repository;
 namespace AirportTicketBookingSystem.Infrastructure.Repository;
 
 public class AirportRepository(
-    IFileService<Airport> fileService
+    ISimpleDatabaseService<Airport> databaseService
 ) : IAirportRepository
 {
-    private IFileService<Airport> FileService { get; } = fileService;
+    private ISimpleDatabaseService<Airport> DatabaseService { get; } = databaseService;
 
     public void Add(Airport airport)
     {
-        FileService.Append(airport);
+        DatabaseService.Add(airport);
     }
 
     public Airport? GetById(string id)
     {
-        return FileService
-            .ReadAll()
+        return DatabaseService
+            .GetAll()
             .FirstOrDefault(a => a.Id == id);
     }
 
     public IEnumerable<Airport> Search(AirportSearchCriteria criteria)
     {
-        return Filter(FileService.ReadAll(), criteria);
+        return Filter(DatabaseService.GetAll(), criteria);
     }
 
     public IEnumerable<Airport> Filter(IEnumerable<Airport> airports, AirportSearchCriteria criteria)
