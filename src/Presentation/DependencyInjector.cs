@@ -24,7 +24,7 @@ public static class DependencyInjector
     {
         services.AddSingleton<ICsvEntityConverter<Flight>, FlightConverter>();
         services.AddSingleton<ICsvEntityConverter<Booking>, BookingConverter>();
-        services.AddSingleton<ICsvEntityConverter<Passenger>, PassengerConverter>();
+        services.AddSingleton<ICsvEntityConverter<Airport>, AirportConverter>();
         services.AddSingleton<ICsvEntityConverter<Passenger>, PassengerConverter>();
 
         services.AddSingleton<IFileService<Flight>, CsvFileService<Flight>>(provider =>
