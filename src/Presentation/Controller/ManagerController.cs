@@ -1,4 +1,4 @@
-namespace AirportTicketBookingSystem.Presentation;
+namespace AirportTicketBookingSystem.Presentation.Controller;
 
 public class ManagerController
 {
