@@ -35,7 +35,7 @@ public static class DependencyInjector
         });
         services.AddSingleton<IFileService<Booking>, CsvFileService<Booking>>(provider =>
         {
-            var filepath = GetVariableOrThrow("BOOKS_FILE_PATH");
+            var filepath = GetVariableOrThrow("BOOKINGS_FILE_PATH");
             var converter = provider.GetRequiredService<ICsvEntityConverter<Booking>>();
             return new CsvFileService<Booking>(filepath, converter);
         });
