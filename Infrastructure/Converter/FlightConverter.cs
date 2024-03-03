@@ -9,7 +9,7 @@ public class FlightConverter : ICsvEntityConverter<Flight>
 {
     private static Dictionary<FlightClass, decimal> ParseFlightClassPricePairsOrThrow(string flightClassStr)
     {
-        var parts = flightClassStr.Split(CsvConstants.FlightClassPriceDelimiter);
+        var parts = flightClassStr.Split(CsvConstants.FlightClassFieldsDelimiter);
         Dictionary<FlightClass, decimal> res = new();
         foreach (var part in parts)
         {
