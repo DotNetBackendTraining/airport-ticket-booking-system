@@ -26,4 +26,6 @@ public class Passenger
         obj is Passenger other && Id == other.Id;
 
     public override int GetHashCode() => Id.GetHashCode();
+
+    public override string ToString() => $"Passenger - ID: {Id}";
 }

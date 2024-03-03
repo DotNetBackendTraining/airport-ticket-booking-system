@@ -34,4 +34,7 @@ public class Airport
         obj is Airport other && Id == other.Id;
 
     public override int GetHashCode() => Id.GetHashCode();
+
+    public override string ToString() =>
+        $"Airport - ID: {Id}, Name: {Name}, Country: {Country}";
 }

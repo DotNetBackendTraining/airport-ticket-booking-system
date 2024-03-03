@@ -37,4 +37,7 @@ public class Booking
 
     public override int GetHashCode() =>
         HashCode.Combine(FlightId, PassengerId);
+
+    public override string ToString() =>
+        $"Booking - Flight ID: {FlightId}, Passenger ID: {PassengerId}, Class: {BookingClass}";
 }

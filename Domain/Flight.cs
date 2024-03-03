@@ -44,4 +44,11 @@ public class Flight
         obj is Flight other && Id == other.Id;
 
     public override int GetHashCode() => Id.GetHashCode();
+
+    public override string ToString()
+    {
+        var pricesString = string.Join(", ", ClassPrices.Select(cp => $"{cp.Key}: {cp.Value:C}"));
+        return $"Flight - ID: {Id}, Departure: {DepartureAirportId} on {DepartureDate:yyyy-MM-dd HH:mm}" +
+               $", Arrival: {ArrivalAirportId}, Prices: [{pricesString}]";
+    }
 }
