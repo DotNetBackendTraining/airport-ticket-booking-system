@@ -6,7 +6,6 @@ public class SimpleDatabaseService<TEntity> : ISimpleDatabaseService<TEntity>
 {
     private IFileService<TEntity> FileService { get; }
     private List<TEntity> Cache { get; }
-    private bool CacheIsDirty { get; set; }
 
     public SimpleDatabaseService(IFileService<TEntity> fileService)
     {
@@ -23,7 +22,7 @@ public class SimpleDatabaseService<TEntity> : ISimpleDatabaseService<TEntity>
         if (Cache.Any(e => e != null && e.Equals(entity)))
             throw new ArgumentException($"Entity {entity} already exists in the database");
         Cache.Add(entity);
-        CacheIsDirty = true;
+        SaveChanges();
     }
 
     public void Update(TEntity newEntity)
@@ -32,25 +31,15 @@ public class SimpleDatabaseService<TEntity> : ISimpleDatabaseService<TEntity>
         if (i == -1)
             throw new KeyNotFoundException($"Entity {newEntity} was not found in the database");
         Cache[i] = newEntity;
-        CacheIsDirty = true;
+        SaveChanges();
     }
 
     public bool Delete(TEntity entity)
     {
         if (Cache.Remove(entity))
-            return CacheIsDirty = true;
+            SaveChanges();
         return false;
     }
 
-    public void Dispose()
-    {
-        if (CacheIsDirty) SaveChangesAsync().Wait();
-    }
-
-    protected virtual async Task SaveChangesAsync()
-    {
-        if (!CacheIsDirty) return;
-        await FileService.WriteAllAsync(Cache);
-        CacheIsDirty = false;
-    }
+    private void SaveChanges() => FileService.WriteAllAsync(Cache).Wait();
 }
