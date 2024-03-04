@@ -34,11 +34,10 @@ public class SimpleDatabaseService<TEntity> : ISimpleDatabaseService<TEntity>
         SaveChanges();
     }
 
-    public bool Delete(TEntity entity)
+    public void Delete(TEntity entity)
     {
-        if (Cache.Remove(entity))
-            SaveChanges();
-        return false;
+        if (Cache.Remove(entity)) SaveChanges();
+        else throw new KeyNotFoundException($"Entity {entity} was not found in the database");
     }
 
     private void SaveChanges() => FileService.WriteAllAsync(Cache).Wait();

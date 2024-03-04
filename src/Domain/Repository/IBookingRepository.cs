@@ -27,8 +27,8 @@ public interface IBookingRepository
     /// Deletes a booking from the repository based on flight and passenger identifiers.
     /// </summary>
     /// <param name="booking">The booking to delete.</param>
-    /// <returns><c>true</c> if the booking was successfully deleted; otherwise, <c>false</c>.</returns>
-    public bool Delete(Booking booking);
+    /// <exception cref="KeyNotFoundException">Thrown when the booking to delete does not exist in the repository.</exception>
+    public void Delete(Booking booking);
 
     /// <summary>
     /// Retrieves a booking by flight and passenger identifiers.

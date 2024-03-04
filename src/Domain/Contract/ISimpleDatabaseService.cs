@@ -37,11 +37,11 @@ public interface ISimpleDatabaseService<TEntity>
     /// Deletes an entity of type <typeparamref name="TEntity"/> from the database.
     /// </summary>
     /// <param name="entity">The entity to be removed.</param>
-    /// <returns>A boolean to indicate whether the entity was found and deleted.</returns>
+    /// <exception cref="KeyNotFoundException">Thrown when the entity does not exist.</exception>
     /// <remarks>
     /// Before deleting an entity, ensure that all dependent entities have been appropriately managed to avoid violating relational constraints.
     /// </remarks>
-    public bool Delete(TEntity entity);
+    public void Delete(TEntity entity);
 
     [Obsolete("Method not implemented yet")]
     public IEnumerable<Task> BatchAdd(IEnumerable<TEntity> entities) => [];

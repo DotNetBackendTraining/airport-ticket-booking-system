@@ -32,7 +32,7 @@ public class BookingRepository(
 
     public void Update(Booking booking) => DatabaseService.Update(booking);
 
-    public bool Delete(Booking booking) => DatabaseService.Delete(booking);
+    public void Delete(Booking booking) => DatabaseService.Delete(booking);
 
     public Booking? GetById(int flightId, int passengerId)
     {
