@@ -20,7 +20,7 @@ public class SimpleDatabaseService<TEntity> : ISimpleDatabaseService<TEntity>
 
     public void Add(TEntity entity)
     {
-        if (Cache.Any(e => e != null && e.Equals(entity)))
+        if (Cache.Any(e => e.Equals(entity)))
             throw new ArgumentException($"Entity {entity} already exists in the database");
         Cache.Add(entity);
         SaveChanges();
