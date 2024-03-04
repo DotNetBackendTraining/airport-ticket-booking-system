@@ -7,14 +7,14 @@ public class CsvFileService<TEntity> : IFileService<TEntity>
 {
     private string Filepath { get; }
     private ICsvEntityConverter<TEntity> Converter { get; }
-    private string Header { get; }
+    private IEnumerable<string> Header { get; }
 
     public CsvFileService(string filepath,
         ICsvEntityConverter<TEntity> csvEntityConverter)
     {
         Filepath = filepath;
         Converter = csvEntityConverter;
-        Header = File.ReadLines(Filepath).Take(1).ToList()[0];
+        Header = File.ReadLines(Filepath).Take(1);
     }
 
     public IEnumerable<TEntity> ReadAll()
@@ -32,7 +32,7 @@ public class CsvFileService<TEntity> : IFileService<TEntity>
         try
         {
             var csvLines = entities.Select(entity => Converter.EntityToCsv(entity));
-            await File.WriteAllLinesAsync(Filepath, Enumerable.Repeat(Header, 1).Concat(csvLines));
+            await File.WriteAllLinesAsync(Filepath, Header.Concat(csvLines));
         }
         finally
         {
