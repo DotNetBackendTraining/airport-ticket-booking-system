@@ -1,4 +1,6 @@
-namespace AirportTicketBookingSystem.Domain.Service;
+using AirportTicketBookingSystem.Domain;
+
+namespace AirportTicketBookingSystem.Application.Contract;
 
 /// <summary>
 /// Defines the service operations available to clients
