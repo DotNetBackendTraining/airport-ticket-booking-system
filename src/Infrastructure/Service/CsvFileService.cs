@@ -39,4 +39,18 @@ public class CsvFileService<TEntity> : IFileService<TEntity>
             _writeLock.Release();
         }
     }
+
+    public async Task AppendAllAsync(IEnumerable<TEntity> entities)
+    {
+        await _writeLock.WaitAsync();
+        try
+        {
+            var csvLines = entities.Select(entity => Converter.EntityToCsv(entity));
+            await File.AppendAllLinesAsync(Filepath, csvLines);
+        }
+        finally
+        {
+            _writeLock.Release();
+        }
+    }
 }

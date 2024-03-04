@@ -16,4 +16,11 @@ public interface IFileService<TEntity>
     /// <param name="entities">The collection of entities to write to the file.</param>
     /// <returns>A task representing the asynchronous write operation.</returns>
     public Task WriteAllAsync(IEnumerable<TEntity> entities);
+
+    /// <summary>
+    /// Appends all entities to the file, keeping any existing content.
+    /// </summary>
+    /// <param name="entities">The collection of entities to append to the file.</param>
+    /// <returns>A task representing the asynchronous append operation.</returns>
+    public Task AppendAllAsync(IEnumerable<TEntity> entities);
 }
