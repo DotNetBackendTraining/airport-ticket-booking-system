@@ -2,44 +2,36 @@ using AirportTicketBookingSystem.Domain.Contract;
 
 namespace AirportTicketBookingSystem.Infrastructure.Service;
 
-public class SimpleDatabaseService<TEntity> : ISimpleDatabaseService<TEntity>
-    where TEntity : IEntity
+public class SimpleDatabaseService<TEntity>(IFileService<TEntity> fileService)
+    : ISimpleDatabaseService<TEntity> where TEntity : IEntity
 {
-    private IFileService<TEntity> FileService { get; }
-    private List<TEntity> Cache { get; }
+    private IFileService<TEntity> FileService { get; } = fileService;
 
-    public SimpleDatabaseService(IFileService<TEntity> fileService)
+    public IEnumerable<TEntity> GetAll() => FileService.ReadAll();
+
+    private bool Exists(TEntity entity) => GetAll().Any(e => e.Equals(entity));
+
+    public async Task Add(TEntity entity)
     {
-        FileService = fileService;
-        Cache = LoadData().ToList();
+        if (Exists(entity)) throw new ArgumentException($"Entity {entity} already exists in the database");
+        await FileService.AppendAllAsync(Enumerable.Repeat(entity, 1));
     }
 
-    private IEnumerable<TEntity> LoadData() => FileService.ReadAll();
-
-    public IEnumerable<TEntity> GetAll() => Cache;
-
-    public void Add(TEntity entity)
+    public async Task Update(TEntity newEntity)
     {
-        if (Cache.Any(e => e.Equals(entity)))
-            throw new ArgumentException($"Entity {entity} already exists in the database");
-        Cache.Add(entity);
-        SaveChanges();
-    }
-
-    public void Update(TEntity newEntity)
-    {
-        var i = Cache.IndexOf(newEntity);
-        if (i == -1)
+        if (!Exists(newEntity))
             throw new KeyNotFoundException($"Entity {newEntity} was not found in the database");
-        Cache[i] = newEntity;
-        SaveChanges();
+        var cache = GetAll().ToList();
+        var changes = cache.Select(e => e.Equals(newEntity) ? newEntity : e);
+        await FileService.WriteAllAsync(changes);
     }
 
-    public void Delete(TEntity entity)
+    public async Task Delete(TEntity entity)
     {
-        if (Cache.Remove(entity)) SaveChanges();
-        else throw new KeyNotFoundException($"Entity {entity} was not found in the database");
+        if (!Exists(entity))
+            throw new KeyNotFoundException($"Entity {entity} was not found in the database");
+        var cache = GetAll().ToList();
+        var changes = cache.Where(e => !e.Equals(entity));
+        await FileService.WriteAllAsync(changes);
     }
-
-    private void SaveChanges() => FileService.WriteAllAsync(Cache).Wait();
 }
