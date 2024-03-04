@@ -8,7 +8,7 @@ public class PassengerConverter : ICsvEntityConverter<Passenger>
 {
     public Passenger CsvToEntity(string csvLine)
     {
-        var id = Parser.ParseOrThrowInt(csvLine);
+        var id = csvLine.ParseOrThrowInt();
         return Passenger.Create(id);
     }
 

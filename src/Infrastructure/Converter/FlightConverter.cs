@@ -13,9 +13,9 @@ public class FlightConverter : ICsvEntityConverter<Flight>
         Dictionary<FlightClass, decimal> res = new();
         foreach (var part in parts)
         {
-            var subs = Parser.SplitToLengthOrThrow(part, 2, CsvConstants.FlightClassPriceDelimiter);
-            var flightClass = Parser.ParseFlightClassOrThrow(subs[0]);
-            var price = Parser.ParseOrThrowDecimal(subs[1]);
+            var subs = part.SplitToLengthOrThrow(2, CsvConstants.FlightClassPriceDelimiter);
+            var flightClass = subs[0].ParseFlightClassOrThrow();
+            var price = subs[1].ParseOrThrowDecimal();
             res[flightClass] = price;
         }
 
@@ -24,9 +24,9 @@ public class FlightConverter : ICsvEntityConverter<Flight>
 
     public Flight CsvToEntity(string csvLine)
     {
-        var parts = Parser.SplitToLengthOrThrow(csvLine, 5);
-        var id = Parser.ParseOrThrowInt(parts[0]);
-        var departureDate = Parser.ParseOrThrowDate(parts[1], CsvConstants.FlightDepartureDateTimeFormat);
+        var parts = csvLine.SplitToLengthOrThrow(5);
+        var id = parts[0].ParseOrThrowInt();
+        var departureDate = parts[1].ParseOrThrowDate(CsvConstants.FlightDepartureDateTimeFormat);
         var departureAirportId = parts[2];
         var arrivalAirportId = parts[3];
         var classPrices = ParseFlightClassPricePairsOrThrow(parts[4]);

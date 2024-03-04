@@ -7,7 +7,7 @@ namespace AirportTicketBookingSystem.Infrastructure.Converter.Utility;
 /// Provides utility methods for parsing different data types from strings with strict format requirements.
 /// Throws exceptions if parsing fails to match the expected formats.
 /// </summary>
-public static class Parser
+public static class ParserExtension
 {
     /// <summary>
     /// Parses a date string into a DateTime object based on the specified format.
@@ -16,7 +16,7 @@ public static class Parser
     /// <param name="format">The expected date format.</param>
     /// <returns>A DateTime object representing the parsed date.</returns>
     /// <exception cref="FormatException">Thrown if the date string does not match the specified format.</exception>
-    public static DateTime ParseOrThrowDate(string dateStr, string format)
+    public static DateTime ParseOrThrowDate(this string dateStr, string format)
     {
         if (!DateTime.TryParseExact(dateStr, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out var res))
             throw new FormatException($"Date '{dateStr}' does not match format '{format}'.");
@@ -29,7 +29,7 @@ public static class Parser
     /// <param name="intStr">The string to parse as an integer.</param>
     /// <returns>The parsed integer value.</returns>
     /// <exception cref="FormatException">Thrown if the string cannot be parsed as an integer.</exception>
-    public static int ParseOrThrowInt(string intStr)
+    public static int ParseOrThrowInt(this string intStr)
     {
         if (!int.TryParse(intStr, out var intValue))
             throw new FormatException($"Unable to parse '{intStr}' as integer.");
@@ -42,7 +42,7 @@ public static class Parser
     /// <param name="decimalStr">The string to parse as a decimal.</param>
     /// <returns>The parsed decimal value.</returns>
     /// <exception cref="FormatException">Thrown if the string cannot be parsed as a decimal.</exception>
-    public static decimal ParseOrThrowDecimal(string decimalStr)
+    public static decimal ParseOrThrowDecimal(this string decimalStr)
     {
         if (!decimal.TryParse(decimalStr, NumberStyles.Any, CultureInfo.InvariantCulture, out var decimalValue))
             throw new FormatException($"Unable to parse '{decimalStr}' as decimal.");
@@ -56,7 +56,7 @@ public static class Parser
     /// <param name="quoteChar">The quotation character to expect at the beginning and end of the string.</param>
     /// <returns>The unquoted string.</returns>
     /// <exception cref="FormatException">Thrown if the string is not enclosed in the expected quotation marks.</exception>
-    public static string UnquoteOrThrowString(string str, char quoteChar)
+    public static string UnquoteOrThrow(this string str, char quoteChar)
     {
         if (!str.StartsWith(quoteChar) || !str.EndsWith(quoteChar))
             throw new FormatException($"The string '{str}' is expected to be enclosed in {quoteChar} quotes.");
@@ -71,7 +71,7 @@ public static class Parser
     /// <param name="splitter">The character used to split the string. Defaults to a comma.</param>
     /// <returns>An array of strings, each representing a part of the original string.</returns>
     /// <exception cref="FormatException">Thrown if the string does not split into the expected number of parts.</exception>
-    public static string[] SplitToLengthOrThrow(string str, int numberOfParts, char splitter = ',')
+    public static string[] SplitToLengthOrThrow(this string str, int numberOfParts, char splitter = ',')
     {
         var parts = str.Split(splitter);
         if (parts.Length != numberOfParts)
@@ -88,7 +88,7 @@ public static class Parser
     /// <param name="splitter">The character used to split the string. Defaults to a comma.</param>
     /// <returns>An array of strings, each representing a part of the original string.</returns>
     /// <exception cref="FormatException">Thrown if the string does not split into at least the expected number of parts.</exception>
-    public static string[] SplitToMinLengthOrThrow(string str, int minNumberOfParts, char splitter = ',')
+    public static string[] SplitToMinLengthOrThrow(this string str, int minNumberOfParts, char splitter = ',')
     {
         var parts = str.Split(splitter);
         if (parts.Length < minNumberOfParts)
@@ -97,7 +97,7 @@ public static class Parser
         return parts;
     }
 
-    public static FlightClass ParseFlightClassOrThrow(string flightClassStr)
+    public static FlightClass ParseFlightClassOrThrow(this string flightClassStr)
     {
         if (!Enum.TryParse<FlightClass>(flightClassStr, true, out var flightClass))
             throw new FormatException($"Unable to determine flight class of '{flightClassStr}'");
