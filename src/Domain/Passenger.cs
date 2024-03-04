@@ -19,7 +19,7 @@ public class Passenger : IEntity
     public static Passenger Create(int id)
     {
         var obj = new Passenger(id);
-        ValidationHelper.ValidateObjectOrThrow(obj);
+        obj.ValidateObjectOrThrow();
         return obj;
     }
 

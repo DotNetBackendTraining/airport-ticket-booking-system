@@ -1,11 +1,12 @@
 using System.ComponentModel.DataAnnotations;
+using AirportTicketBookingSystem.Domain.Contract;
 
 namespace AirportTicketBookingSystem.Domain.Utility;
 
 /// <summary>
 /// Provides utility methods for validating objects and properties against their validation attributes.
 /// </summary>
-public static class ValidationHelper
+public static class ValidationExtension
 {
     /// <summary>
     /// Validates an object's properties against the defined validation attributes.
@@ -17,7 +18,7 @@ public static class ValidationHelper
     /// and aggregates all validation errors. If any validation errors are found, a ValidationException is thrown
     /// with a detailed error message.
     /// </remarks>
-    public static void ValidateObjectOrThrow(object obj)
+    public static void ValidateObjectOrThrow(this IEntity obj)
     {
         var context = new ValidationContext(obj);
         var results = new List<ValidationResult>();
@@ -40,7 +41,7 @@ public static class ValidationHelper
     /// This method checks the specified property against its validation attributes. If the validation fails,
     /// a ValidationException is thrown with a detailed error message specifying the property name and the validation errors.
     /// </remarks>
-    public static void ValidatePropertyOrThrow<T>(T propertyValue, string propertyName, object validatingObject)
+    public static void ValidatePropertyOrThrow<T>(this IEntity validatingObject, T propertyValue, string propertyName)
     {
         var context = new ValidationContext(validatingObject) { MemberName = propertyName };
         var results = new List<ValidationResult>();

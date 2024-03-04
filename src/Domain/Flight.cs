@@ -37,7 +37,7 @@ public class Flight : IEntity
         IReadOnlyDictionary<FlightClass, decimal> classPrices)
     {
         var obj = new Flight(id, departureDate, departureAirportId, arrivalAirportId, classPrices);
-        ValidationHelper.ValidateObjectOrThrow(obj);
+        obj.ValidateObjectOrThrow();
         return obj;
     }
 

@@ -27,7 +27,7 @@ public class Booking : IEntity
     public static Booking Create(int flightId, int passengerId, FlightClass bookingClass)
     {
         var obj = new Booking(flightId, passengerId, bookingClass);
-        ValidationHelper.ValidateObjectOrThrow(obj);
+        obj.ValidateObjectOrThrow();
         return obj;
     }
 

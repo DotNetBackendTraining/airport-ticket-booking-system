@@ -27,7 +27,7 @@ public class Airport : IEntity
     public static Airport Create(string id, string name, string country)
     {
         var obj = new Airport(id, name, country);
-        ValidationHelper.ValidateObjectOrThrow(obj);
+        obj.ValidateObjectOrThrow();
         return obj;
     }
 
