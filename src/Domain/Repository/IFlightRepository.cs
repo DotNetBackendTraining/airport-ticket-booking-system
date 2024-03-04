@@ -13,6 +13,7 @@ public interface IFlightRepository
     /// </summary>
     /// <param name="flight">The flight to add.</param>
     /// <exception cref="ArgumentException">Thrown when a flight with the same identifier already exists in the repository.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when <c>DepartureAirportId</c> or <c>ArrivalAirportId</c> do not exist in the repository.</exception>
     public void Add(Flight flight);
 
     /// <summary>
