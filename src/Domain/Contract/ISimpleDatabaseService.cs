@@ -12,6 +12,7 @@ namespace AirportTicketBookingSystem.Domain.Contract;
 /// </remarks>
 /// <typeparam name="TEntity">The type of the entity this service is responsible for.</typeparam>
 public interface ISimpleDatabaseService<TEntity>
+    where TEntity : IEntity
 {
     public IEnumerable<TEntity> GetAll();
 

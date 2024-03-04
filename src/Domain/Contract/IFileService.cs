@@ -1,6 +1,7 @@
 namespace AirportTicketBookingSystem.Domain.Contract;
 
 public interface IFileService<TEntity>
+    where TEntity : IEntity
 {
     /// <summary>
     /// Reads all entities from file.

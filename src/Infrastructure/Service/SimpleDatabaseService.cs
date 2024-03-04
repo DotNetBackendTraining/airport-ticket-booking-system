@@ -3,6 +3,7 @@ using AirportTicketBookingSystem.Domain.Contract;
 namespace AirportTicketBookingSystem.Infrastructure.Service;
 
 public class SimpleDatabaseService<TEntity> : ISimpleDatabaseService<TEntity>
+    where TEntity : IEntity
 {
     private IFileService<TEntity> FileService { get; }
     private List<TEntity> Cache { get; }

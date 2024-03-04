@@ -1,9 +1,10 @@
 using System.ComponentModel.DataAnnotations;
+using AirportTicketBookingSystem.Domain.Contract;
 using AirportTicketBookingSystem.Domain.Utility;
 
 namespace AirportTicketBookingSystem.Domain;
 
-public class Airport
+public class Airport : IEntity
 {
     [Key]
     [Range(1, int.MaxValue, ErrorMessage = "ID must be a positive integer.")]

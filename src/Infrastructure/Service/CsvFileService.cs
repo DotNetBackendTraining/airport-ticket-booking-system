@@ -3,6 +3,7 @@ using AirportTicketBookingSystem.Domain.Contract;
 namespace AirportTicketBookingSystem.Infrastructure.Service;
 
 public class CsvFileService<TEntity> : IFileService<TEntity>
+    where TEntity : IEntity
 {
     private string Filepath { get; }
     private ICsvEntityConverter<TEntity> Converter { get; }
