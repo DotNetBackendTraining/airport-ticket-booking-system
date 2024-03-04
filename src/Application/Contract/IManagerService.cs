@@ -15,4 +15,11 @@ public interface IManagerService
     /// <param name="criteria">The criteria used to filter bookings.</param>
     /// <returns>A SearchResult object containing a collection of bookings that match the criteria, along with the search operation's success status and message.</returns>
     public SearchResult<Booking> SearchBookings(BookingSearchCriteria criteria);
+
+    /// <summary>
+    /// Adds a new flight to the system.
+    /// </summary>
+    /// <param name="flight">The flight to add.</param>
+    /// <returns>An OperationResult corresponding to the addition operation of the flight.</returns>
+    public OperationResult<Flight> AddFlight(Flight flight);
 }

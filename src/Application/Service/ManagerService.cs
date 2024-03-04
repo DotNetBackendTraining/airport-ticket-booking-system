@@ -7,10 +7,13 @@ using AirportTicketBookingSystem.Domain.Repository;
 namespace AirportTicketBookingSystem.Application.Service;
 
 public class ManagerService(
-    IBookingRepository bookingRepository
+    IBookingRepository bookingRepository,
+    IFlightRepository flightRepository
 ) : IManagerService
 {
     private IBookingRepository BookingRepository { get; } = bookingRepository;
+
+    private IFlightRepository FlightRepository { get; } = flightRepository;
 
     public SearchResult<Booking> SearchBookings(BookingSearchCriteria criteria)
     {
@@ -19,5 +22,24 @@ public class ManagerService(
             Success: true,
             Message: "Bookings search completed successfully",
             Items: bookings);
+    }
+
+    public OperationResult<Flight> AddFlight(Flight flight)
+    {
+        try
+        {
+            FlightRepository.Add(flight);
+            return new OperationResult<Flight>(
+                Success: true,
+                Message: "Flight creation completed successfully",
+                Item: flight);
+        }
+        catch (SystemException e)
+        {
+            return new OperationResult<Flight>(
+                Success: false,
+                Message: "Flight creation failed:  " + e.Message,
+                Item: flight);
+        }
     }
 }
