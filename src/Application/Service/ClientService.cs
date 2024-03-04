@@ -1,4 +1,5 @@
 using AirportTicketBookingSystem.Application.Contract;
+using AirportTicketBookingSystem.Application.Result;
 using AirportTicketBookingSystem.Domain;
 using AirportTicketBookingSystem.Domain.Criteria.Search;
 using AirportTicketBookingSystem.Domain.Repository;
@@ -11,18 +12,47 @@ public class ClientService(
 {
     private IBookingRepository BookingRepository { get; } = bookingRepository;
 
-    public IEnumerable<Booking> GetAllBookings(int passengerId)
+    public SearchResult<Booking> GetAllBookings(int passengerId)
     {
-        return BookingRepository.Search(new BookingSearchCriteria { PassengerId = passengerId });
+        var bookings = BookingRepository.Search(new BookingSearchCriteria { PassengerId = passengerId });
+        return new SearchResult<Booking>(
+            Success: true,
+            Message: "Bookings search completed successfully",
+            Items: bookings);
     }
 
-    public bool UpdateBooking(Booking updatedBooking)
+    public OperationResult<Booking> UpdateBooking(Booking updatedBooking)
     {
-        throw new NotImplementedException();
+        try
+        {
+            BookingRepository.Update(updatedBooking);
+            return new OperationResult<Booking>(
+                Success: true,
+                Message: "Booking update completed successfully",
+                Item: updatedBooking);
+        }
+        catch (KeyNotFoundException e)
+        {
+            return new OperationResult<Booking>(
+                Success: false,
+                Message: "Booking update failed:  " + e.Message,
+                Item: updatedBooking);
+        }
     }
 
-    public bool CancelBooking(int flightId, int passengerId)
+    public OperationResult<Booking> CancelBooking(int flightId, int passengerId)
     {
-        throw new NotImplementedException();
+        var booking = BookingRepository.GetById(flightId, passengerId);
+        if (booking == null)
+            return new OperationResult<Booking>(
+                Success: false,
+                Message: "Booking cancellation failed:  Booking not found in the system",
+                Item: null);
+
+        BookingRepository.Delete(booking);
+        return new OperationResult<Booking>(
+            Success: true,
+            Message: "Booking update completed successfully",
+            Item: booking);
     }
 }

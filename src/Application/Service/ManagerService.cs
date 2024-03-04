@@ -1,4 +1,5 @@
 using AirportTicketBookingSystem.Application.Contract;
+using AirportTicketBookingSystem.Application.Result;
 using AirportTicketBookingSystem.Domain;
 using AirportTicketBookingSystem.Domain.Criteria.Search;
 using AirportTicketBookingSystem.Domain.Repository;
@@ -11,8 +12,12 @@ public class ManagerService(
 {
     private IBookingRepository BookingRepository { get; } = bookingRepository;
 
-    public IEnumerable<Booking> SearchBookings(BookingSearchCriteria criteria)
+    public SearchResult<Booking> SearchBookings(BookingSearchCriteria criteria)
     {
-        return BookingRepository.Search(criteria);
+        var bookings = BookingRepository.Search(criteria);
+        return new SearchResult<Booking>(
+            Success: true,
+            Message: "Bookings search completed successfully",
+            Items: bookings);
     }
 }

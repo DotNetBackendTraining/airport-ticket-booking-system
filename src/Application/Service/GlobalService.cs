@@ -1,4 +1,5 @@
 using AirportTicketBookingSystem.Application.Contract;
+using AirportTicketBookingSystem.Application.Result;
 using AirportTicketBookingSystem.Domain;
 using AirportTicketBookingSystem.Domain.Criteria.Search;
 using AirportTicketBookingSystem.Domain.Repository;
@@ -11,8 +12,12 @@ public class GlobalService(
 {
     private IFlightRepository FlightRepository { get; } = flightRepository;
 
-    public IEnumerable<Flight> SearchFlights(FlightSearchCriteria criteria)
+    public SearchResult<Flight> SearchFlights(FlightSearchCriteria criteria)
     {
-        return FlightRepository.Search(criteria);
+        var flights = FlightRepository.Search(criteria);
+        return new SearchResult<Flight>(
+            Success: true,
+            Message: "Flights search completed successfully",
+            Items: flights);
     }
 }
