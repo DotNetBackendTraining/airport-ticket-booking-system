@@ -15,4 +15,11 @@ public interface IGlobalService
     /// <param name="criteria">The criteria used to filter flights.</param>
     /// <returns>A SearchResult object containing a collection of flights that match the criteria.</returns>
     public SearchResult<Flight> SearchFlights(FlightSearchCriteria criteria);
+
+    /// <summary>
+    /// Searches for airports that match the specified criteria.
+    /// </summary>
+    /// <param name="criteria">The criteria used to filter airports.</param>
+    /// <returns>A SearchResult object containing a collection of airports that match the criteria.</returns>
+    public SearchResult<Airport> SearchAirports(AirportSearchCriteria criteria);
 }

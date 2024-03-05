@@ -7,10 +7,13 @@ using AirportTicketBookingSystem.Domain.Repository;
 namespace AirportTicketBookingSystem.Application.Service;
 
 public class GlobalService(
-    IFlightRepository flightRepository
+    IFlightRepository flightRepository,
+    IAirportRepository airportRepository
 ) : IGlobalService
 {
     private IFlightRepository FlightRepository { get; } = flightRepository;
+
+    private IAirportRepository AirportRepository { get; } = airportRepository;
 
     public SearchResult<Flight> SearchFlights(FlightSearchCriteria criteria)
     {
@@ -19,5 +22,14 @@ public class GlobalService(
             Success: true,
             Message: "Flights search completed successfully",
             Items: flights);
+    }
+
+    public SearchResult<Airport> SearchAirports(AirportSearchCriteria criteria)
+    {
+        var airports = AirportRepository.Search(criteria);
+        return new SearchResult<Airport>(
+            Success: true,
+            Message: "Airports search completed successfully",
+            Items: airports);
     }
 }
