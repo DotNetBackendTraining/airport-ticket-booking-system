@@ -58,4 +58,25 @@ public static class Display
 
         Console.WriteLine($"{borderLine}\n");
     }
+
+    public static void BatchOperationResults<TItem>(IEnumerable<OperationResult<TItem>> operationResults,
+        string headerMessage = "Batch Operation Results")
+        where TItem : notnull
+    {
+        Console.WriteLine($"\n--- {headerMessage} ---\n");
+        var list = operationResults.ToList();
+        if (list.Count == 0)
+        {
+            Console.WriteLine("No operation results to display.");
+            return;
+        }
+
+        var count = 1;
+        foreach (var operationResult in list)
+        {
+            Console.WriteLine($"Result {count}:");
+            OperationResult(operationResult);
+            count++;
+        }
+    }
 }
