@@ -1,4 +1,5 @@
 using AirportTicketBookingSystem.Application.Contract;
+using AirportTicketBookingSystem.Domain;
 using AirportTicketBookingSystem.Presentation.Utility;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -29,7 +30,27 @@ public class ManagerController(IServiceProvider serviceProvider)
 
     private void ImportFlights()
     {
-        throw new NotImplementedException();
+        Console.WriteLine("Enter CSV File (Full) Path:");
+        var filepath = Console.ReadLine() ?? string.Empty;
+        try
+        {
+            var results = ManagerService.BatchUploadFlights(filepath).ToList();
+            Display.BatchOperationResults(results);
+            if (results.All(res => !res.Success)) return;
+
+            var save = PromptHelper.PromptYesNo("Would you like to save valid flights to system (y/n)?  ");
+            if (!save) return;
+
+            var saveResults = results
+                .Select(r => r.Item)
+                .OfType<Flight>()
+                .Select(f => ManagerService.AddFlight(f));
+            Display.BatchOperationResults(saveResults);
+        }
+        catch (FileNotFoundException)
+        {
+            Console.WriteLine("File not found!");
+        }
     }
 
     private void PrintValidations()
