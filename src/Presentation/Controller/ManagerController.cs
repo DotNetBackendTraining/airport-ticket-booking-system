@@ -22,7 +22,9 @@ public class ManagerController(IServiceProvider serviceProvider)
 
     private void SearchBookings()
     {
-        throw new NotImplementedException();
+        var criteria = PromptFilter.PromptBookingFilter();
+        var bookings = ManagerService.SearchBookings(criteria);
+        Display.SearchResult(bookings);
     }
 
     private void ImportFlights()

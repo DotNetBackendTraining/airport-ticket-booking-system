@@ -4,7 +4,7 @@ namespace AirportTicketBookingSystem.Presentation.Utility;
 
 public static class PromptFilter
 {
-    public static FlightSearchCriteria PromptFlightFilter()
+    public static FlightSearchCriteria PromptFlightFilter(string exitOptionMessage = "Show Results")
     {
         var criteria = new FlightSearchCriteria();
         PromptMenu.ActionMenu("--- Flight Search Options ---", [
@@ -12,7 +12,7 @@ public static class PromptFilter
             ("Add Departure Date Filter", Action2),
             ("Add Departure Airport Filter", Action3),
             ("Add Arrival Airport Filter", Action4)
-        ], "Show Results");
+        ], exitOptionMessage);
         return criteria;
 
         void Action1()
@@ -24,5 +24,23 @@ public static class PromptFilter
         void Action2() => criteria.DepartureDate = PromptCriteria.DateCriteria();
         void Action3() => criteria.DepartureAirport = PromptCriteria.AirportCriteria();
         void Action4() => criteria.ArrivalAirport = PromptCriteria.AirportCriteria();
+    }
+
+    public static BookingSearchCriteria PromptBookingFilter()
+    {
+        var criteria = new BookingSearchCriteria();
+        PromptMenu.ActionMenu("--- Booking Search Options ---", [
+            ("Specify Passenger ID", Action1),
+            ("Add Flight Filters", Action2),
+        ], "Show Results");
+        return criteria;
+
+        void Action1()
+        {
+            PromptHelper.TryPromptForInput("Enter Passenger ID:  ", int.Parse, out var id);
+            criteria.PassengerId = id;
+        }
+
+        void Action2() => criteria.Flight = PromptFlightFilter("Go Back");
     }
 }
