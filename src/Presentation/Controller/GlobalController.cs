@@ -13,6 +13,6 @@ public class GlobalController(IServiceProvider serviceProvider)
     {
         var flightCriteria = PromptFilter.PromptFlightFilter();
         var flights = GlobalService.SearchFlights(flightCriteria);
-        Display.Items(flights.Items);
+        Display.SearchResult(flights);
     }
 }
