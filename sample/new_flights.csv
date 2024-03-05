@@ -1,0 +1,16 @@
+Id,DepartureDate,DepartureAirportId,ArrivalAirportId,ClassPrices
+11,2024-03-05 10:00,1,3,Economy:200.50;Business:500.00;FirstClass:800.00
+12,2024-03-06 15:30,2,3,Economy:150.00;Business:450.00;FirstClass:700.00
+13,2024-03-07 20:45,7,4,Economy:180.75;Business:550.25;FirstClass:950.50
+14,2024-03-18 09:00,5,1,Economy:220.00;Business:560.00;FirstClass:1100.00
+15,2024-03-19 12:00,6,2,Economy:250.00;Business:600.00;FirstClass:1150.00
+13,2024-03-07 20:45,7,4,Economy:180.75;Business:550.25;FirstClass:950.50
+16,24-03-10 18:30,8,3,Economy:300.00;Business:650.00;FirstClass:1200.00
+17,2024-03-11 22:15,9,4,Economy:320.00,Business:700.00,FirstClass:1250.00
+18,2024-03-12 05:45,,5,Economy:350.00;Business:750.00;FirstClass:1300.00
+19,2024-03-13 14:30,1,6,Economy;Business:800.00;FirstClass:1350.00
+20,2024-03-14 16:00,2,7,Economy:400.00;Business:850.00;FirstClass
+21,2024-03-15 19:45,3,8,Economy:420.00;Business:900.00;FirstClass:1450.00
+22,2024-03-16 23:30,4,9,Economy:450.00;Business:950.00;First:1500.00
+23,2024-03-17 07:00,5,10,Economy:470.00;Business:1000.00;FirstClass:1550.00
+24,2024-03-20 08:00,11,12,Economy:480.00;Business:1050.00;FirstClass:1600.00
