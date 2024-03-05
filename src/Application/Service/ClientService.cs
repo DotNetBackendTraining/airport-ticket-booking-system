@@ -24,6 +24,25 @@ public class ClientService(
             Items: bookings);
     }
 
+    public OperationResult<Booking> AddBooking(Booking booking)
+    {
+        try
+        {
+            BookingRepository.Add(booking);
+            return new OperationResult<Booking>(
+                Success: true,
+                Message: "Booking creation completed successfully",
+                Item: booking);
+        }
+        catch (SystemException e)
+        {
+            return new OperationResult<Booking>(
+                Success: false,
+                Message: "Booking creation failed:  " + e.Message,
+                Item: booking);
+        }
+    }
+
     public OperationResult<Booking> UpdateBooking(Booking updatedBooking)
     {
         try

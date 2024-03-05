@@ -16,6 +16,13 @@ public interface IClientService
     public SearchResult<Booking> GetAllBookings(int passengerId);
 
     /// <summary>
+    /// Adds a new booking to the system.
+    /// </summary>
+    /// <param name="booking">The booking to add.</param>
+    /// <returns>An OperationResult corresponding to the addition operation of the booking.</returns>
+    public OperationResult<Booking> AddBooking(Booking booking);
+
+    /// <summary>
     /// Updates an existing flight booking for a passenger.
     /// The booking to be updated is identified by ID fields within the updatedBooking parameter.
     /// </summary>
