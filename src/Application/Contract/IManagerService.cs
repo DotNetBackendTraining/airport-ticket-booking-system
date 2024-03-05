@@ -41,4 +41,11 @@ public interface IManagerService
     /// An enumerable of <see cref="Type"/> objects representing each domain class in the system.
     /// </returns>
     public IEnumerable<Type> GetDomainEntities();
+
+    /// <summary>
+    /// Generates a report listing properties and their attributes for a given type.
+    /// </summary>
+    /// <param name="type">The type to report on.</param>
+    /// <returns>A formatted string report detailing each property of the specified type and its associated attributes.</returns>
+    public string ReportConstraints(Type type);
 }

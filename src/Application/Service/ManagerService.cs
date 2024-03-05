@@ -56,4 +56,7 @@ public class ManagerService(
     public IEnumerable<Type> GetDomainEntities() =>
         ReflectionService.GetClassTypesInNamespace("AirportTicketBookingSystem.Domain")
             .Where(type => typeof(IEntity).IsAssignableFrom(type));
+
+    public string ReportConstraints(Type type) =>
+        ReflectionService.ReportPropertiesWithAttributes(type);
 }
