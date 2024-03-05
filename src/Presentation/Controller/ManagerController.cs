@@ -1,9 +1,8 @@
 namespace AirportTicketBookingSystem.Presentation.Controller;
 
 public class ManagerController(IServiceProvider serviceProvider)
+    : GlobalController(serviceProvider)
 {
-    private IServiceProvider Provider { get; } = serviceProvider;
-
     public void Start()
     {
     }
