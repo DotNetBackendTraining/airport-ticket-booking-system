@@ -62,20 +62,23 @@ public class ClientService(
         }
     }
 
-    public OperationResult<Booking> CancelBooking(int flightId, int passengerId)
+    public OperationResult<Booking> CancelBooking(Booking cancelledBooking)
     {
-        var booking = BookingRepository.GetById(flightId, passengerId);
-        if (booking == null)
+        try
+        {
+            BookingRepository.Delete(cancelledBooking);
+            return new OperationResult<Booking>(
+                Success: true,
+                Message: "Booking delete completed successfully",
+                Item: cancelledBooking);
+        }
+        catch (KeyNotFoundException e)
+        {
             return new OperationResult<Booking>(
                 Success: false,
-                Message: "Booking cancellation failed:  Booking not found in the system",
-                Item: null);
-
-        BookingRepository.Delete(booking);
-        return new OperationResult<Booking>(
-            Success: true,
-            Message: "Booking update completed successfully",
-            Item: booking);
+                Message: "Booking delete failed:  " + e.Message,
+                Item: cancelledBooking);
+        }
     }
 
     public bool AuthenticatePassenger(int passengerId) =>

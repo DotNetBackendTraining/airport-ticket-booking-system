@@ -33,10 +33,9 @@ public interface IClientService
     /// <summary>
     /// Cancels a flight booking for the passenger.
     /// </summary>
-    /// <param name="flightId">The ID of the flight to cancel.</param>
-    /// <param name="passengerId">The ID of the passenger canceling the booking.</param>
+    /// <param name="cancelledBooking">The cancelled booking information containing the changes.</param>
     /// <returns>An OperationResult indicating whether the cancellation was successful, including a message.</returns>
-    public OperationResult<Booking> CancelBooking(int flightId, int passengerId);
+    public OperationResult<Booking> CancelBooking(Booking cancelledBooking);
 
     /// <summary>
     /// Checks if the passenger is registered within the system.
