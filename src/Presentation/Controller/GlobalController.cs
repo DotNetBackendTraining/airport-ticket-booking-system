@@ -1,4 +1,5 @@
 using AirportTicketBookingSystem.Application.Contract;
+using AirportTicketBookingSystem.Domain.Criteria.Search;
 using AirportTicketBookingSystem.Presentation.Utility;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,5 +15,12 @@ public class GlobalController(IServiceProvider serviceProvider)
         var flightCriteria = PromptFilter.PromptFlightFilter();
         var flights = GlobalService.SearchFlights(flightCriteria);
         Display.SearchResult(flights);
+    }
+
+    protected void SearchAirports()
+    {
+        var criteria = PromptCriteria.AirportCriteria() ?? new AirportSearchCriteria();
+        var airports = GlobalService.SearchAirports(criteria);
+        Display.SearchResult(airports);
     }
 }

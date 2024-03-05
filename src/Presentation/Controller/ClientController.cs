@@ -29,6 +29,7 @@ public class ClientController(IServiceProvider serviceProvider)
         Console.WriteLine($"--- Logged In With ID: {PassengerId} ---");
         PromptMenu.ActionMenu("Welcome to the Airport Ticket Booking System!", [
             ("Search for Flights", SearchFlights),
+            ("Search for Airports", SearchAirports),
             ("Book a Flight", BookFlight),
             ("Manage Bookings", ManageBookings)
         ]);

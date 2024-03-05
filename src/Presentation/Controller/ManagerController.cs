@@ -14,6 +14,7 @@ public class ManagerController(IServiceProvider serviceProvider)
         PromptMenu.ActionMenu("Welcome to the Airport Ticket Booking System!", [
             ("Search for Bookings", SearchBookings),
             ("Search for Flights", SearchFlights),
+            ("Search for Airports", SearchAirports),
             ("Import Flights from a File", ImportFlights),
             ("Print Validation Constraints", PrintValidations)
         ]);
