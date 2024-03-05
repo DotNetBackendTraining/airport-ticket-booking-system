@@ -7,10 +7,13 @@ using AirportTicketBookingSystem.Domain.Repository;
 namespace AirportTicketBookingSystem.Application.Service;
 
 public class ClientService(
-    IBookingRepository bookingRepository
+    IBookingRepository bookingRepository,
+    IPassengerRepository passengerRepository
 ) : IClientService
 {
     private IBookingRepository BookingRepository { get; } = bookingRepository;
+
+    private IPassengerRepository PassengerRepository { get; } = passengerRepository;
 
     public SearchResult<Booking> GetAllBookings(int passengerId)
     {
@@ -55,4 +58,7 @@ public class ClientService(
             Message: "Booking update completed successfully",
             Item: booking);
     }
+
+    public bool AuthenticatePassenger(int passengerId) =>
+        PassengerRepository.GetById(passengerId) != null;
 }

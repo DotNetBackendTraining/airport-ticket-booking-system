@@ -30,4 +30,11 @@ public interface IClientService
     /// <param name="passengerId">The ID of the passenger canceling the booking.</param>
     /// <returns>An OperationResult indicating whether the cancellation was successful, including a message.</returns>
     public OperationResult<Booking> CancelBooking(int flightId, int passengerId);
+
+    /// <summary>
+    /// Checks if the passenger is registered within the system.
+    /// </summary>
+    /// <param name="passengerId">The ID of the passenger to check.</param>
+    /// <returns>Whether the passenger is found in the system.</returns>
+    public bool AuthenticatePassenger(int passengerId);
 }
