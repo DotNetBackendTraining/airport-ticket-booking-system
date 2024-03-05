@@ -33,4 +33,12 @@ public interface IManagerService
     /// </returns>
     /// <exception cref="FileNotFoundException">Thrown if the file specified by <paramref name="filepath"/> does not exist.</exception>
     public IEnumerable<OperationResult<Flight>> BatchUploadFlights(string filepath);
+
+    /// <summary>
+    /// Retrieves a collection of all domain entities available in the system.
+    /// </summary>
+    /// <returns>
+    /// An enumerable of <see cref="Type"/> objects representing each domain class in the system.
+    /// </returns>
+    public IEnumerable<Type> GetDomainEntities();
 }

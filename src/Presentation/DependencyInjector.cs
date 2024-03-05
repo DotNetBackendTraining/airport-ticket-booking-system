@@ -76,6 +76,7 @@ public static class DependencyInjector
     {
         services.AddSingleton<IGlobalService, GlobalService>();
         services.AddSingleton<IUploadService<Flight>, CsvUploadService<Flight>>();
+        services.AddSingleton<IReflectionService, ReflectionService>();
         services.AddSingleton<IManagerService, ManagerService>();
     }
 
