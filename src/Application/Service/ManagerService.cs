@@ -8,12 +8,15 @@ namespace AirportTicketBookingSystem.Application.Service;
 
 public class ManagerService(
     IBookingRepository bookingRepository,
-    IFlightRepository flightRepository
+    IFlightRepository flightRepository,
+    IUploadService<Flight> flightUploadService
 ) : IManagerService
 {
     private IBookingRepository BookingRepository { get; } = bookingRepository;
 
     private IFlightRepository FlightRepository { get; } = flightRepository;
+
+    private IUploadService<Flight> FlightUploadService { get; } = flightUploadService;
 
     public SearchResult<Booking> SearchBookings(BookingSearchCriteria criteria)
     {
@@ -42,4 +45,7 @@ public class ManagerService(
                 Item: flight);
         }
     }
+
+    public IEnumerable<OperationResult<Flight>> BatchUploadFlights(string filepath) =>
+        FlightUploadService.BatchUpload(filepath);
 }

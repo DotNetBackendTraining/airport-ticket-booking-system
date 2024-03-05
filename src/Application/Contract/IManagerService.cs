@@ -22,4 +22,15 @@ public interface IManagerService
     /// <param name="flight">The flight to add.</param>
     /// <returns>An OperationResult corresponding to the addition operation of the flight.</returns>
     public OperationResult<Flight> AddFlight(Flight flight);
+
+    /// <summary>
+    /// Uploads a batch of <see cref="Flight"/> entities from a specified file.
+    /// </summary>
+    /// <param name="filepath">The path to the file containing flight data to be uploaded.</param>
+    /// <returns>
+    /// An enumerable of <see cref="OperationResult{Flight}"/>, representing the result of each flight upload operation.
+    /// Each result includes the flight entity, a success flag, and an optional error message if the upload failed.
+    /// </returns>
+    /// <exception cref="FileNotFoundException">Thrown if the file specified by <paramref name="filepath"/> does not exist.</exception>
+    public IEnumerable<OperationResult<Flight>> BatchUploadFlights(string filepath);
 }
