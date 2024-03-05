@@ -1,10 +1,10 @@
 ﻿using AirportTicketBookingSystem.Presentation;
 using AirportTicketBookingSystem.Presentation.Controller;
+using AirportTicketBookingSystem.Presentation.Utility;
 
 LoadEnvVariables();
 
-Console.WriteLine("Do You Want to Enter Manager Mode ? (y/n)");
-if (Console.ReadLine() == "y")
+if (PromptHelper.PromptYesNo("Do You Want to Enter Manager Mode (y/n):  "))
 {
     var provider = DependencyInjector.CreateManagerServiceProvider();
     new ManagerController(provider).Start();
