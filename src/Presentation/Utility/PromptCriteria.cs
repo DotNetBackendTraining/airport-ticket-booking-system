@@ -21,14 +21,6 @@ public static class PromptCriteria
         return criteria;
     }
 
-    public static FlightClass? FlightClass()
-    {
-        const string message = "Enter flight class (Economy, Business, FirstClass) or press Enter to skip: ";
-        if (!PromptHelper.TryPromptForInput(message, Enum.Parse<FlightClass>, out var flightClass))
-            return null;
-        return flightClass;
-    }
-
     public static List<FlightClassCriteria> FlightClassCriteriaList()
     {
         var flightClassCriteriaList = new List<FlightClassCriteria>();
@@ -37,7 +29,7 @@ public static class PromptCriteria
         while (addMore)
         {
             Console.WriteLine("\n--- Add Flight Class Criteria ---");
-            var flightClass = FlightClass();
+            var flightClass = PromptDomain.FlightClass();
             if (flightClass == null) break;
 
             var hasMaxPrice = PromptHelper.TryPromptForInput(
