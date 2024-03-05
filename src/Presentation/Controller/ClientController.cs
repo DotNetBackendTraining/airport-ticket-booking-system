@@ -1,4 +1,6 @@
+using System.ComponentModel.DataAnnotations;
 using AirportTicketBookingSystem.Application.Contract;
+using AirportTicketBookingSystem.Domain;
 using AirportTicketBookingSystem.Presentation.Utility;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -34,11 +36,25 @@ public class ClientController(IServiceProvider serviceProvider)
 
     private void BookFlight()
     {
-        throw new NotImplementedException();
+        var res = PromptHelper.TryPromptForInput("Enter Flight ID:  ", int.Parse, out var flightId);
+        if (!res) return;
+        var flightClass = PromptDomain.FlightClass();
+        if (flightClass == null) return;
+
+        try
+        {
+            var booking = Booking.Create(flightId, PassengerId, flightClass.Value);
+            var result = ClientService.AddBooking(booking);
+            Display.OperationResult(result);
+        }
+        catch (ValidationException e)
+        {
+            Console.WriteLine("Booking creation failed:  " + e.Message);
+        }
     }
 
     private void ManageBookings()
     {
-        throw new NotImplementedException();
+        Display.SearchResult(ClientService.GetAllBookings(PassengerId));
     }
 }
