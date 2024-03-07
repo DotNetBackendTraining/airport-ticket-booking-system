@@ -1,18 +1,19 @@
 using AirportTicketBookingSystem.Domain.Criteria.Search;
+using AirportTicketBookingSystem.Presentation.MenuSystem;
 
 namespace AirportTicketBookingSystem.Presentation.Utility;
 
 public static class PromptFilter
 {
-    public static FlightSearchCriteria PromptFlightFilter(string exitOptionMessage = "Show Results")
+    public static FlightSearchCriteria PromptFlightFilter(string returnMessage = "Show Results")
     {
         var criteria = new FlightSearchCriteria();
-        PromptMenu.ActionMenu("--- Flight Search Options ---", [
-            ("Add Flight Class Filter", Action1),
-            ("Add Departure Date Filter", Action2),
-            ("Add Departure Airport Filter", Action3),
-            ("Add Arrival Airport Filter", Action4)
-        ], exitOptionMessage);
+        var menu = new Menu("--- Flight Search Options ---", returnMessage)
+            .AddItem(new MenuItem("Add Flight Class Filter", Action1))
+            .AddItem(new MenuItem("Add Departure Date Filter", Action2))
+            .AddItem(new MenuItem("Add Departure Airport Filter", Action3))
+            .AddItem(new MenuItem("Add Arrival Airport Filter", Action4));
+        menu.Invoke();
         return criteria;
 
         void Action1()
@@ -29,10 +30,10 @@ public static class PromptFilter
     public static BookingSearchCriteria PromptBookingFilter()
     {
         var criteria = new BookingSearchCriteria();
-        PromptMenu.ActionMenu("--- Booking Search Options ---", [
-            ("Specify Passenger ID", Action1),
-            ("Add Flight Filters", Action2),
-        ], "Show Results");
+        var menu = new Menu("--- Booking Search Options ---", "Show Results")
+            .AddItem(new MenuItem("Specify Passenger ID", Action1))
+            .AddItem(new MenuItem("Add Flight Filters", Action2));
+        menu.Invoke();
         return criteria;
 
         void Action1()

@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using AirportTicketBookingSystem.Application.Contract;
 using AirportTicketBookingSystem.Domain;
+using AirportTicketBookingSystem.Presentation.MenuSystem;
 using AirportTicketBookingSystem.Presentation.Utility;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -27,12 +28,12 @@ public class ClientController(IServiceProvider serviceProvider)
     public void Start()
     {
         Console.WriteLine($"--- Logged In With ID: {PassengerId} ---");
-        PromptMenu.ActionMenu("Welcome to the Airport Ticket Booking System!", [
-            ("Search for Flights", SearchFlights),
-            ("Search for Airports", SearchAirports),
-            ("Book a Flight", BookFlight),
-            ("Manage Bookings", ManageBookings)
-        ]);
+        var menu = new Menu("Welcome to the Airport Ticket Booking System!", "Exit")
+            .AddItem(new MenuItem("Search for Flights", SearchFlights))
+            .AddItem(new MenuItem("Search for Airports", SearchAirports))
+            .AddItem(new MenuItem("Book a Flight", BookFlight))
+            .AddItem(ManageBookingsMenu());
+        menu.Invoke();
     }
 
     private void BookFlight()
@@ -54,14 +55,13 @@ public class ClientController(IServiceProvider serviceProvider)
         }
     }
 
-    private void ManageBookings()
+    private Menu ManageBookingsMenu()
     {
-        PromptMenu.ActionMenu("Bookings Actions", [
-            ("Show All Bookings", ShowBookings),
-            ("Create Booking", BookFlight),
-            ("Modify Booking", ModifyBooking),
-            ("Cancel Booking", CancelBooking)
-        ], "Go Back");
+        return new Menu("Bookings Actions")
+            .AddItem(new MenuItem("Show All Bookings", ShowBookings))
+            .AddItem(new MenuItem("Create Booking", BookFlight))
+            .AddItem(new MenuItem("Modify Booking", ModifyBooking))
+            .AddItem(new MenuItem("Cancel Booking", CancelBooking));
     }
 
     private void ShowBookings() =>

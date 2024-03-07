@@ -1,5 +1,6 @@
 using AirportTicketBookingSystem.Application.Contract;
 using AirportTicketBookingSystem.Domain;
+using AirportTicketBookingSystem.Presentation.MenuSystem;
 using AirportTicketBookingSystem.Presentation.Utility;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,13 +13,13 @@ public class ManagerController(IServiceProvider serviceProvider)
 
     public void Start()
     {
-        PromptMenu.ActionMenu("Welcome to the Airport Ticket Booking System!", [
-            ("Search for Bookings", SearchBookings),
-            ("Search for Flights", SearchFlights),
-            ("Search for Airports", SearchAirports),
-            ("Import Flights from a File", ImportFlights),
-            ("Print Validation Constraints", PrintValidations)
-        ]);
+        var menu = new Menu("Welcome to the Airport Ticket Booking System!", "Exit")
+            .AddItem(new MenuItem("Search for Bookings", SearchBookings))
+            .AddItem(new MenuItem("Search for Flights", SearchFlights))
+            .AddItem(new MenuItem("Search for Airports", SearchAirports))
+            .AddItem(new MenuItem("Import Flights from a File", ImportFlights))
+            .AddItem(PrintValidationsMenu());
+        menu.Invoke();
     }
 
     private void SearchBookings()
@@ -53,16 +54,15 @@ public class ManagerController(IServiceProvider serviceProvider)
         }
     }
 
-    private void PrintValidations()
+    private Menu PrintValidationsMenu()
     {
-        var types = ManagerService.GetDomainEntities();
-        var menuOptions = types.Select(type =>
+        var menu = new Menu("Available Models in the System");
+        foreach (var type in ManagerService.GetDomainEntities())
         {
-            return (type.Name, (Action)PrintReport);
+            menu.AddItem(new MenuItem(
+                type.Name, () => Console.WriteLine(ManagerService.ReportConstraints(type))));
+        }
 
-            void PrintReport() => Console.WriteLine(ManagerService.ReportConstraints(type));
-        });
-
-        PromptMenu.ActionMenu("Available Models in the System", menuOptions.ToList(), "Go Back");
+        return menu;
     }
 }
