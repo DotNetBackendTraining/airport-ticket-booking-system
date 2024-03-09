@@ -2,7 +2,7 @@ using AirportTicketBookingSystem.Application.Result;
 using AirportTicketBookingSystem.Domain;
 using AirportTicketBookingSystem.Domain.Criteria.Search;
 
-namespace AirportTicketBookingSystem.Application.Interfaces;
+namespace AirportTicketBookingSystem.Application.Contract;
 
 /// <summary>
 /// Defines the service operations available to managers, including functionality for searching bookings.

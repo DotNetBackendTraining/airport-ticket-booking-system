@@ -1,4 +1,4 @@
-namespace AirportTicketBookingSystem.Application.Interfaces;
+namespace AirportTicketBookingSystem.Application.Contract;
 
 /// <summary>
 /// Provides services for reflecting over types and properties within the application.

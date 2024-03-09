@@ -1,7 +1,7 @@
-using AirportTicketBookingSystem.Application.Interfaces;
+using AirportTicketBookingSystem.Application.Contract;
 using AirportTicketBookingSystem.Application.Services;
 using AirportTicketBookingSystem.Domain;
-using AirportTicketBookingSystem.Domain.Interfaces;
+using AirportTicketBookingSystem.Domain.Contract;
 using AirportTicketBookingSystem.Domain.Repository;
 using AirportTicketBookingSystem.Infrastructure.Converter;
 using AirportTicketBookingSystem.Infrastructure.Repository;

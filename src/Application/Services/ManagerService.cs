@@ -1,8 +1,8 @@
-using AirportTicketBookingSystem.Application.Interfaces;
+using AirportTicketBookingSystem.Application.Contract;
 using AirportTicketBookingSystem.Application.Result;
 using AirportTicketBookingSystem.Domain;
+using AirportTicketBookingSystem.Domain.Contract;
 using AirportTicketBookingSystem.Domain.Criteria.Search;
-using AirportTicketBookingSystem.Domain.Interfaces;
 using AirportTicketBookingSystem.Domain.Repository;
 
 namespace AirportTicketBookingSystem.Application.Services;

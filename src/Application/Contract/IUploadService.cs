@@ -1,7 +1,7 @@
 using AirportTicketBookingSystem.Application.Result;
-using AirportTicketBookingSystem.Domain.Interfaces;
+using AirportTicketBookingSystem.Domain.Contract;
 
-namespace AirportTicketBookingSystem.Application.Interfaces;
+namespace AirportTicketBookingSystem.Application.Contract;
 
 /// <summary>
 /// Responsible for uploading entities of type <typeparamref name="TEntity"/>.

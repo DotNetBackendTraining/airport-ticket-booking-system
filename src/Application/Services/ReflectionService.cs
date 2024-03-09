@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using System.Text;
-using AirportTicketBookingSystem.Application.Interfaces;
+using AirportTicketBookingSystem.Application.Contract;
 
 namespace AirportTicketBookingSystem.Application.Services;
 
