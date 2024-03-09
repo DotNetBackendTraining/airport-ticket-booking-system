@@ -1,14 +1,20 @@
-using AirportTicketBookingSystem.Application.Contract;
+using AirportTicketBookingSystem.Application.Interfaces;
 using AirportTicketBookingSystem.Domain.Criteria.Search;
 using AirportTicketBookingSystem.Presentation.Utility;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AirportTicketBookingSystem.Presentation.Controller;
 
-public class GlobalController(IServiceProvider serviceProvider)
+public class GlobalController
 {
-    protected IServiceProvider Provider { get; } = serviceProvider;
-    protected IGlobalService GlobalService => Provider.GetRequiredService<IGlobalService>();
+    protected readonly IServiceProvider Provider;
+
+    protected GlobalController(IServiceProvider provider)
+    {
+        Provider = provider;
+    }
+
+    private IGlobalService GlobalService => Provider.GetRequiredService<IGlobalService>();
 
     protected void SearchFlights()
     {

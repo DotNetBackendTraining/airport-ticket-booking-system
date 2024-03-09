@@ -1,30 +1,34 @@
-using AirportTicketBookingSystem.Application.Contract;
+using AirportTicketBookingSystem.Application.Interfaces;
 using AirportTicketBookingSystem.Application.Result;
 using AirportTicketBookingSystem.Domain;
-using AirportTicketBookingSystem.Domain.Contract;
 using AirportTicketBookingSystem.Domain.Criteria.Search;
+using AirportTicketBookingSystem.Domain.Interfaces;
 using AirportTicketBookingSystem.Domain.Repository;
 
-namespace AirportTicketBookingSystem.Application.Service;
+namespace AirportTicketBookingSystem.Application.Services;
 
-public class ManagerService(
-    IBookingRepository bookingRepository,
-    IFlightRepository flightRepository,
-    IUploadService<Flight> flightUploadService,
-    IReflectionService reflectionService
-) : IManagerService
+public class ManagerService : IManagerService
 {
-    private IBookingRepository BookingRepository { get; } = bookingRepository;
-
-    private IFlightRepository FlightRepository { get; } = flightRepository;
-
-    private IUploadService<Flight> FlightUploadService { get; } = flightUploadService;
-
-    private IReflectionService ReflectionService { get; } = reflectionService;
+    private readonly IBookingRepository _bookingRepository;
+    private readonly IFlightRepository _flightRepository;
+    private readonly IUploadService<Flight> _flightUploadService;
+    private readonly IReflectionService _reflectionService;
+    
+    public ManagerService(
+        IBookingRepository bookingRepository,
+        IFlightRepository flightRepository,
+        IUploadService<Flight> flightUploadService,
+        IReflectionService reflectionService)
+    {
+        _bookingRepository = bookingRepository;
+        _flightRepository = flightRepository;
+        _flightUploadService = flightUploadService;
+        _reflectionService = reflectionService;
+    }
 
     public SearchResult<Booking> SearchBookings(BookingSearchCriteria criteria)
     {
-        var bookings = BookingRepository.Search(criteria);
+        var bookings = _bookingRepository.Search(criteria);
         return new SearchResult<Booking>(
             Success: true,
             Message: "Bookings search completed successfully",
@@ -35,7 +39,7 @@ public class ManagerService(
     {
         try
         {
-            FlightRepository.Add(flight);
+            _flightRepository.Add(flight);
             return new OperationResult<Flight>(
                 Success: true,
                 Message: "Flight creation completed successfully",
@@ -51,12 +55,12 @@ public class ManagerService(
     }
 
     public IEnumerable<OperationResult<Flight>> BatchUploadFlights(string filepath) =>
-        FlightUploadService.BatchUpload(filepath);
+        _flightUploadService.BatchUpload(filepath);
 
     public IEnumerable<Type> GetDomainEntities() =>
-        ReflectionService.GetClassTypesInNamespace("AirportTicketBookingSystem.Domain")
+        _reflectionService.GetClassTypesInNamespace("AirportTicketBookingSystem.Domain")
             .Where(type => typeof(IEntity).IsAssignableFrom(type));
 
     public string ReportConstraints(Type type) =>
-        ReflectionService.ReportPropertiesWithAttributes(type);
+        _reflectionService.ReportPropertiesWithAttributes(type);
 }

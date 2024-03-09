@@ -1,38 +1,40 @@
 using AirportTicketBookingSystem.Domain;
-using AirportTicketBookingSystem.Domain.Contract;
 using AirportTicketBookingSystem.Domain.Criteria;
 using AirportTicketBookingSystem.Domain.Criteria.Search;
+using AirportTicketBookingSystem.Domain.Interfaces;
 using AirportTicketBookingSystem.Domain.Repository;
 
 namespace AirportTicketBookingSystem.Infrastructure.Repository;
 
-public class FlightRepository(
-    ISimpleDatabaseService<Flight> databaseService,
-    IAirportRepository airportRepository
-) : IFlightRepository
+public class FlightRepository : IFlightRepository
 {
-    private ISimpleDatabaseService<Flight> DatabaseService { get; } = databaseService;
-
-    private IAirportRepository AirportRepository { get; } = airportRepository;
+    private readonly ISimpleDatabaseService<Flight> _databaseService;
+    private readonly IAirportRepository _airportRepository;
+    
+    public FlightRepository(ISimpleDatabaseService<Flight> databaseService, IAirportRepository airportRepository)
+    {
+        _databaseService = databaseService;
+        _airportRepository = airportRepository;
+    }
 
     public void Add(Flight flight)
     {
         foreach (var id in new[] { flight.DepartureAirportId, flight.ArrivalAirportId })
-            if (AirportRepository.GetById(id) == null)
+            if (_airportRepository.GetById(id) == null)
                 throw new InvalidOperationException($"Airport with ID '{id}' was not found in the repository");
-        DatabaseService.Add(flight);
+        _databaseService.Add(flight);
     }
 
     public Flight? GetById(int flightId)
     {
-        return DatabaseService
+        return _databaseService
             .GetAll()
             .FirstOrDefault(f => f.Id == flightId);
     }
 
     public IEnumerable<Flight> Search(FlightSearchCriteria criteria)
     {
-        return Filter(DatabaseService.GetAll(), criteria);
+        return Filter(_databaseService.GetAll(), criteria);
     }
 
     public IEnumerable<Flight> Filter(IEnumerable<Flight> flights, FlightSearchCriteria criteria)
@@ -67,7 +69,8 @@ public class FlightRepository(
 
     private bool MatchesAirport(string airportId, AirportSearchCriteria airportCriteria)
     {
-        var airport = AirportRepository.GetById(airportId);
-        return AirportRepository.Filter([airport], airportCriteria).Any();
+        var airport = _airportRepository.GetById(airportId);
+        return airport != null && 
+               _airportRepository.Filter(new List<Airport>{airport}, airportCriteria).Any();
     }
 }

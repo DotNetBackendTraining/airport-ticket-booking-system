@@ -1,7 +1,7 @@
 using AirportTicketBookingSystem.Application.Result;
 using AirportTicketBookingSystem.Domain;
 
-namespace AirportTicketBookingSystem.Application.Contract;
+namespace AirportTicketBookingSystem.Application.Interfaces;
 
 /// <summary>
 /// Defines the service operations available to clients
@@ -42,5 +42,5 @@ public interface IClientService
     /// </summary>
     /// <param name="passengerId">The ID of the passenger to check.</param>
     /// <returns>Whether the passenger is found in the system.</returns>
-    public bool AuthenticatePassenger(int passengerId);
+    public bool IsRegisteredPassenger(int passengerId);
 }

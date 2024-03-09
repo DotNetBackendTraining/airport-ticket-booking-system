@@ -1,23 +1,28 @@
-using AirportTicketBookingSystem.Application.Contract;
+using AirportTicketBookingSystem.Application.Interfaces;
 using AirportTicketBookingSystem.Application.Result;
 using AirportTicketBookingSystem.Domain;
 using AirportTicketBookingSystem.Domain.Criteria.Search;
 using AirportTicketBookingSystem.Domain.Repository;
 
-namespace AirportTicketBookingSystem.Application.Service;
+namespace AirportTicketBookingSystem.Application.Services;
 
-public class ClientService(
-    IBookingRepository bookingRepository,
-    IPassengerRepository passengerRepository
-) : IClientService
+public class ClientService : IClientService
 {
-    private IBookingRepository BookingRepository { get; } = bookingRepository;
-
-    private IPassengerRepository PassengerRepository { get; } = passengerRepository;
+    private readonly IBookingRepository _bookingRepository;
+    private readonly IPassengerRepository _passengerRepository;
+    
+    public ClientService(
+        IBookingRepository bookingRepository,
+        IPassengerRepository passengerRepository
+    )
+    {
+        _bookingRepository = bookingRepository;
+        _passengerRepository = passengerRepository;
+    }
 
     public SearchResult<Booking> GetAllBookings(int passengerId)
     {
-        var bookings = BookingRepository.Search(new BookingSearchCriteria { PassengerId = passengerId });
+        var bookings = _bookingRepository.Search(new BookingSearchCriteria { PassengerId = passengerId });
         return new SearchResult<Booking>(
             Success: true,
             Message: "Bookings search completed successfully",
@@ -28,7 +33,7 @@ public class ClientService(
     {
         try
         {
-            BookingRepository.Add(booking);
+            _bookingRepository.Add(booking);
             return new OperationResult<Booking>(
                 Success: true,
                 Message: "Booking creation completed successfully",
@@ -47,7 +52,7 @@ public class ClientService(
     {
         try
         {
-            BookingRepository.Update(updatedBooking);
+            _bookingRepository.Update(updatedBooking);
             return new OperationResult<Booking>(
                 Success: true,
                 Message: "Booking update completed successfully",
@@ -66,7 +71,7 @@ public class ClientService(
     {
         try
         {
-            BookingRepository.Delete(cancelledBooking);
+            _bookingRepository.Delete(cancelledBooking);
             return new OperationResult<Booking>(
                 Success: true,
                 Message: "Booking delete completed successfully",
@@ -81,6 +86,6 @@ public class ClientService(
         }
     }
 
-    public bool AuthenticatePassenger(int passengerId) =>
-        PassengerRepository.GetById(passengerId) != null;
+    public bool IsRegisteredPassenger(int passengerId) =>
+        _passengerRepository.GetById(passengerId) != null;
 }

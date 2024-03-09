@@ -1,4 +1,4 @@
-using AirportTicketBookingSystem.Application.Contract;
+using AirportTicketBookingSystem.Application.Interfaces;
 using AirportTicketBookingSystem.Domain;
 using AirportTicketBookingSystem.Presentation.MenuSystem;
 using AirportTicketBookingSystem.Presentation.Utility;
@@ -6,10 +6,14 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace AirportTicketBookingSystem.Presentation.Controller;
 
-public class ManagerController(IServiceProvider serviceProvider)
-    : GlobalController(serviceProvider)
+public class ManagerController : GlobalController
 {
     private IManagerService ManagerService => Provider.GetRequiredService<IManagerService>();
+
+    public ManagerController(IServiceProvider provider) : base(provider)
+    {
+        
+    }
 
     public void Start()
     {

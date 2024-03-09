@@ -1,7 +1,11 @@
 namespace AirportTicketBookingSystem.Domain.Criteria;
 
-public class FlightClassCriteria(FlightClass flightClass)
+public class FlightClassCriteria
 {
-    public FlightClass Class { get; set; } = flightClass;
+    public FlightClassCriteria(FlightClass flightClass)
+    {
+        Class = flightClass;
+    }
+    public FlightClass Class { get; set; }
     public decimal? MaxPrice { get; set; }
 }

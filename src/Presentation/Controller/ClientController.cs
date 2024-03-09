@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using AirportTicketBookingSystem.Application.Contract;
+using AirportTicketBookingSystem.Application.Interfaces;
 using AirportTicketBookingSystem.Domain;
 using AirportTicketBookingSystem.Presentation.MenuSystem;
 using AirportTicketBookingSystem.Presentation.Utility;
@@ -7,18 +7,21 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace AirportTicketBookingSystem.Presentation.Controller;
 
-public class ClientController(IServiceProvider serviceProvider)
-    : GlobalController(serviceProvider)
+public class ClientController : GlobalController
 {
     private IClientService ClientService => Provider.GetRequiredService<IClientService>();
 
     private int? _passengerId;
     private int PassengerId => _passengerId ??= Authenticate();
+    
+    public ClientController(IServiceProvider provider) : base(provider)
+    {
+    }
 
     private int Authenticate()
     {
         var res = PromptHelper.TryPromptForInput("Please Enter Your Passenger ID:  ", int.Parse, out var id);
-        if (res && ClientService.AuthenticatePassenger(id)) return id;
+        if (res && ClientService.IsRegisteredPassenger(id)) return id;
 
         Console.WriteLine("You Can't Continue Without Your Passenger ID!");
         Environment.Exit(0);

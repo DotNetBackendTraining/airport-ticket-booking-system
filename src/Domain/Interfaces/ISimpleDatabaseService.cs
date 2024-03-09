@@ -1,4 +1,4 @@
-namespace AirportTicketBookingSystem.Domain.Contract;
+namespace AirportTicketBookingSystem.Domain.Interfaces;
 
 /// <summary>
 /// Represents a simplified database service for managing entities of type <typeparamref name="TEntity"/>.
@@ -11,8 +11,7 @@ namespace AirportTicketBookingSystem.Domain.Contract;
 /// you must manually ensure that all related entities are appropriately handled to maintain database integrity.
 /// </remarks>
 /// <typeparam name="TEntity">The type of the entity this service is responsible for.</typeparam>
-public interface ISimpleDatabaseService<TEntity>
-    where TEntity : IEntity
+public interface ISimpleDatabaseService<TEntity> where TEntity : IEntity
 {
     public IEnumerable<TEntity> GetAll();
 
@@ -48,5 +47,5 @@ public interface ISimpleDatabaseService<TEntity>
     public Task Delete(TEntity entity);
 
     [Obsolete("Method not implemented yet")]
-    public IEnumerable<Task> BatchAdd(IEnumerable<TEntity> entities) => [];
+    public IEnumerable<Task> BatchAdd(IEnumerable<TEntity> entities) => Enumerable.Empty<Task>();
 }

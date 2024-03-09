@@ -1,20 +1,24 @@
-using AirportTicketBookingSystem.Domain.Contract;
+using AirportTicketBookingSystem.Domain.Interfaces;
 
 namespace AirportTicketBookingSystem.Infrastructure.Service;
 
-public class SimpleDatabaseService<TEntity>(IFileService<TEntity> fileService)
-    : ISimpleDatabaseService<TEntity> where TEntity : IEntity
+public class SimpleDatabaseService<TEntity> : ISimpleDatabaseService<TEntity> where TEntity : IEntity
 {
-    private IFileService<TEntity> FileService { get; } = fileService;
+    private readonly IFileService<TEntity> _fileService;
 
-    public IEnumerable<TEntity> GetAll() => FileService.ReadAll();
+    public SimpleDatabaseService(IFileService<TEntity> fileService)
+    {
+        _fileService = fileService;
+    }
+
+    public IEnumerable<TEntity> GetAll() => _fileService.ReadAll();
 
     private bool Exists(TEntity entity) => GetAll().Any(e => e.Equals(entity));
 
     public async Task Add(TEntity entity)
     {
         if (Exists(entity)) throw new ArgumentException($"Entity {entity} already exists in the database");
-        await FileService.AppendAllAsync(Enumerable.Repeat(entity, 1));
+        await _fileService.AppendAllAsync(Enumerable.Repeat(entity, 1));
     }
 
     public async Task Update(TEntity newEntity)
@@ -23,7 +27,7 @@ public class SimpleDatabaseService<TEntity>(IFileService<TEntity> fileService)
             throw new KeyNotFoundException($"Entity {newEntity} was not found in the database");
         var cache = GetAll().ToList();
         var changes = cache.Select(e => e.Equals(newEntity) ? newEntity : e);
-        await FileService.WriteAllAsync(changes);
+        await _fileService.WriteAllAsync(changes);
     }
 
     public async Task Delete(TEntity entity)
@@ -32,6 +36,11 @@ public class SimpleDatabaseService<TEntity>(IFileService<TEntity> fileService)
             throw new KeyNotFoundException($"Entity {entity} was not found in the database");
         var cache = GetAll().ToList();
         var changes = cache.Where(e => !e.Equals(entity));
-        await FileService.WriteAllAsync(changes);
+        await _fileService.WriteAllAsync(changes);
+    }
+
+    public IEnumerable<Task> BatchAdd(IEnumerable<TEntity> entities)
+    {
+        throw new NotImplementedException();
     }
 }

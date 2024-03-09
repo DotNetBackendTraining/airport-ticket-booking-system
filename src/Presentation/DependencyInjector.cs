@@ -1,7 +1,7 @@
-using AirportTicketBookingSystem.Application.Contract;
-using AirportTicketBookingSystem.Application.Service;
+using AirportTicketBookingSystem.Application.Interfaces;
+using AirportTicketBookingSystem.Application.Services;
 using AirportTicketBookingSystem.Domain;
-using AirportTicketBookingSystem.Domain.Contract;
+using AirportTicketBookingSystem.Domain.Interfaces;
 using AirportTicketBookingSystem.Domain.Repository;
 using AirportTicketBookingSystem.Infrastructure.Converter;
 using AirportTicketBookingSystem.Infrastructure.Repository;
@@ -15,9 +15,7 @@ public static class DependencyInjector
     private static string GetVariableOrThrow(string envVariable)
     {
         var variable = Environment.GetEnvironmentVariable(envVariable);
-        if (variable == null)
-            throw new KeyNotFoundException($"Environment variable '{envVariable}' not found");
-        return variable;
+        return variable ?? throw new KeyNotFoundException($"Environment variable '{envVariable}' not found");
     }
 
     private static void InjectDatabaseServices(IServiceCollection services)

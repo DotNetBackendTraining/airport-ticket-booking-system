@@ -1,23 +1,25 @@
-using AirportTicketBookingSystem.Application.Contract;
+using AirportTicketBookingSystem.Application.Interfaces;
 using AirportTicketBookingSystem.Application.Result;
 using AirportTicketBookingSystem.Domain;
 using AirportTicketBookingSystem.Domain.Criteria.Search;
 using AirportTicketBookingSystem.Domain.Repository;
 
-namespace AirportTicketBookingSystem.Application.Service;
+namespace AirportTicketBookingSystem.Application.Services;
 
-public class GlobalService(
-    IFlightRepository flightRepository,
-    IAirportRepository airportRepository
-) : IGlobalService
+public class GlobalService : IGlobalService
 {
-    private IFlightRepository FlightRepository { get; } = flightRepository;
-
-    private IAirportRepository AirportRepository { get; } = airportRepository;
+    private readonly IFlightRepository _flightRepository;
+    private readonly IAirportRepository _airportRepository;
+    
+    public GlobalService(IFlightRepository flightRepository, IAirportRepository airportRepository)
+    {
+        _flightRepository = flightRepository;
+        _airportRepository = airportRepository;
+    }
 
     public SearchResult<Flight> SearchFlights(FlightSearchCriteria criteria)
     {
-        var flights = FlightRepository.Search(criteria);
+        var flights = _flightRepository.Search(criteria);
         return new SearchResult<Flight>(
             Success: true,
             Message: "Flights search completed successfully",
@@ -26,7 +28,7 @@ public class GlobalService(
 
     public SearchResult<Airport> SearchAirports(AirportSearchCriteria criteria)
     {
-        var airports = AirportRepository.Search(criteria);
+        var airports = _airportRepository.Search(criteria);
         return new SearchResult<Airport>(
             Success: true,
             Message: "Airports search completed successfully",

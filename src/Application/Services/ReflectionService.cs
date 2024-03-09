@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using System.Text;
-using AirportTicketBookingSystem.Application.Contract;
+using AirportTicketBookingSystem.Application.Interfaces;
 
-namespace AirportTicketBookingSystem.Application.Service;
+namespace AirportTicketBookingSystem.Application.Services;
 
 public class ReflectionService : IReflectionService
 {

@@ -1,34 +1,41 @@
 namespace AirportTicketBookingSystem.Presentation.MenuSystem;
 
-public class Menu(string name, string returnMessage = "Return") : IMenuItem
+public class Menu : IMenuItem
 {
-    public string Name { get; } = name;
-    private string ReturnMessage { get; } = returnMessage;
-    private List<IMenuItem> Items { get; } = [];
+    private readonly string _returnMessage;
+    private readonly List<IMenuItem> _items;
+    public string Name { get; set; }
 
+    public Menu(string name, string returnMessage = "Return")
+    {
+        Name = name;
+        _returnMessage = returnMessage;
+        _items = new List<IMenuItem>();
+    }
+    
     public Menu AddItem(IMenuItem menuItem)
     {
-        Items.Add(menuItem);
+        _items.Add(menuItem);
         return this;
     }
-
+    
     public void Invoke()
     {
         while (true)
         {
             Display();
             var validIndex = ReadValidIndexInput();
-            if (validIndex == Items.Count) return;
-            Items[validIndex].Invoke();
+            if (validIndex == _items.Count) return;
+            _items[validIndex].Invoke();
         }
     }
 
     private void Display()
     {
         Console.WriteLine(Name);
-        for (var i = 0; i < Items.Count; i++)
-            Console.WriteLine($"{i + 1}. {Items[i].Name}");
-        Console.WriteLine($"{Items.Count + 1}. {ReturnMessage}");
+        for (var i = 0; i < _items.Count; i++)
+            Console.WriteLine($"{i + 1}. {_items[i].Name}");
+        Console.WriteLine($"{_items.Count + 1}. {_returnMessage}");
     }
 
     private int ReadValidIndexInput()
@@ -38,7 +45,7 @@ public class Menu(string name, string returnMessage = "Return") : IMenuItem
             var input = Console.ReadLine();
             var success = int.TryParse(input, out var res);
             var index = res - 1;
-            if (success && index >= 0 && index <= Items.Count)
+            if (success && index >= 0 && index <= _items.Count)
                 return index;
             Console.WriteLine("Invalid option, please try again.");
         }
