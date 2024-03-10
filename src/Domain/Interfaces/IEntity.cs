@@ -1,4 +1,4 @@
-namespace AirportTicketBookingSystem.Domain.Contract;
+namespace AirportTicketBookingSystem.Domain.Interfaces;
 
 /// <summary>
 /// Marker for all domain entities

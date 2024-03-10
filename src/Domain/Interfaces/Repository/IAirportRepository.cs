@@ -1,6 +1,6 @@
 using AirportTicketBookingSystem.Domain.Criteria.Search;
 
-namespace AirportTicketBookingSystem.Domain.Repository;
+namespace AirportTicketBookingSystem.Domain.Interfaces.Repository;
 
 /// <summary>
 /// Defines the interface for airport repository operations, providing methods for adding, retrieving,

@@ -1,6 +1,6 @@
 using AirportTicketBookingSystem.Domain;
-using AirportTicketBookingSystem.Domain.Contract;
-using AirportTicketBookingSystem.Domain.Repository;
+using AirportTicketBookingSystem.Domain.Interfaces;
+using AirportTicketBookingSystem.Domain.Interfaces.Repository;
 
 namespace AirportTicketBookingSystem.Infrastructure.Repository;
 

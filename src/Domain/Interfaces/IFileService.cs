@@ -1,4 +1,4 @@
-namespace AirportTicketBookingSystem.Domain.Contract;
+namespace AirportTicketBookingSystem.Domain.Interfaces;
 
 public interface IFileService<TEntity>
     where TEntity : IEntity

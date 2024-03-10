@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using AirportTicketBookingSystem.Domain.Contract;
+using AirportTicketBookingSystem.Domain.Interfaces;
 using AirportTicketBookingSystem.Domain.Utility;
 
 namespace AirportTicketBookingSystem.Domain;

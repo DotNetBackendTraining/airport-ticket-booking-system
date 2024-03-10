@@ -1,5 +1,5 @@
 using AirportTicketBookingSystem.Domain;
-using AirportTicketBookingSystem.Domain.Contract;
+using AirportTicketBookingSystem.Domain.Interfaces;
 using AirportTicketBookingSystem.Infrastructure.Converter.Utility;
 
 namespace AirportTicketBookingSystem.Infrastructure.Converter;

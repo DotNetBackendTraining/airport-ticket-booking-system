@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace AirportTicketBookingSystem.Domain.Contract;
+namespace AirportTicketBookingSystem.Domain.Interfaces;
 
 public interface ICsvEntityConverter<TEntity>
     where TEntity : IEntity

@@ -1,4 +1,4 @@
-namespace AirportTicketBookingSystem.Domain.Contract;
+namespace AirportTicketBookingSystem.Domain.Interfaces;
 
 /// <summary>
 /// Represents a simplified database service for managing entities of type <typeparamref name="TEntity"/>.
