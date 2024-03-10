@@ -17,7 +17,7 @@ public class BookingService(
 
     private IPassengerService PassengerService { get; } = passengerService;
 
-    public void Add(Booking booking)
+    private void CheckValidRelationsOrThrow(Booking booking)
     {
         if (PassengerService.GetById(booking.PassengerId) == null)
             throw new InvalidOperationException(
@@ -26,11 +26,19 @@ public class BookingService(
         if (FlightService.GetById(booking.FlightId) == null)
             throw new InvalidOperationException(
                 $"Flight with ID '{booking.FlightId}' was not found for the booking '{booking}'");
+    }
 
+    public void Add(Booking booking)
+    {
+        CheckValidRelationsOrThrow(booking);
         Repository.Add(booking);
     }
 
-    public void Update(Booking booking) => Repository.Update(booking);
+    public void Update(Booking booking)
+    {
+        CheckValidRelationsOrThrow(booking);
+        Repository.Update(booking);
+    }
 
     public void Delete(Booking booking) => Repository.Delete(booking);
 

@@ -21,6 +21,7 @@ public interface IBookingService
     /// </summary>
     /// <param name="booking">The booking with updated information.</param>
     /// <exception cref="KeyNotFoundException">Thrown when the booking to update does not exist in the repository.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when the <c>flightId</c> or <c>passengerId</c> in the booking do not exist in the repository.</exception>
     public void Update(Booking booking);
 
     /// <summary>
