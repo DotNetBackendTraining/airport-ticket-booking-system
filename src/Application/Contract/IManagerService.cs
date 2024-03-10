@@ -9,6 +9,12 @@ namespace AirportTicketBookingSystem.Application.Contract;
 /// </summary>
 public interface IManagerService
 {
+    // can we have an interface for search in general, and create new 3 interfaces one for each type of returned entities?
+    // IBookingSearchService, IFlightSearchService, IAirportSearchService
+    // this way we can have a more specific interface for each type of search
+    // and we can have a more specific implementation for each type of search
+    // and we can have a security layer if the user is not allowed to search for a specific type of entity
+    
     /// <summary>
     /// Searches for bookings that match the specified criteria.
     /// </summary>
@@ -16,6 +22,13 @@ public interface IManagerService
     /// <returns>A SearchResult object containing a collection of bookings that match the criteria, along with the search operation's success status and message.</returns>
     public SearchResult<Booking> SearchBookings(BookingSearchCriteria criteria);
 
+    
+    //can we have an interface for flight in general, and create new service for it
+    //IFlightService
+    //this way we can have a more specific interface for each type of operation
+    //and we can use it in any service can have access to it
+    // same comment for BatchUploadFlights it should be in flight service
+    
     /// <summary>
     /// Adds a new flight to the system.
     /// </summary>

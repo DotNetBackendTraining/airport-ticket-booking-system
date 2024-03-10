@@ -23,6 +23,8 @@ public class BookingRepository : IBookingRepository
 
     public void Add(Booking booking)
     {
+        // this validation should be in service level, not in repository
+        // you should add a service like (ClientService=> should be BookingService) and it will call the BookingRepo
         if (_passengerRepository.GetById(booking.PassengerId) == null)
             throw new InvalidOperationException(
                 $"Passenger with ID '{booking.PassengerId}' was not found for the booking '{booking}'");

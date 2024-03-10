@@ -15,6 +15,10 @@ public class CsvUploadService<TEntity> : IUploadService<TEntity> where TEntity :
 
     public IEnumerable<OperationResult<TEntity>> BatchUpload(string filepath)
     {
+        // try to use exiting libraries to read common file types
+        // you can use CsvHelper to read csv files
+        // https://joshclose.github.io/CsvHelper/
+        // it will save your time and help you to avoid common mistakes
         foreach (var line in File.ReadLines(filepath).Skip(1))
         {
             var success = true;

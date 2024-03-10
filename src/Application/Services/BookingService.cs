@@ -1,4 +1,4 @@
-using AirportTicketBookingSystem.Application.Interfaces;
+using AirportTicketBookingSystem.Application.Contract;
 using AirportTicketBookingSystem.Application.Result;
 using AirportTicketBookingSystem.Domain;
 using AirportTicketBookingSystem.Domain.Criteria.Search;
@@ -6,12 +6,12 @@ using AirportTicketBookingSystem.Domain.Repository;
 
 namespace AirportTicketBookingSystem.Application.Services;
 
-public class ClientService : IClientService
+public class BookingService : IBookingService
 {
     private readonly IBookingRepository _bookingRepository;
     private readonly IPassengerRepository _passengerRepository;
     
-    public ClientService(
+    public BookingService(
         IBookingRepository bookingRepository,
         IPassengerRepository passengerRepository
     )

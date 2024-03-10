@@ -6,7 +6,7 @@ namespace AirportTicketBookingSystem.Application.Contract;
 /// <summary>
 /// Defines the service operations available to clients
 /// </summary>
-public interface IClientService
+public interface IBookingService
 {
     /// <summary>
     /// Retrieves all bookings for a given passenger.

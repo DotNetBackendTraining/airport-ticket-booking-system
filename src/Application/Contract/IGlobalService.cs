@@ -9,6 +9,9 @@ namespace AirportTicketBookingSystem.Application.Contract;
 /// </summary>
 public interface IGlobalService
 {
+    // why this is global?
+    // can we split this into two interfaces?
+    
     /// <summary>
     /// Searches for flights that match the specified criteria.
     /// </summary>

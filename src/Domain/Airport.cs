@@ -24,6 +24,9 @@ public class Airport : IEntity
     }
 
     /// <exception cref="ValidationException">Thrown when any of the arguments do not meet the validation criteria.</exception>
+    // you can add this method to AirportService and call the validation method from there
+    // avoid adding validation methods to the domain model
+    // try to keep the domain model as clean as possible
     public static Airport Create(string id, string name, string country)
     {
         var obj = new Airport(id, name, country);

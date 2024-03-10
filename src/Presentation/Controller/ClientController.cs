@@ -9,7 +9,7 @@ namespace AirportTicketBookingSystem.Presentation.Controller;
 
 public class ClientController : GlobalController
 {
-    private IClientService ClientService => Provider.GetRequiredService<IClientService>();
+    private IBookingService BookingService => Provider.GetRequiredService<IBookingService>();
 
     private int? _passengerId;
     private int PassengerId => _passengerId ??= Authenticate();
@@ -21,7 +21,7 @@ public class ClientController : GlobalController
     private int Authenticate()
     {
         var res = PromptHelper.TryPromptForInput("Please Enter Your Passenger ID:  ", int.Parse, out var id);
-        if (res && ClientService.IsRegisteredPassenger(id)) return id;
+        if (res && BookingService.IsRegisteredPassenger(id)) return id;
 
         Console.WriteLine("You Can't Continue Without Your Passenger ID!");
         Environment.Exit(0);
@@ -49,7 +49,7 @@ public class ClientController : GlobalController
         try
         {
             var booking = Booking.Create(flightId, PassengerId, flightClass.Value);
-            var result = ClientService.AddBooking(booking);
+            var result = BookingService.AddBooking(booking);
             Display.OperationResult(result);
         }
         catch (ValidationException e)
@@ -68,7 +68,7 @@ public class ClientController : GlobalController
     }
 
     private void ShowBookings() =>
-        Display.SearchResult(ClientService.GetAllBookings(PassengerId));
+        Display.SearchResult(BookingService.GetAllBookings(PassengerId));
 
     private void ModifyBooking()
     {
@@ -84,7 +84,7 @@ public class ClientController : GlobalController
         }
 
         booking = Booking.Create(booking.FlightId, booking.PassengerId, flightClass.Value);
-        Display.OperationResult(ClientService.UpdateBooking(booking));
+        Display.OperationResult(BookingService.UpdateBooking(booking));
     }
 
     private void CancelBooking()
@@ -93,7 +93,7 @@ public class ClientController : GlobalController
         if (booking == null) return;
 
         var res = PromptHelper.PromptYesNo("Are you sure you want to delete this booking (y/n) ?  ");
-        if (res) Display.OperationResult(ClientService.CancelBooking(booking));
+        if (res) Display.OperationResult(BookingService.CancelBooking(booking));
         else Console.WriteLine("Nothing happened.");
     }
 
@@ -103,7 +103,7 @@ public class ClientController : GlobalController
         var res = PromptHelper.TryPromptForInput("Please Enter The Flight ID:  ", int.Parse, out var flightId);
         if (!res) return null;
 
-        var list = ClientService.GetAllBookings(PassengerId).Items
+        var list = BookingService.GetAllBookings(PassengerId).Items
             .Where(b => b.FlightId == flightId).Take(1).ToList();
         if (list.Count > 0) return list[0];
 

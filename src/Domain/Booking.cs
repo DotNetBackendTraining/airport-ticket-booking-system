@@ -23,7 +23,10 @@ public class Booking : IEntity
         BookingClass = bookingClass;
     }
 
+    
     /// <exception cref="ValidationException">Thrown when any of the arguments do not meet the validation criteria.</exception>
+    // you can add this method to BookingService and call the validation method from there
+    // avoid adding validation methods to the domain model
     public static Booking Create(int flightId, int passengerId, FlightClass bookingClass)
     {
         var obj = new Booking(flightId, passengerId, bookingClass);

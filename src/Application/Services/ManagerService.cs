@@ -9,6 +9,8 @@ namespace AirportTicketBookingSystem.Application.Services;
 
 public class ManagerService : IManagerService
 {
+    // same comment, use BookingService to talk to BookingRepository
+    // and use FlightService to talk to FlightRepository
     private readonly IBookingRepository _bookingRepository;
     private readonly IFlightRepository _flightRepository;
     private readonly IUploadService<Flight> _flightUploadService;

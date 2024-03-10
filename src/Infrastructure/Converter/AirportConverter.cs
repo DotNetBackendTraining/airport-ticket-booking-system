@@ -6,6 +6,9 @@ namespace AirportTicketBookingSystem.Infrastructure.Converter;
 
 public class AirportConverter : ICsvEntityConverter<Airport>
 {
+    // using csvHelper is a good idea
+    // it will make your life easier
+    // and you will not have to write your own csv parser
     public Airport CsvToEntity(string csvLine)
     {
         var parts = csvLine.SplitToLengthOrThrow(3);

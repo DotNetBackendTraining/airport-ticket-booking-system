@@ -67,7 +67,7 @@ public static class DependencyInjector
     private static void InjectClientServices(IServiceCollection services)
     {
         services.AddSingleton<IGlobalService, GlobalService>();
-        services.AddSingleton<IClientService, ClientService>();
+        services.AddSingleton<IBookingService, BookingService>();
     }
 
     private static void InjectManagerServices(IServiceCollection services)

@@ -19,6 +19,9 @@ return;
 
 void LoadEnvVariables()
 {
+    // try to use dotenv built-in package
+    // it will help you to handle .env file
+    
     var current = new DirectoryInfo(Directory.GetCurrentDirectory());
     while (current != null && current.GetFiles("*.csproj").Length == 0)
         current = current.Parent;

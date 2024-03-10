@@ -7,6 +7,9 @@ namespace AirportTicketBookingSystem.Infrastructure.Converter;
 
 public class FlightConverter : ICsvEntityConverter<Flight>
 {
+    // using csvHelper is a good idea
+    // it will make your life easier
+    // and you will not have to write your own csv parser
     private static Dictionary<FlightClass, decimal> ParseFlightClassPricePairsOrThrow(string flightClassStr)
     {
         var parts = flightClassStr.Split(CsvConstants.FlightClassFieldsDelimiter);

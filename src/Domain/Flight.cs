@@ -32,6 +32,8 @@ public class Flight : IEntity
     }
 
     /// <exception cref="ValidationException">Thrown when any of the arguments do not meet the validation criteria.</exception>
+    // you can add this method to FlightService and call the validation method from there
+    // avoid adding validation methods to the domain model
     public static Flight Create(
         int id, DateTime departureDate, string departureAirportId, string arrivalAirportId,
         IReadOnlyDictionary<FlightClass, decimal> classPrices)
