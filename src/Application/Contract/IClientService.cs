@@ -42,5 +42,5 @@ public interface IClientService
     /// </summary>
     /// <param name="passengerId">The ID of the passenger to check.</param>
     /// <returns>Whether the passenger is found in the system.</returns>
-    public bool AuthenticatePassenger(int passengerId);
+    public bool IsPassengerRegistered(int passengerId);
 }

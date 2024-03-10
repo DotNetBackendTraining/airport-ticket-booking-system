@@ -81,6 +81,6 @@ public class ClientService(
         }
     }
 
-    public bool AuthenticatePassenger(int passengerId) =>
+    public bool IsPassengerRegistered(int passengerId) =>
         PassengerService.GetById(passengerId) != null;
 }

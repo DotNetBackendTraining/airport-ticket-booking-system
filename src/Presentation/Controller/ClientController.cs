@@ -13,12 +13,12 @@ public class ClientController(IServiceProvider serviceProvider)
     private IClientService ClientService => Provider.GetRequiredService<IClientService>();
 
     private int? _passengerId;
-    private int PassengerId => _passengerId ??= Authenticate();
+    private int PassengerId => _passengerId ??= IsRegistered();
 
-    private int Authenticate()
+    private int IsRegistered()
     {
         var res = PromptHelper.TryPromptForInput("Please Enter Your Passenger ID:  ", int.Parse, out var id);
-        if (res && ClientService.AuthenticatePassenger(id)) return id;
+        if (res && ClientService.IsPassengerRegistered(id)) return id;
 
         Console.WriteLine("You Can't Continue Without Your Passenger ID!");
         Environment.Exit(0);
