@@ -1,17 +1,17 @@
 using AirportTicketBookingSystem.Domain;
 using AirportTicketBookingSystem.Domain.Criteria.Search;
-using AirportTicketBookingSystem.Domain.Interfaces;
+using AirportTicketBookingSystem.Domain.Interfaces.Repository;
 using AirportTicketBookingSystem.Domain.Interfaces.Service;
 
 namespace AirportTicketBookingSystem.Infrastructure.Service;
 
 public class BookingService(
-    ISimpleDatabaseService<Booking> databaseService,
+    IBookingRepository repository,
     IFlightService flightService,
     IPassengerService passengerService
 ) : IBookingService
 {
-    private ISimpleDatabaseService<Booking> DatabaseService { get; } = databaseService;
+    private IBookingRepository Repository { get; } = repository;
 
     private IFlightService FlightService { get; } = flightService;
 
@@ -27,25 +27,18 @@ public class BookingService(
             throw new InvalidOperationException(
                 $"Flight with ID '{booking.FlightId}' was not found for the booking '{booking}'");
 
-        DatabaseService.Add(booking);
+        Repository.Add(booking);
     }
 
-    public void Update(Booking booking) => DatabaseService.Update(booking);
+    public void Update(Booking booking) => Repository.Update(booking);
 
-    public void Delete(Booking booking) => DatabaseService.Delete(booking);
+    public void Delete(Booking booking) => Repository.Delete(booking);
 
-    public Booking? GetById(int flightId, int passengerId)
-    {
-        return DatabaseService
-            .GetAll()
-            .FirstOrDefault(b =>
-                b.FlightId == flightId &&
-                b.PassengerId == passengerId);
-    }
+    public Booking? GetById(int flightId, int passengerId) => Repository.GetById(flightId, passengerId);
 
     public IEnumerable<Booking> Search(BookingSearchCriteria criteria)
     {
-        var query = DatabaseService.GetAll();
+        var query = Repository.GetAll();
 
         if (criteria.PassengerId.HasValue)
             query = query.Where(b => b.PassengerId == criteria.PassengerId.Value);

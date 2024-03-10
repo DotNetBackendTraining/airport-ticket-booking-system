@@ -1,21 +1,16 @@
 using AirportTicketBookingSystem.Domain;
-using AirportTicketBookingSystem.Domain.Interfaces;
+using AirportTicketBookingSystem.Domain.Interfaces.Repository;
 using AirportTicketBookingSystem.Domain.Interfaces.Service;
 
 namespace AirportTicketBookingSystem.Infrastructure.Service;
 
 public class PassengerService(
-    ISimpleDatabaseService<Passenger> databaseService
+    IPassengerRepository repository
 ) : IPassengerService
 {
-    private ISimpleDatabaseService<Passenger> DatabaseService { get; } = databaseService;
+    private IPassengerRepository Repository { get; } = repository;
 
-    public void Add(Passenger passenger) => DatabaseService.Add(passenger);
+    public void Add(Passenger passenger) => Repository.Add(passenger);
 
-    public Passenger? GetById(int id)
-    {
-        return DatabaseService
-            .GetAll()
-            .FirstOrDefault(p => p.Id == id);
-    }
+    public Passenger? GetById(int id) => Repository.GetById(id);
 }

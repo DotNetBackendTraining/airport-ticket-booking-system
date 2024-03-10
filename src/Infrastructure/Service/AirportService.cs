@@ -1,28 +1,23 @@
 using AirportTicketBookingSystem.Domain;
 using AirportTicketBookingSystem.Domain.Criteria.Search;
-using AirportTicketBookingSystem.Domain.Interfaces;
+using AirportTicketBookingSystem.Domain.Interfaces.Repository;
 using AirportTicketBookingSystem.Domain.Interfaces.Service;
 
 namespace AirportTicketBookingSystem.Infrastructure.Service;
 
 public class AirportService(
-    ISimpleDatabaseService<Airport> databaseService
+    IAirportRepository repository
 ) : IAirportService
 {
-    private ISimpleDatabaseService<Airport> DatabaseService { get; } = databaseService;
+    private IAirportRepository Repository { get; } = repository;
 
-    public void Add(Airport airport) => DatabaseService.Add(airport);
+    public void Add(Airport airport) => Repository.Add(airport);
 
-    public Airport? GetById(string id)
-    {
-        return DatabaseService
-            .GetAll()
-            .FirstOrDefault(a => a.Id == id);
-    }
+    public Airport? GetById(string id) => Repository.GetById(id);
 
     public IEnumerable<Airport> Search(AirportSearchCriteria criteria)
     {
-        return Filter(DatabaseService.GetAll(), criteria);
+        return Filter(Repository.GetAll(), criteria);
     }
 
     public IEnumerable<Airport> Filter(IEnumerable<Airport> airports, AirportSearchCriteria criteria)

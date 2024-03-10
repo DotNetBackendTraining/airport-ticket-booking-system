@@ -1,17 +1,17 @@
 using AirportTicketBookingSystem.Domain;
 using AirportTicketBookingSystem.Domain.Criteria;
 using AirportTicketBookingSystem.Domain.Criteria.Search;
-using AirportTicketBookingSystem.Domain.Interfaces;
+using AirportTicketBookingSystem.Domain.Interfaces.Repository;
 using AirportTicketBookingSystem.Domain.Interfaces.Service;
 
 namespace AirportTicketBookingSystem.Infrastructure.Service;
 
 public class FlightService(
-    ISimpleDatabaseService<Flight> databaseService,
+    IFlightRepository repository,
     IAirportService airportService
 ) : IFlightService
 {
-    private ISimpleDatabaseService<Flight> DatabaseService { get; } = databaseService;
+    private IFlightRepository Repository { get; } = repository;
 
     private IAirportService AirportService { get; } = airportService;
 
@@ -20,19 +20,14 @@ public class FlightService(
         foreach (var id in new[] { flight.DepartureAirportId, flight.ArrivalAirportId })
             if (AirportService.GetById(id) == null)
                 throw new InvalidOperationException($"Airport with ID '{id}' was not found in the repository");
-        DatabaseService.Add(flight);
+        Repository.Add(flight);
     }
 
-    public Flight? GetById(int flightId)
-    {
-        return DatabaseService
-            .GetAll()
-            .FirstOrDefault(f => f.Id == flightId);
-    }
+    public Flight? GetById(int flightId) => Repository.GetById(flightId);
 
     public IEnumerable<Flight> Search(FlightSearchCriteria criteria)
     {
-        return Filter(DatabaseService.GetAll(), criteria);
+        return Filter(Repository.GetAll(), criteria);
     }
 
     public IEnumerable<Flight> Filter(IEnumerable<Flight> flights, FlightSearchCriteria criteria)
