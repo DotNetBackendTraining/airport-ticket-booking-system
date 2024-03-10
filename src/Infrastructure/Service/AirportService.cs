@@ -1,13 +1,13 @@
 using AirportTicketBookingSystem.Domain;
 using AirportTicketBookingSystem.Domain.Criteria.Search;
 using AirportTicketBookingSystem.Domain.Interfaces;
-using AirportTicketBookingSystem.Domain.Interfaces.Repository;
+using AirportTicketBookingSystem.Domain.Interfaces.Service;
 
-namespace AirportTicketBookingSystem.Infrastructure.Repository;
+namespace AirportTicketBookingSystem.Infrastructure.Service;
 
-public class AirportRepository(
+public class AirportService(
     ISimpleDatabaseService<Airport> databaseService
-) : IAirportRepository
+) : IAirportService
 {
     private ISimpleDatabaseService<Airport> DatabaseService { get; } = databaseService;
 

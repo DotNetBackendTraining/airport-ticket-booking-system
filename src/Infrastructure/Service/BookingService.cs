@@ -1,29 +1,29 @@
 using AirportTicketBookingSystem.Domain;
 using AirportTicketBookingSystem.Domain.Criteria.Search;
 using AirportTicketBookingSystem.Domain.Interfaces;
-using AirportTicketBookingSystem.Domain.Interfaces.Repository;
+using AirportTicketBookingSystem.Domain.Interfaces.Service;
 
-namespace AirportTicketBookingSystem.Infrastructure.Repository;
+namespace AirportTicketBookingSystem.Infrastructure.Service;
 
-public class BookingRepository(
+public class BookingService(
     ISimpleDatabaseService<Booking> databaseService,
-    IFlightRepository flightRepository,
-    IPassengerRepository passengerRepository
-) : IBookingRepository
+    IFlightService flightService,
+    IPassengerService passengerService
+) : IBookingService
 {
     private ISimpleDatabaseService<Booking> DatabaseService { get; } = databaseService;
 
-    private IFlightRepository FlightRepository { get; } = flightRepository;
+    private IFlightService FlightService { get; } = flightService;
 
-    private IPassengerRepository PassengerRepository { get; } = passengerRepository;
+    private IPassengerService PassengerService { get; } = passengerService;
 
     public void Add(Booking booking)
     {
-        if (PassengerRepository.GetById(booking.PassengerId) == null)
+        if (PassengerService.GetById(booking.PassengerId) == null)
             throw new InvalidOperationException(
                 $"Passenger with ID '{booking.PassengerId}' was not found for the booking '{booking}'");
 
-        if (FlightRepository.GetById(booking.FlightId) == null)
+        if (FlightService.GetById(booking.FlightId) == null)
             throw new InvalidOperationException(
                 $"Flight with ID '{booking.FlightId}' was not found for the booking '{booking}'");
 
@@ -58,7 +58,7 @@ public class BookingRepository(
 
     private bool MatchingFlight(int flightId, FlightSearchCriteria flightCriteria)
     {
-        var flight = FlightRepository.GetById(flightId);
-        return FlightRepository.Filter([flight], flightCriteria).Any();
+        var flight = FlightService.GetById(flightId);
+        return FlightService.Filter([flight], flightCriteria).Any();
     }
 }

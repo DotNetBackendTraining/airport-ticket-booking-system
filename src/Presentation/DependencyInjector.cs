@@ -2,9 +2,8 @@ using AirportTicketBookingSystem.Application.Contract;
 using AirportTicketBookingSystem.Application.Service;
 using AirportTicketBookingSystem.Domain;
 using AirportTicketBookingSystem.Domain.Interfaces;
-using AirportTicketBookingSystem.Domain.Interfaces.Repository;
+using AirportTicketBookingSystem.Domain.Interfaces.Service;
 using AirportTicketBookingSystem.Infrastructure.Converter;
-using AirportTicketBookingSystem.Infrastructure.Repository;
 using AirportTicketBookingSystem.Infrastructure.Service;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -60,10 +59,10 @@ public static class DependencyInjector
         services.AddSingleton<ISimpleDatabaseService<Passenger>, SimpleDatabaseService<Passenger>>();
         services.AddSingleton<ISimpleDatabaseService<Airport>, SimpleDatabaseService<Airport>>();
 
-        services.AddSingleton<IFlightRepository, FlightRepository>();
-        services.AddSingleton<IBookingRepository, BookingRepository>();
-        services.AddSingleton<IPassengerRepository, PassengerRepository>();
-        services.AddSingleton<IAirportRepository, AirportRepository>();
+        services.AddSingleton<IFlightService, FlightService>();
+        services.AddSingleton<IBookingService, BookingService>();
+        services.AddSingleton<IPassengerService, PassengerService>();
+        services.AddSingleton<IAirportService, AirportService>();
     }
 
     private static void InjectClientServices(IServiceCollection services)

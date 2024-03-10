@@ -2,23 +2,23 @@ using AirportTicketBookingSystem.Domain;
 using AirportTicketBookingSystem.Domain.Criteria;
 using AirportTicketBookingSystem.Domain.Criteria.Search;
 using AirportTicketBookingSystem.Domain.Interfaces;
-using AirportTicketBookingSystem.Domain.Interfaces.Repository;
+using AirportTicketBookingSystem.Domain.Interfaces.Service;
 
-namespace AirportTicketBookingSystem.Infrastructure.Repository;
+namespace AirportTicketBookingSystem.Infrastructure.Service;
 
-public class FlightRepository(
+public class FlightService(
     ISimpleDatabaseService<Flight> databaseService,
-    IAirportRepository airportRepository
-) : IFlightRepository
+    IAirportService airportService
+) : IFlightService
 {
     private ISimpleDatabaseService<Flight> DatabaseService { get; } = databaseService;
 
-    private IAirportRepository AirportRepository { get; } = airportRepository;
+    private IAirportService AirportService { get; } = airportService;
 
     public void Add(Flight flight)
     {
         foreach (var id in new[] { flight.DepartureAirportId, flight.ArrivalAirportId })
-            if (AirportRepository.GetById(id) == null)
+            if (AirportService.GetById(id) == null)
                 throw new InvalidOperationException($"Airport with ID '{id}' was not found in the repository");
         DatabaseService.Add(flight);
     }
@@ -67,7 +67,7 @@ public class FlightRepository(
 
     private bool MatchesAirport(string airportId, AirportSearchCriteria airportCriteria)
     {
-        var airport = AirportRepository.GetById(airportId);
-        return AirportRepository.Filter([airport], airportCriteria).Any();
+        var airport = AirportService.GetById(airportId);
+        return AirportService.Filter([airport], airportCriteria).Any();
     }
 }

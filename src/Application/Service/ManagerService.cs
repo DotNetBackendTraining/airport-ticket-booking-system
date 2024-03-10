@@ -3,20 +3,20 @@ using AirportTicketBookingSystem.Application.Result;
 using AirportTicketBookingSystem.Domain;
 using AirportTicketBookingSystem.Domain.Criteria.Search;
 using AirportTicketBookingSystem.Domain.Interfaces;
-using AirportTicketBookingSystem.Domain.Interfaces.Repository;
+using AirportTicketBookingSystem.Domain.Interfaces.Service;
 
 namespace AirportTicketBookingSystem.Application.Service;
 
 public class ManagerService(
-    IBookingRepository bookingRepository,
-    IFlightRepository flightRepository,
+    IBookingService bookingService,
+    IFlightService flightService,
     IUploadService<Flight> flightUploadService,
     IReflectionService reflectionService
 ) : IManagerService
 {
-    private IBookingRepository BookingRepository { get; } = bookingRepository;
+    private IBookingService BookingService { get; } = bookingService;
 
-    private IFlightRepository FlightRepository { get; } = flightRepository;
+    private IFlightService FlightService { get; } = flightService;
 
     private IUploadService<Flight> FlightUploadService { get; } = flightUploadService;
 
@@ -24,7 +24,7 @@ public class ManagerService(
 
     public SearchResult<Booking> SearchBookings(BookingSearchCriteria criteria)
     {
-        var bookings = BookingRepository.Search(criteria);
+        var bookings = BookingService.Search(criteria);
         return new SearchResult<Booking>(
             Success: true,
             Message: "Bookings search completed successfully",
@@ -35,7 +35,7 @@ public class ManagerService(
     {
         try
         {
-            FlightRepository.Add(flight);
+            FlightService.Add(flight);
             return new OperationResult<Flight>(
                 Success: true,
                 Message: "Flight creation completed successfully",

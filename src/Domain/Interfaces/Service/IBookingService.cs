@@ -1,12 +1,12 @@
 using AirportTicketBookingSystem.Domain.Criteria.Search;
 
-namespace AirportTicketBookingSystem.Domain.Interfaces.Repository;
+namespace AirportTicketBookingSystem.Domain.Interfaces.Service;
 
 /// <summary>
 /// Defines the interface for booking repository operations, providing methods for adding, updating, deleting,
 /// and retrieving bookings, as well as searching for bookings based on criteria.
 /// </summary>
-public interface IBookingRepository
+public interface IBookingService
 {
     /// <summary>
     /// Adds a new booking to the repository.

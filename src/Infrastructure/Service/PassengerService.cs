@@ -1,12 +1,12 @@
 using AirportTicketBookingSystem.Domain;
 using AirportTicketBookingSystem.Domain.Interfaces;
-using AirportTicketBookingSystem.Domain.Interfaces.Repository;
+using AirportTicketBookingSystem.Domain.Interfaces.Service;
 
-namespace AirportTicketBookingSystem.Infrastructure.Repository;
+namespace AirportTicketBookingSystem.Infrastructure.Service;
 
-public class PassengerRepository(
+public class PassengerService(
     ISimpleDatabaseService<Passenger> databaseService
-) : IPassengerRepository
+) : IPassengerService
 {
     private ISimpleDatabaseService<Passenger> DatabaseService { get; } = databaseService;
 

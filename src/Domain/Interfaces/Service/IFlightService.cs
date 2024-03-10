@@ -1,12 +1,12 @@
 using AirportTicketBookingSystem.Domain.Criteria.Search;
 
-namespace AirportTicketBookingSystem.Domain.Interfaces.Repository;
+namespace AirportTicketBookingSystem.Domain.Interfaces.Service;
 
 /// <summary>
 /// Defines the interface for flight repository operations, providing methods for adding, retrieving,
 /// searching, and filtering flights.
 /// </summary>
-public interface IFlightRepository
+public interface IFlightService
 {
     /// <summary>
     /// Adds a new flight to the repository.

@@ -1,9 +1,9 @@
-namespace AirportTicketBookingSystem.Domain.Interfaces.Repository;
+namespace AirportTicketBookingSystem.Domain.Interfaces.Service;
 
 /// <summary>
 /// Defines the interface for passenger repository operations, providing methods for adding and retrieving passengers.
 /// </summary>
-public interface IPassengerRepository
+public interface IPassengerService
 {
     /// <summary>
     /// Adds a new passenger to the repository.
