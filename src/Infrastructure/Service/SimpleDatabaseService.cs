@@ -1,4 +1,5 @@
 using AirportTicketBookingSystem.Domain.Interfaces;
+using AirportTicketBookingSystem.Infrastructure.Interfaces;
 
 namespace AirportTicketBookingSystem.Infrastructure.Service;
 

@@ -1,12 +1,12 @@
 using AirportTicketBookingSystem.Domain.Interfaces;
+using AirportTicketBookingSystem.Infrastructure.Interfaces;
 
 namespace AirportTicketBookingSystem.Infrastructure.Service;
 
 public class CsvFileService<TEntity>(
     string filepath,
-    ICsvEntityConverter<TEntity> csvEntityConverter)
-    : IFileService<TEntity>
-    where TEntity : IEntity
+    ICsvEntityConverter<TEntity> csvEntityConverter
+) : IFileService<TEntity> where TEntity : IEntity
 {
     private string Filepath { get; } = filepath;
     private ICsvEntityConverter<TEntity> Converter { get; } = csvEntityConverter;

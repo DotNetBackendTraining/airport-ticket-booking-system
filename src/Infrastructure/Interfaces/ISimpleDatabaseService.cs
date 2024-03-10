@@ -1,4 +1,6 @@
-namespace AirportTicketBookingSystem.Domain.Interfaces;
+using AirportTicketBookingSystem.Domain.Interfaces;
+
+namespace AirportTicketBookingSystem.Infrastructure.Interfaces;
 
 /// <summary>
 /// Represents a simplified database service for managing entities of type <typeparamref name="TEntity"/>.
