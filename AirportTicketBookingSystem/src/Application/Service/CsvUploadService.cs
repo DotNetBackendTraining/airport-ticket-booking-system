@@ -21,7 +21,7 @@ public class CsvUploadService<TEntity>(
             {
                 entity = CsvEntityConverter.CsvToEntity(line);
             }
-            catch (Exception e)
+            catch (FormatException e)
             {
                 success = false;
                 message = "Entity validation failed:  " + e.Message;
