@@ -1,3 +1,4 @@
+using AirportTicketBookingSystem.Domain.Common;
 using AirportTicketBookingSystem.Domain.Interfaces;
 using AirportTicketBookingSystem.Infrastructure.Interfaces;
 
@@ -19,14 +20,14 @@ public class DatabaseService<TEntity>(IFileService<TEntity> fileService)
 
     public async Task Add(TEntity entity)
     {
-        if (Exists(entity)) throw new ArgumentException($"Entity {entity} already exists in the database");
+        if (Exists(entity)) throw new DatabaseOperationException($"Entity {entity} already exists in the database");
         await FileService.AppendAllAsync(Enumerable.Repeat(entity, 1));
     }
 
     public async Task Update(TEntity newEntity)
     {
         if (!Exists(newEntity))
-            throw new KeyNotFoundException($"Entity {newEntity} was not found in the database");
+            throw new DatabaseOperationException($"Entity {newEntity} was not found in the database");
         var cache = GetAll().ToList();
         var changes = cache.Select(e => e.Equals(newEntity) ? newEntity : e);
         await FileService.WriteAllAsync(changes);
@@ -35,7 +36,7 @@ public class DatabaseService<TEntity>(IFileService<TEntity> fileService)
     public async Task Delete(TEntity entity)
     {
         if (!Exists(entity))
-            throw new KeyNotFoundException($"Entity {entity} was not found in the database");
+            throw new DatabaseOperationException($"Entity {entity} was not found in the database");
         var cache = GetAll().ToList();
         var changes = cache.Where(e => !e.Equals(entity));
         await FileService.WriteAllAsync(changes);

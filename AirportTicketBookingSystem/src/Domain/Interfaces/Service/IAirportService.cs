@@ -1,3 +1,4 @@
+using AirportTicketBookingSystem.Domain.Common;
 using AirportTicketBookingSystem.Domain.Criteria.Search;
 
 namespace AirportTicketBookingSystem.Domain.Interfaces.Service;
@@ -12,7 +13,7 @@ public interface IAirportService
     /// Adds a new airport to the repository.
     /// </summary>
     /// <param name="airport">The airport to add.</param>
-    /// <exception cref="ArgumentException">Thrown when an airport with the same identifier already exists in the repository.</exception>
+    /// <exception cref="DatabaseOperationException">Thrown when an airport with the same identifier already exists in the repository.</exception>
     void Add(Airport airport);
 
     /// <summary>

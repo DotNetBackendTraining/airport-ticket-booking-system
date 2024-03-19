@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+using AirportTicketBookingSystem.Domain.Common;
 using AirportTicketBookingSystem.Domain.Interfaces;
 
 namespace AirportTicketBookingSystem.Infrastructure.Interfaces;
@@ -17,8 +17,8 @@ public interface IDatabaseService<TEntity>
     /// </summary>
     /// <param name="entity">The entity to be added.</param>
     /// <returns>A task representing the add operation.</returns>
-    /// <exception cref="ArgumentException">Thrown when an entity already exists in the database.</exception>
-    /// <exception cref="ValidationException">Thrown when an entity is invalid (against its own attributes).</exception>
+    /// <exception cref="DatabaseOperationException">Thrown when an entity already exists in the database.
+    /// Or when entity is invalid (against its own attributes).</exception>
     public Task Add(TEntity entity);
 
     /// <summary>
@@ -26,8 +26,8 @@ public interface IDatabaseService<TEntity>
     /// Finds the old entity by comparing the new entity with `Object.Equals()` method.
     /// </summary>
     /// <param name="newEntity">The new entity to replace the old entity.</param>
-    /// <exception cref="KeyNotFoundException">Thrown when the old entity does not exist.</exception>
-    /// <exception cref="ValidationException">Thrown when an entity is invalid (against its own attributes).</exception>
+    /// <exception cref="DatabaseOperationException">Thrown when the old entity does not exist.
+    /// Or when entity is invalid (against its own attributes).</exception>
     /// <returns>A task representing the update operation.</returns>
     /// <remarks>
     /// Before updating an entity, ensure that all dependent entities have been appropriately managed to avoid violating relational constraints.
@@ -38,7 +38,7 @@ public interface IDatabaseService<TEntity>
     /// Deletes an entity of type <typeparamref name="TEntity"/> from the database.
     /// </summary>
     /// <param name="entity">The entity to be removed.</param>
-    /// <exception cref="KeyNotFoundException">Thrown when the entity does not exist.</exception>
+    /// <exception cref="DatabaseOperationException">Thrown when the entity does not exist.</exception>
     /// <returns>A task representing the delete operation.</returns>
     /// <remarks>
     /// Before deleting an entity, ensure that all dependent entities have been appropriately managed to avoid violating relational constraints.

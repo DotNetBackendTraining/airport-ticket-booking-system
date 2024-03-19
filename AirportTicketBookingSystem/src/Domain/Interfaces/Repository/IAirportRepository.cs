@@ -1,8 +1,10 @@
+using AirportTicketBookingSystem.Domain.Common;
+
 namespace AirportTicketBookingSystem.Domain.Interfaces.Repository;
 
 public interface IAirportRepository
 {
-    /// <exception cref="ArgumentException">Thrown when an airport with the same identifier already exists in the repository.</exception>
+    /// <exception cref="DatabaseOperationException">Thrown when an airport with the same identifier already exists in the repository.</exception>
     public void Add(Airport airport);
 
     public IEnumerable<Airport> GetAll();

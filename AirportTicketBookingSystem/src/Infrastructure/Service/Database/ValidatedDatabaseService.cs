@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+using AirportTicketBookingSystem.Domain.Common;
 using AirportTicketBookingSystem.Domain.Interfaces;
 using AirportTicketBookingSystem.Domain.Interfaces.Service;
 using AirportTicketBookingSystem.Infrastructure.Interfaces;
@@ -23,6 +25,18 @@ public class ValidatedDatabaseService<TEntity> : IDatabaseService<TEntity>
         _validationService = validationService;
     }
 
+    private void ValidateOrThrow(TEntity entity)
+    {
+        try
+        {
+            _validationService.ValidateEntityOrThrow(entity);
+        }
+        catch (ValidationException e)
+        {
+            throw new DatabaseOperationException(e.Message);
+        }
+    }
+
     public IEnumerable<TEntity> GetAll()
     {
         return _databaseService.GetAll();
@@ -30,13 +44,13 @@ public class ValidatedDatabaseService<TEntity> : IDatabaseService<TEntity>
 
     public async Task Add(TEntity entity)
     {
-        _validationService.ValidateEntityOrThrow(entity);
+        ValidateOrThrow(entity);
         await _databaseService.Add(entity);
     }
 
     public async Task Update(TEntity newEntity)
     {
-        _validationService.ValidateEntityOrThrow(newEntity);
+        ValidateOrThrow(newEntity);
         await _databaseService.Update(newEntity);
     }
 

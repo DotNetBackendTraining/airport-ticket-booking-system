@@ -1,6 +1,7 @@
 using AirportTicketBookingSystem.Application.Contract;
 using AirportTicketBookingSystem.Application.Result;
 using AirportTicketBookingSystem.Domain;
+using AirportTicketBookingSystem.Domain.Common;
 using AirportTicketBookingSystem.Domain.Criteria.Search;
 using AirportTicketBookingSystem.Domain.Interfaces.Service;
 
@@ -34,7 +35,7 @@ public class ClientService(
                 Message: "Booking creation completed successfully",
                 Item: booking);
         }
-        catch (SystemException e)
+        catch (DatabaseException e)
         {
             return new OperationResult<Booking>(
                 Success: false,
@@ -53,7 +54,7 @@ public class ClientService(
                 Message: "Booking update completed successfully",
                 Item: updatedBooking);
         }
-        catch (KeyNotFoundException e)
+        catch (DatabaseException e)
         {
             return new OperationResult<Booking>(
                 Success: false,
@@ -72,7 +73,7 @@ public class ClientService(
                 Message: "Booking delete completed successfully",
                 Item: cancelledBooking);
         }
-        catch (KeyNotFoundException e)
+        catch (DatabaseException e)
         {
             return new OperationResult<Booking>(
                 Success: false,

@@ -1,4 +1,5 @@
 using AirportTicketBookingSystem.Domain;
+using AirportTicketBookingSystem.Domain.Common;
 using AirportTicketBookingSystem.Domain.Criteria.Search;
 using AirportTicketBookingSystem.Domain.Interfaces.Repository;
 using AirportTicketBookingSystem.Domain.Interfaces.Service;
@@ -20,11 +21,11 @@ public class BookingService(
     private void CheckValidRelationsOrThrow(Booking booking)
     {
         if (PassengerService.GetById(booking.PassengerId) == null)
-            throw new InvalidOperationException(
+            throw new DatabaseRelationalException(
                 $"Passenger with ID '{booking.PassengerId}' was not found for the booking '{booking}'");
 
         if (FlightService.GetById(booking.FlightId) == null)
-            throw new InvalidOperationException(
+            throw new DatabaseRelationalException(
                 $"Flight with ID '{booking.FlightId}' was not found for the booking '{booking}'");
     }
 

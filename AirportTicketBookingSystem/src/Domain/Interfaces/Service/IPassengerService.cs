@@ -1,3 +1,5 @@
+using AirportTicketBookingSystem.Domain.Common;
+
 namespace AirportTicketBookingSystem.Domain.Interfaces.Service;
 
 /// <summary>
@@ -9,7 +11,7 @@ public interface IPassengerService
     /// Adds a new passenger to the repository.
     /// </summary>
     /// <param name="passenger">The passenger to add.</param>
-    /// <exception cref="ArgumentException">Thrown when a passenger with the same identifier already exists in the repository.</exception>
+    /// <exception cref="DatabaseOperationException">Thrown when a passenger with the same identifier already exists in the repository.</exception>
     public void Add(Passenger passenger);
 
     /// <summary>

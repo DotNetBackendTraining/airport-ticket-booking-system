@@ -1,4 +1,5 @@
 using AirportTicketBookingSystem.Domain;
+using AirportTicketBookingSystem.Domain.Common;
 using AirportTicketBookingSystem.Domain.Criteria;
 using AirportTicketBookingSystem.Domain.Criteria.Search;
 using AirportTicketBookingSystem.Domain.Interfaces.Repository;
@@ -19,7 +20,7 @@ public class FlightService(
     {
         foreach (var id in new[] { flight.DepartureAirportId, flight.ArrivalAirportId })
             if (AirportService.GetById(id) == null)
-                throw new InvalidOperationException($"Airport with ID '{id}' was not found in the repository");
+                throw new DatabaseRelationalException($"Airport with ID '{id}' was not found in the repository");
         Repository.Add(flight);
     }
 

@@ -1,3 +1,4 @@
+using AirportTicketBookingSystem.Domain.Common;
 using AirportTicketBookingSystem.Domain.Criteria.Search;
 
 namespace AirportTicketBookingSystem.Domain.Interfaces.Service;
@@ -12,8 +13,8 @@ public interface IFlightService
     /// Adds a new flight to the repository.
     /// </summary>
     /// <param name="flight">The flight to add.</param>
-    /// <exception cref="ArgumentException">Thrown when a flight with the same identifier already exists in the repository.</exception>
-    /// <exception cref="InvalidOperationException">Thrown when <c>DepartureAirportId</c> or <c>ArrivalAirportId</c> do not exist in the repository.</exception>
+    /// <exception cref="DatabaseOperationException">Thrown when a flight with the same identifier already exists in the repository.</exception>
+    /// <exception cref="DatabaseRelationalException">Thrown when <c>DepartureAirportId</c> or <c>ArrivalAirportId</c> do not exist in the repository.</exception>
     public void Add(Flight flight);
 
     /// <summary>

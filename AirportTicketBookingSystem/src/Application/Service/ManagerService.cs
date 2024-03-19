@@ -1,6 +1,7 @@
 using AirportTicketBookingSystem.Application.Contract;
 using AirportTicketBookingSystem.Application.Result;
 using AirportTicketBookingSystem.Domain;
+using AirportTicketBookingSystem.Domain.Common;
 using AirportTicketBookingSystem.Domain.Criteria.Search;
 using AirportTicketBookingSystem.Domain.Interfaces;
 using AirportTicketBookingSystem.Domain.Interfaces.Service;
@@ -41,7 +42,7 @@ public class ManagerService(
                 Message: "Flight creation completed successfully",
                 Item: flight);
         }
-        catch (SystemException e)
+        catch (DatabaseException e)
         {
             return new OperationResult<Flight>(
                 Success: false,
