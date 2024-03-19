@@ -79,24 +79,6 @@ public static class ParserExtension
         return parts;
     }
 
-    /// <summary>
-    /// Splits a string into at least the specified number of parts using the provided splitter character
-    /// and throws an exception if the string cannot be split into at least the expected number of parts.
-    /// </summary>
-    /// <param name="str">The string to split.</param>
-    /// <param name="minNumberOfParts">The minimum expected number of parts after splitting.</param>
-    /// <param name="splitter">The character used to split the string. Defaults to a comma.</param>
-    /// <returns>An array of strings, each representing a part of the original string.</returns>
-    /// <exception cref="FormatException">Thrown if the string does not split into at least the expected number of parts.</exception>
-    public static string[] SplitToMinLengthOrThrow(this string str, int minNumberOfParts, char splitter = ',')
-    {
-        var parts = str.Split(splitter);
-        if (parts.Length < minNumberOfParts)
-            throw new FormatException(
-                $"Unable to split '{str}' into at least {minNumberOfParts} parts separated by '{splitter}'.");
-        return parts;
-    }
-
     public static FlightClass ParseFlightClassOrThrow(this string flightClassStr)
     {
         if (!Enum.TryParse<FlightClass>(flightClassStr, true, out var flightClass))
