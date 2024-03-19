@@ -1,4 +1,5 @@
 using AirportTicketBookingSystem.Domain.Interfaces;
+using FluentAssertions;
 using Xunit;
 
 namespace AirportTicketBookingSystem.Test.Infrastructure.Converter;
@@ -11,20 +12,20 @@ public abstract class ConverterTestBase<TEntity> where TEntity : IEntity
     {
         var converter = GetConverter();
         var entity = converter.CsvToEntity(validCsvLine);
-        Assert.NotNull(entity);
-        Assert.Equal(entity, expectedEntity);
+        entity.Should().NotBeNull().And.Be(expectedEntity);
     }
 
     public virtual void CsvToEntity_ThrowFormatExceptionIfInvalidCsv(string invalidCsvLine)
     {
         var converter = GetConverter();
-        Assert.Throws<FormatException>(() => converter.CsvToEntity(invalidCsvLine));
+        var converting = () => converter.CsvToEntity(invalidCsvLine);
+        converting.Should().Throw<FormatException>();
     }
 
     public virtual void EntityToCsv_ConvertEntityToCsv(TEntity entity, string expectedCsvLine)
     {
         var converter = GetConverter();
         var csvLine = converter.EntityToCsv(entity);
-        Assert.Equal(csvLine, expectedCsvLine);
+        csvLine.Should().Be(expectedCsvLine);
     }
 }
