@@ -43,16 +43,9 @@ public class ClientController(IServiceProvider serviceProvider)
         var flightClass = PromptDomain.FlightClass();
         if (flightClass == null) return;
 
-        try
-        {
-            var booking = Booking.Create(flightId, PassengerId, flightClass.Value);
-            var result = ClientService.AddBooking(booking);
-            Display.OperationResult(result);
-        }
-        catch (ValidationException e)
-        {
-            Console.WriteLine("Booking creation failed:  " + e.Message);
-        }
+        var booking = new Booking(flightId, PassengerId, flightClass.Value);
+        var result = ClientService.AddBooking(booking);
+        Display.OperationResult(result);
     }
 
     private Menu ManageBookingsMenu()
@@ -80,7 +73,7 @@ public class ClientController(IServiceProvider serviceProvider)
             return;
         }
 
-        booking = Booking.Create(booking.FlightId, booking.PassengerId, flightClass.Value);
+        booking = new Booking(booking.FlightId, booking.PassengerId, flightClass.Value);
         Display.OperationResult(ClientService.UpdateBooking(booking));
     }
 

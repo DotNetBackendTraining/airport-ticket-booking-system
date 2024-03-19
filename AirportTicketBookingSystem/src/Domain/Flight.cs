@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using AirportTicketBookingSystem.Domain.Interfaces;
-using AirportTicketBookingSystem.Domain.Utility;
 
 namespace AirportTicketBookingSystem.Domain;
 
@@ -20,7 +19,7 @@ public class Flight : IEntity
 
     public IReadOnlyDictionary<FlightClass, decimal> ClassPrices { get; }
 
-    private Flight(
+    public Flight(
         int id, DateTime departureDate, string departureAirportId, string arrivalAirportId,
         IReadOnlyDictionary<FlightClass, decimal> classPrices)
     {
@@ -29,16 +28,6 @@ public class Flight : IEntity
         DepartureAirportId = departureAirportId;
         ArrivalAirportId = arrivalAirportId;
         ClassPrices = classPrices;
-    }
-
-    /// <exception cref="ValidationException">Thrown when any of the arguments do not meet the validation criteria.</exception>
-    public static Flight Create(
-        int id, DateTime departureDate, string departureAirportId, string arrivalAirportId,
-        IReadOnlyDictionary<FlightClass, decimal> classPrices)
-    {
-        var obj = new Flight(id, departureDate, departureAirportId, arrivalAirportId, classPrices);
-        obj.ValidateObjectOrThrow();
-        return obj;
     }
 
     public override bool Equals(object? obj) =>

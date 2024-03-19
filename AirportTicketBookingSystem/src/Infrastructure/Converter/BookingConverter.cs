@@ -1,7 +1,6 @@
 using AirportTicketBookingSystem.Domain;
 using AirportTicketBookingSystem.Domain.Interfaces;
 using AirportTicketBookingSystem.Infrastructure.Converter.Utility;
-using AirportTicketBookingSystem.Infrastructure.Interfaces;
 
 namespace AirportTicketBookingSystem.Infrastructure.Converter;
 
@@ -13,7 +12,7 @@ public class BookingConverter : ICsvEntityConverter<Booking>
         var flightId = parts[0].ParseOrThrowInt();
         var passengerId = parts[1].ParseOrThrowInt();
         var flightClass = parts[2].ParseFlightClassOrThrow();
-        return Booking.Create(flightId, passengerId, flightClass);
+        return new Booking(flightId, passengerId, flightClass);
     }
 
     public string EntityToCsv(Booking entity) =>

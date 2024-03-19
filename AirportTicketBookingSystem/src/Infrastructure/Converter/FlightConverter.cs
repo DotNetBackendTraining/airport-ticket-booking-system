@@ -2,7 +2,6 @@ using System.Text;
 using AirportTicketBookingSystem.Domain;
 using AirportTicketBookingSystem.Domain.Interfaces;
 using AirportTicketBookingSystem.Infrastructure.Converter.Utility;
-using AirportTicketBookingSystem.Infrastructure.Interfaces;
 
 namespace AirportTicketBookingSystem.Infrastructure.Converter;
 
@@ -31,7 +30,7 @@ public class FlightConverter : ICsvEntityConverter<Flight>
         var departureAirportId = parts[2];
         var arrivalAirportId = parts[3];
         var classPrices = ParseFlightClassPricePairsOrThrow(parts[4]);
-        return Flight.Create(id, departureDate, departureAirportId, arrivalAirportId, classPrices);
+        return new Flight(id, departureDate, departureAirportId, arrivalAirportId, classPrices);
     }
 
     public string EntityToCsv(Flight entity)

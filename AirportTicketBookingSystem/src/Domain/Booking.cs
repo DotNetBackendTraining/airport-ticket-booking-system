@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using AirportTicketBookingSystem.Domain.Interfaces;
-using AirportTicketBookingSystem.Domain.Utility;
 
 namespace AirportTicketBookingSystem.Domain;
 
@@ -16,19 +15,11 @@ public class Booking : IEntity
 
     public FlightClass BookingClass { get; }
 
-    private Booking(int flightId, int passengerId, FlightClass bookingClass)
+    public Booking(int flightId, int passengerId, FlightClass bookingClass)
     {
         FlightId = flightId;
         PassengerId = passengerId;
         BookingClass = bookingClass;
-    }
-
-    /// <exception cref="ValidationException">Thrown when any of the arguments do not meet the validation criteria.</exception>
-    public static Booking Create(int flightId, int passengerId, FlightClass bookingClass)
-    {
-        var obj = new Booking(flightId, passengerId, bookingClass);
-        obj.ValidateObjectOrThrow();
-        return obj;
     }
 
     public override bool Equals(object? obj) =>
