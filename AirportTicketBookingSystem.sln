@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirportTicketBookingSystem", "AirportTicketBookingSystem/AirportTicketBookingSystem.csproj", "{9838FFEF-37A4-418B-BCDD-EC248971939B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirportTicketBookingSystem.Test", "AirportTicketBookingSystem.Test\AirportTicketBookingSystem.Test.csproj", "{4463886B-D316-4F6E-AD95-F6A10010FAF9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{9838FFEF-37A4-418B-BCDD-EC248971939B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9838FFEF-37A4-418B-BCDD-EC248971939B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9838FFEF-37A4-418B-BCDD-EC248971939B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4463886B-D316-4F6E-AD95-F6A10010FAF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4463886B-D316-4F6E-AD95-F6A10010FAF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4463886B-D316-4F6E-AD95-F6A10010FAF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4463886B-D316-4F6E-AD95-F6A10010FAF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
