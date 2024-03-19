@@ -13,4 +13,7 @@ public static class CsvConstants
 
     // All flight class-price pairs should be combined with it in CSV files
     public const char FlightClassPriceDelimiter = ':';
+
+    // Standard decimal format in CSV files
+    public const string DecimalFormatSpecifier = "F2";
 }

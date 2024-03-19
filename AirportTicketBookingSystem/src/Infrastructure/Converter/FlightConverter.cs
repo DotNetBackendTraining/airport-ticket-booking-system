@@ -45,8 +45,11 @@ public class FlightConverter : ICsvEntityConverter<Flight>
         sb.Append(entity.ArrivalAirportId);
         sb.Append(',');
 
-        var fields = entity.ClassPrices.Select(
-            kvp => $"{kvp.Key}{CsvConstants.FlightClassPriceDelimiter}{kvp.Value}");
+        const char priceDelimiter = CsvConstants.FlightClassPriceDelimiter;
+        const string decimalFormat = CsvConstants.DecimalFormatSpecifier;
+
+        var fields = entity.ClassPrices.Select(kvp =>
+            $"{kvp.Key}{priceDelimiter}{kvp.Value.ToString(decimalFormat)}");
         sb.Append(string.Join(CsvConstants.FlightClassFieldsDelimiter, fields));
 
         return sb.ToString();
