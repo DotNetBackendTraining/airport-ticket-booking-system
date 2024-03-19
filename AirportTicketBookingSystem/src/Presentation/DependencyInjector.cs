@@ -8,6 +8,7 @@ using AirportTicketBookingSystem.Infrastructure.Converter;
 using AirportTicketBookingSystem.Infrastructure.Interfaces;
 using AirportTicketBookingSystem.Infrastructure.Repository;
 using AirportTicketBookingSystem.Infrastructure.Service;
+using AirportTicketBookingSystem.Infrastructure.Service.Database;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AirportTicketBookingSystem.Presentation;
@@ -53,15 +54,37 @@ public static class DependencyInjector
             var converter = provider.GetRequiredService<ICsvEntityConverter<Airport>>();
             return new CsvFileService<Airport>(filepath, converter);
         });
+
+        services.AddSingleton<DatabaseService<Flight>>();
+        services.AddSingleton<DatabaseService<Booking>>();
+        services.AddSingleton<DatabaseService<Passenger>>();
+        services.AddSingleton<DatabaseService<Airport>>();
+
+        services.AddSingleton<IValidationService, ValidationService>();
+
+        services.AddSingleton<IDatabaseService<Flight>>(provider =>
+            new ValidatedDatabaseService<Flight>(
+                provider.GetRequiredService<DatabaseService<Flight>>(),
+                provider.GetRequiredService<IValidationService>()));
+
+        services.AddSingleton<IDatabaseService<Booking>>(provider =>
+            new ValidatedDatabaseService<Booking>(
+                provider.GetRequiredService<DatabaseService<Booking>>(),
+                provider.GetRequiredService<IValidationService>()));
+
+        services.AddSingleton<IDatabaseService<Passenger>>(provider =>
+            new ValidatedDatabaseService<Passenger>(
+                provider.GetRequiredService<DatabaseService<Passenger>>(),
+                provider.GetRequiredService<IValidationService>()));
+
+        services.AddSingleton<IDatabaseService<Airport>>(provider =>
+            new ValidatedDatabaseService<Airport>(
+                provider.GetRequiredService<DatabaseService<Airport>>(),
+                provider.GetRequiredService<IValidationService>()));
     }
 
     private static void InjectRepositoryServices(IServiceCollection services)
     {
-        services.AddSingleton<ISimpleDatabaseService<Flight>, SimpleDatabaseService<Flight>>();
-        services.AddSingleton<ISimpleDatabaseService<Booking>, SimpleDatabaseService<Booking>>();
-        services.AddSingleton<ISimpleDatabaseService<Passenger>, SimpleDatabaseService<Passenger>>();
-        services.AddSingleton<ISimpleDatabaseService<Airport>, SimpleDatabaseService<Airport>>();
-
         services.AddSingleton<IFlightRepository, FlightRepository>();
         services.AddSingleton<IBookingRepository, BookingRepository>();
         services.AddSingleton<IPassengerRepository, PassengerRepository>();

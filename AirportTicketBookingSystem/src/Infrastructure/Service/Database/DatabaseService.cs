@@ -1,10 +1,15 @@
 using AirportTicketBookingSystem.Domain.Interfaces;
 using AirportTicketBookingSystem.Infrastructure.Interfaces;
 
-namespace AirportTicketBookingSystem.Infrastructure.Service;
+namespace AirportTicketBookingSystem.Infrastructure.Service.Database;
 
-public class SimpleDatabaseService<TEntity>(IFileService<TEntity> fileService)
-    : ISimpleDatabaseService<TEntity> where TEntity : IEntity
+/// <summary>
+/// Provides basic CRUD operations for managing entities in the database. This service enforces simple
+/// constraints such as uniqueness and existence, but does not manage relational constraints or dependencies.
+/// </summary>
+/// <typeparam name="TEntity">The type of the entity this service manages.</typeparam>
+public class DatabaseService<TEntity>(IFileService<TEntity> fileService)
+    : IDatabaseService<TEntity> where TEntity : IEntity
 {
     private IFileService<TEntity> FileService { get; } = fileService;
 

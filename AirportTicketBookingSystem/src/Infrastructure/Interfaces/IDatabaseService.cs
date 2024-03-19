@@ -1,19 +1,13 @@
+using System.ComponentModel.DataAnnotations;
 using AirportTicketBookingSystem.Domain.Interfaces;
 
 namespace AirportTicketBookingSystem.Infrastructure.Interfaces;
 
 /// <summary>
-/// Represents a simplified database service for managing entities of type <typeparamref name="TEntity"/>.
-/// This service provides basic CRUD operations with limited constraint checking.
+/// Defines the basic database methods for managing entities of type <typeparamref name="TEntity"/>.
 /// </summary>
-/// <remarks>
-/// Use this service with caution, as it only enforces simple database constraints such as uniqueness and existence.
-/// It does not manage or enforce relational constraints or dependencies between entities.
-/// For example, when deleting an entity that might have dependent entities in the database (e.g., deleting a flight without handling its associated bookings),
-/// you must manually ensure that all related entities are appropriately handled to maintain database integrity.
-/// </remarks>
 /// <typeparam name="TEntity">The type of the entity this service is responsible for.</typeparam>
-public interface ISimpleDatabaseService<TEntity>
+public interface IDatabaseService<TEntity>
     where TEntity : IEntity
 {
     public IEnumerable<TEntity> GetAll();
@@ -24,6 +18,7 @@ public interface ISimpleDatabaseService<TEntity>
     /// <param name="entity">The entity to be added.</param>
     /// <returns>A task representing the add operation.</returns>
     /// <exception cref="ArgumentException">Thrown when an entity already exists in the database.</exception>
+    /// <exception cref="ValidationException">Thrown when an entity is invalid (against its own attributes).</exception>
     public Task Add(TEntity entity);
 
     /// <summary>
@@ -32,6 +27,7 @@ public interface ISimpleDatabaseService<TEntity>
     /// </summary>
     /// <param name="newEntity">The new entity to replace the old entity.</param>
     /// <exception cref="KeyNotFoundException">Thrown when the old entity does not exist.</exception>
+    /// <exception cref="ValidationException">Thrown when an entity is invalid (against its own attributes).</exception>
     /// <returns>A task representing the update operation.</returns>
     /// <remarks>
     /// Before updating an entity, ensure that all dependent entities have been appropriately managed to avoid violating relational constraints.

@@ -1,7 +1,7 @@
 using AirportTicketBookingSystem.Domain.Interfaces;
 using AirportTicketBookingSystem.Infrastructure.Interfaces;
 
-namespace AirportTicketBookingSystem.Infrastructure.Service;
+namespace AirportTicketBookingSystem.Infrastructure.Service.Database;
 
 public class CsvFileService<TEntity>(
     string filepath,

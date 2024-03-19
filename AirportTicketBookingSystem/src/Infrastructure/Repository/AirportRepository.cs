@@ -1,15 +1,14 @@
 using AirportTicketBookingSystem.Domain;
-using AirportTicketBookingSystem.Domain.Interfaces;
 using AirportTicketBookingSystem.Domain.Interfaces.Repository;
 using AirportTicketBookingSystem.Infrastructure.Interfaces;
 
 namespace AirportTicketBookingSystem.Infrastructure.Repository;
 
 public class AirportRepository(
-    ISimpleDatabaseService<Airport> databaseService
+    IDatabaseService<Airport> databaseService
 ) : IAirportRepository
 {
-    private ISimpleDatabaseService<Airport> DatabaseService { get; } = databaseService;
+    private IDatabaseService<Airport> DatabaseService { get; } = databaseService;
 
     public void Add(Airport airport) => DatabaseService.Add(airport);
 
