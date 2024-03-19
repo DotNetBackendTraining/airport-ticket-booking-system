@@ -13,7 +13,7 @@ public class Booking : IEntity
     [Range(1, int.MaxValue, ErrorMessage = "ID must be a positive integer.")]
     public int PassengerId { get; }
 
-    public FlightClass BookingClass { get; }
+    [Required] public FlightClass BookingClass { get; }
 
     public Booking(int flightId, int passengerId, FlightClass bookingClass)
     {

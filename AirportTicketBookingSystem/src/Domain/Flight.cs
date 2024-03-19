@@ -9,7 +9,7 @@ public class Flight : IEntity
     [Range(1, int.MaxValue, ErrorMessage = "ID must be a positive integer.")]
     public int Id { get; }
 
-    public DateTime DepartureDate { get; }
+    [Required] public DateTime DepartureDate { get; }
 
     [StringLength(64, MinimumLength = 1, ErrorMessage = "Airport ID must be between 1 and 64 characters.")]
     public string DepartureAirportId { get; }
@@ -17,7 +17,7 @@ public class Flight : IEntity
     [StringLength(64, MinimumLength = 1, ErrorMessage = "Airport ID must be between 1 and 64 characters.")]
     public string ArrivalAirportId { get; }
 
-    public IReadOnlyDictionary<FlightClass, decimal> ClassPrices { get; }
+    [Required] public IReadOnlyDictionary<FlightClass, decimal> ClassPrices { get; }
 
     public Flight(
         int id, DateTime departureDate, string departureAirportId, string arrivalAirportId,
