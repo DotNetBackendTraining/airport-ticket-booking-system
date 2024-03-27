@@ -6,10 +6,13 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace AirportTicketBookingSystem.Presentation.Controller;
 
-public class ManagerController(IServiceProvider serviceProvider)
-    : GlobalController(serviceProvider)
+public class ManagerController : GlobalController
 {
     private IManagerService ManagerService => Provider.GetRequiredService<IManagerService>();
+
+    public ManagerController(IServiceProvider serviceProvider) : base(serviceProvider)
+    {
+    }
 
     public void Start()
     {

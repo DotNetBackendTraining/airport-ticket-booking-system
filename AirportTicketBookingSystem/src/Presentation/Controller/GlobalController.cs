@@ -5,10 +5,12 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace AirportTicketBookingSystem.Presentation.Controller;
 
-public class GlobalController(IServiceProvider serviceProvider)
+public class GlobalController
 {
-    protected IServiceProvider Provider { get; } = serviceProvider;
+    protected IServiceProvider Provider { get; }
     protected IGlobalService GlobalService => Provider.GetRequiredService<IGlobalService>();
+
+    public GlobalController(IServiceProvider serviceProvider) => Provider = serviceProvider;
 
     protected void SearchFlights()
     {

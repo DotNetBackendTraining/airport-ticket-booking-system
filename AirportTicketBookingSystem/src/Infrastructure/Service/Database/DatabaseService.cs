@@ -9,10 +9,11 @@ namespace AirportTicketBookingSystem.Infrastructure.Service.Database;
 /// constraints such as uniqueness and existence, but does not manage relational constraints or dependencies.
 /// </summary>
 /// <typeparam name="TEntity">The type of the entity this service manages.</typeparam>
-public class DatabaseService<TEntity>(IFileService<TEntity> fileService)
-    : IDatabaseService<TEntity> where TEntity : IEntity
+public class DatabaseService<TEntity> : IDatabaseService<TEntity>
+    where TEntity : IEntity
 {
-    private IFileService<TEntity> FileService { get; } = fileService;
+    private IFileService<TEntity> FileService { get; }
+    public DatabaseService(IFileService<TEntity> fileService) => FileService = fileService;
 
     public IEnumerable<TEntity> GetAll() => FileService.ReadAll();
 

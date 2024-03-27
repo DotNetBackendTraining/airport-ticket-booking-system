@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using AirportTicketBookingSystem.Application.Interfaces;
 using AirportTicketBookingSystem.Domain;
 using AirportTicketBookingSystem.Presentation.MenuSystem;
@@ -7,10 +6,13 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace AirportTicketBookingSystem.Presentation.Controller;
 
-public class ClientController(IServiceProvider serviceProvider)
-    : GlobalController(serviceProvider)
+public class ClientController : GlobalController
 {
     private IClientService ClientService => Provider.GetRequiredService<IClientService>();
+
+    public ClientController(IServiceProvider serviceProvider) : base(serviceProvider)
+    {
+    }
 
     private int? _passengerId;
     private int PassengerId => _passengerId ??= IsRegistered();

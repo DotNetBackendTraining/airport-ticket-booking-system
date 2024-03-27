@@ -6,17 +6,21 @@ using AirportTicketBookingSystem.Domain.Interfaces.Service;
 
 namespace AirportTicketBookingSystem.Infrastructure.Service;
 
-public class BookingService(
-    IBookingRepository repository,
-    IFlightService flightService,
-    IPassengerService passengerService
-) : IBookingService
+public class BookingService : IBookingService
 {
-    private IBookingRepository Repository { get; } = repository;
+    private IBookingRepository Repository { get; }
+    private IFlightService FlightService { get; }
+    private IPassengerService PassengerService { get; }
 
-    private IFlightService FlightService { get; } = flightService;
-
-    private IPassengerService PassengerService { get; } = passengerService;
+    public BookingService(
+        IBookingRepository repository,
+        IFlightService flightService,
+        IPassengerService passengerService)
+    {
+        Repository = repository;
+        FlightService = flightService;
+        PassengerService = passengerService;
+    }
 
     private void CheckValidRelationsOrThrow(Booking booking)
     {

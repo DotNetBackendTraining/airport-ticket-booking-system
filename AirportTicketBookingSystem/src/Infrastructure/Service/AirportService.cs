@@ -5,11 +5,10 @@ using AirportTicketBookingSystem.Domain.Interfaces.Service;
 
 namespace AirportTicketBookingSystem.Infrastructure.Service;
 
-public class AirportService(
-    IAirportRepository repository
-) : IAirportService
+public class AirportService : IAirportService
 {
-    private IAirportRepository Repository { get; } = repository;
+    private IAirportRepository Repository { get; }
+    public AirportService(IAirportRepository repository) => Repository = repository;
 
     public void Add(Airport airport) => Repository.Add(airport);
 

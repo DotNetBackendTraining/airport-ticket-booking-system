@@ -6,14 +6,17 @@ using AirportTicketBookingSystem.Domain.Interfaces.Service;
 
 namespace AirportTicketBookingSystem.Application.Service;
 
-public class GlobalService(
-    IFlightService flightService,
-    IAirportService airportService
-) : IGlobalService
+public class GlobalService : IGlobalService
 {
-    private IFlightService FlightService { get; } = flightService;
+    private IFlightService FlightService { get; }
+    private IAirportService AirportService { get; }
 
-    private IAirportService AirportService { get; } = airportService;
+    public GlobalService(IFlightService flightService,
+        IAirportService airportService)
+    {
+        FlightService = flightService;
+        AirportService = airportService;
+    }
 
     public SearchResult<Flight> SearchFlights(FlightSearchCriteria criteria)
     {

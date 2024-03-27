@@ -3,14 +3,19 @@ using AirportTicketBookingSystem.Infrastructure.Interfaces;
 
 namespace AirportTicketBookingSystem.Infrastructure.Service.Database;
 
-public class CsvFileService<TEntity>(
-    string filepath,
-    ICsvEntityConverter<TEntity> csvEntityConverter
-) : IFileService<TEntity> where TEntity : IEntity
+public class CsvFileService<TEntity> : IFileService<TEntity> where TEntity : IEntity
 {
-    private string Filepath { get; } = filepath;
-    private ICsvEntityConverter<TEntity> Converter { get; } = csvEntityConverter;
+    private string Filepath { get; }
+    private ICsvEntityConverter<TEntity> Converter { get; }
     private string? Header { get; set; }
+
+    public CsvFileService(
+        string filepath,
+        ICsvEntityConverter<TEntity> csvEntityConverter)
+    {
+        Filepath = filepath;
+        Converter = csvEntityConverter;
+    }
 
     public IEnumerable<TEntity> ReadAll()
     {

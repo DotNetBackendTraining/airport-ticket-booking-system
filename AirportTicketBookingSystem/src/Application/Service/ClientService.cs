@@ -7,14 +7,17 @@ using AirportTicketBookingSystem.Domain.Interfaces.Service;
 
 namespace AirportTicketBookingSystem.Application.Service;
 
-public class ClientService(
-    IBookingService bookingService,
-    IPassengerService passengerService
-) : IClientService
+public class ClientService : IClientService
 {
-    private IBookingService BookingService { get; } = bookingService;
+    private IBookingService BookingService { get; }
+    private IPassengerService PassengerService { get; }
 
-    private IPassengerService PassengerService { get; } = passengerService;
+    public ClientService(IBookingService bookingService,
+        IPassengerService passengerService)
+    {
+        BookingService = bookingService;
+        PassengerService = passengerService;
+    }
 
     public SearchResult<Booking> GetAllBookings(int passengerId)
     {

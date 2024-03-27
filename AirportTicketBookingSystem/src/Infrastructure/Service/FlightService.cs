@@ -7,14 +7,16 @@ using AirportTicketBookingSystem.Domain.Interfaces.Service;
 
 namespace AirportTicketBookingSystem.Infrastructure.Service;
 
-public class FlightService(
-    IFlightRepository repository,
-    IAirportService airportService
-) : IFlightService
+public class FlightService : IFlightService
 {
-    private IFlightRepository Repository { get; } = repository;
+    private IFlightRepository Repository { get; }
+    private IAirportService AirportService { get; }
 
-    private IAirportService AirportService { get; } = airportService;
+    public FlightService(IFlightRepository repository, IAirportService airportService)
+    {
+        Repository = repository;
+        AirportService = airportService;
+    }
 
     public void Add(Flight flight)
     {

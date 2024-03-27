@@ -1,10 +1,16 @@
 namespace AirportTicketBookingSystem.Presentation.MenuSystem;
 
-public class Menu(string name, string returnMessage = "Return") : IMenuItem
+public class Menu : IMenuItem
 {
-    public string Name { get; } = name;
-    private string ReturnMessage { get; } = returnMessage;
+    public string Name { get; }
+    private string ReturnMessage { get; }
     private List<IMenuItem> Items { get; } = [];
+
+    public Menu(string name, string returnMessage = "Return")
+    {
+        Name = name;
+        ReturnMessage = returnMessage;
+    }
 
     public Menu AddItem(IMenuItem menuItem)
     {

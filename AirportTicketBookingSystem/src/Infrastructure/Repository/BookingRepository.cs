@@ -4,11 +4,10 @@ using AirportTicketBookingSystem.Infrastructure.Interfaces;
 
 namespace AirportTicketBookingSystem.Infrastructure.Repository;
 
-public class BookingRepository(
-    IDatabaseService<Booking> databaseService
-) : IBookingRepository
+public class BookingRepository : IBookingRepository
 {
-    private IDatabaseService<Booking> DatabaseService { get; } = databaseService;
+    private IDatabaseService<Booking> DatabaseService { get; }
+    public BookingRepository(IDatabaseService<Booking> databaseService) => DatabaseService = databaseService;
 
     public void Add(Booking booking) => DatabaseService.Add(booking);
 

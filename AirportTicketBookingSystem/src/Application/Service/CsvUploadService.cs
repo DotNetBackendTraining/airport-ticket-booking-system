@@ -4,11 +4,10 @@ using AirportTicketBookingSystem.Domain.Interfaces;
 
 namespace AirportTicketBookingSystem.Application.Service;
 
-public class CsvUploadService<TEntity>(
-    ICsvEntityConverter<TEntity> csvEntityConverter
-) : IUploadService<TEntity> where TEntity : IEntity
+public class CsvUploadService<TEntity> : IUploadService<TEntity> where TEntity : IEntity
 {
-    private ICsvEntityConverter<TEntity> CsvEntityConverter { get; } = csvEntityConverter;
+    private ICsvEntityConverter<TEntity> CsvEntityConverter { get; }
+    public CsvUploadService(ICsvEntityConverter<TEntity> csvEntityConverter) => CsvEntityConverter = csvEntityConverter;
 
     public IEnumerable<OperationResult<TEntity>> BatchUpload(string filepath)
     {

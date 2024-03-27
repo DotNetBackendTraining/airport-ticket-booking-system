@@ -8,20 +8,23 @@ using AirportTicketBookingSystem.Domain.Interfaces.Service;
 
 namespace AirportTicketBookingSystem.Application.Service;
 
-public class ManagerService(
-    IBookingService bookingService,
-    IFlightService flightService,
-    IUploadService<Flight> flightUploadService,
-    IReflectionService reflectionService
-) : IManagerService
+public class ManagerService : IManagerService
 {
-    private IBookingService BookingService { get; } = bookingService;
+    private IBookingService BookingService { get; }
+    private IFlightService FlightService { get; }
+    private IUploadService<Flight> FlightUploadService { get; }
+    private IReflectionService ReflectionService { get; }
 
-    private IFlightService FlightService { get; } = flightService;
-
-    private IUploadService<Flight> FlightUploadService { get; } = flightUploadService;
-
-    private IReflectionService ReflectionService { get; } = reflectionService;
+    public ManagerService(IBookingService bookingService,
+        IFlightService flightService,
+        IUploadService<Flight> flightUploadService,
+        IReflectionService reflectionService)
+    {
+        BookingService = bookingService;
+        FlightService = flightService;
+        FlightUploadService = flightUploadService;
+        ReflectionService = reflectionService;
+    }
 
     public SearchResult<Booking> SearchBookings(BookingSearchCriteria criteria)
     {
