@@ -1,6 +1,7 @@
 using AirportTicketBookingSystem.Application.Interfaces;
 using AirportTicketBookingSystem.Application.Service;
 using AirportTicketBookingSystem.Domain;
+using AirportTicketBookingSystem.Domain.Criteria.Search;
 using AirportTicketBookingSystem.Domain.Interfaces;
 using AirportTicketBookingSystem.Domain.Interfaces.Repository;
 using AirportTicketBookingSystem.Domain.Interfaces.Service;
@@ -9,6 +10,7 @@ using AirportTicketBookingSystem.Infrastructure.Interfaces;
 using AirportTicketBookingSystem.Infrastructure.Repository;
 using AirportTicketBookingSystem.Infrastructure.Service;
 using AirportTicketBookingSystem.Infrastructure.Service.Database;
+using AirportTicketBookingSystem.Infrastructure.Service.Filters;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AirportTicketBookingSystem.Presentation;
@@ -89,6 +91,10 @@ public static class DependencyInjector
         services.AddSingleton<IBookingRepository, BookingRepository>();
         services.AddSingleton<IPassengerRepository, PassengerRepository>();
         services.AddSingleton<IAirportRepository, AirportRepository>();
+
+        services.AddSingleton<IFilteringService<Airport, AirportSearchCriteria>, AirportFilteringService>();
+        services.AddSingleton<IFilteringService<Flight, FlightSearchCriteria>, FlightFilteringService>();
+        services.AddSingleton<IFilteringService<Booking, BookingSearchCriteria>, BookingFilteringService>();
 
         services.AddSingleton<IFlightService, FlightService>();
         services.AddSingleton<IBookingService, BookingService>();

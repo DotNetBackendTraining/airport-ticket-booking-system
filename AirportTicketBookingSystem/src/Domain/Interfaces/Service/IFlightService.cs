@@ -38,12 +38,4 @@ public interface IFlightService
     /// <param name="criteria">The criteria to apply to the search.</param>
     /// <returns>A collection of flights that match the search criteria.</returns>
     public IEnumerable<Flight> Search(FlightSearchCriteria criteria);
-
-    /// <summary>
-    /// Filters a given collection of flights based on the specified criteria.
-    /// </summary>
-    /// <param name="flights">The collection of flights to filter.</param>
-    /// <param name="criteria">The criteria to apply to the filtering.</param>
-    /// <returns>A collection of flights that meet the filter criteria.</returns>
-    public IEnumerable<Flight> Filter(IEnumerable<Flight> flights, FlightSearchCriteria criteria);
 }

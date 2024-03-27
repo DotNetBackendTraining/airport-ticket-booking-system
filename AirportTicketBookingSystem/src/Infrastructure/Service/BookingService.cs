@@ -11,15 +11,18 @@ public class BookingService : IBookingService
     private readonly IBookingRepository _repository;
     private readonly IFlightService _flightService;
     private readonly IPassengerService _passengerService;
+    private readonly IFilteringService<Booking, BookingSearchCriteria> _filteringService;
 
     public BookingService(
         IBookingRepository repository,
         IFlightService flightService,
-        IPassengerService passengerService)
+        IPassengerService passengerService,
+        IFilteringService<Booking, BookingSearchCriteria> filteringService)
     {
         _repository = repository;
         _flightService = flightService;
         _passengerService = passengerService;
+        _filteringService = filteringService;
     }
 
     private void CheckValidRelationsOrThrow(Booking booking)
@@ -49,22 +52,6 @@ public class BookingService : IBookingService
 
     public Booking? GetById(int flightId, int passengerId) => _repository.GetById(flightId, passengerId);
 
-    public IEnumerable<Booking> Search(BookingSearchCriteria criteria)
-    {
-        var query = _repository.GetAll();
-
-        if (criteria.PassengerId.HasValue)
-            query = query.Where(b => b.PassengerId == criteria.PassengerId.Value);
-
-        if (criteria.Flight != null)
-            query = query.Where(b => MatchingFlight(b.FlightId, criteria.Flight));
-
-        return query;
-    }
-
-    private bool MatchingFlight(int flightId, FlightSearchCriteria flightCriteria)
-    {
-        var flight = _flightService.GetById(flightId);
-        return _flightService.Filter([flight], flightCriteria).Any();
-    }
+    public IEnumerable<Booking> Search(BookingSearchCriteria criteria) =>
+        _filteringService.Filter(_repository.GetAll(), criteria);
 }

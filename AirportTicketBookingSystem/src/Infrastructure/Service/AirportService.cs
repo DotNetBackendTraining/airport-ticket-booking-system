@@ -8,25 +8,20 @@ namespace AirportTicketBookingSystem.Infrastructure.Service;
 public class AirportService : IAirportService
 {
     private readonly IAirportRepository _repository;
-    public AirportService(IAirportRepository repository) => _repository = repository;
+    private readonly IFilteringService<Airport, AirportSearchCriteria> _filteringService;
+
+    public AirportService(
+        IAirportRepository repository,
+        IFilteringService<Airport, AirportSearchCriteria> filteringService)
+    {
+        _repository = repository;
+        _filteringService = filteringService;
+    }
 
     public void Add(Airport airport) => _repository.Add(airport);
 
     public Airport? GetById(string id) => _repository.GetById(id);
 
-    public IEnumerable<Airport> Search(AirportSearchCriteria criteria)
-    {
-        return Filter(_repository.GetAll(), criteria);
-    }
-
-    public IEnumerable<Airport> Filter(IEnumerable<Airport> airports, AirportSearchCriteria criteria)
-    {
-        if (!string.IsNullOrEmpty(criteria.Name))
-            airports = airports.Where(a => a.Name == criteria.Name);
-
-        if (!string.IsNullOrEmpty(criteria.Country))
-            airports = airports.Where(a => a.Country == criteria.Country);
-
-        return airports;
-    }
+    public IEnumerable<Airport> Search(AirportSearchCriteria criteria) =>
+        _filteringService.Filter(_repository.GetAll(), criteria);
 }

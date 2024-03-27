@@ -29,12 +29,4 @@ public interface IAirportService
     /// <param name="criteria">The criteria to apply to the search.</param>
     /// <returns>A collection of airports that match the search criteria.</returns>
     IEnumerable<Airport> Search(AirportSearchCriteria criteria);
-
-    /// <summary>
-    /// Filters a given collection of airports based on the specified criteria.
-    /// </summary>
-    /// <param name="airports">The collection of airports to filter.</param>
-    /// <param name="criteria">The criteria to apply to the filtering.</param>
-    /// <returns>A collection of airports that meet the filter criteria.</returns>
-    IEnumerable<Airport> Filter(IEnumerable<Airport> airports, AirportSearchCriteria criteria);
 }
