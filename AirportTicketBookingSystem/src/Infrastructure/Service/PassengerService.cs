@@ -6,10 +6,10 @@ namespace AirportTicketBookingSystem.Infrastructure.Service;
 
 public class PassengerService : IPassengerService
 {
-    private IPassengerRepository Repository { get; }
-    public PassengerService(IPassengerRepository repository) => Repository = repository;
+    private readonly IPassengerRepository _repository;
+    public PassengerService(IPassengerRepository repository) => _repository = repository;
 
-    public void Add(Passenger passenger) => Repository.Add(passenger);
+    public void Add(Passenger passenger) => _repository.Add(passenger);
 
-    public Passenger? GetById(int id) => Repository.GetById(id);
+    public Passenger? GetById(int id) => _repository.GetById(id);
 }

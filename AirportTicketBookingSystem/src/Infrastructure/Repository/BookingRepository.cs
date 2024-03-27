@@ -6,18 +6,18 @@ namespace AirportTicketBookingSystem.Infrastructure.Repository;
 
 public class BookingRepository : IBookingRepository
 {
-    private IDatabaseService<Booking> DatabaseService { get; }
-    public BookingRepository(IDatabaseService<Booking> databaseService) => DatabaseService = databaseService;
+    private readonly IDatabaseService<Booking> _databaseService;
+    public BookingRepository(IDatabaseService<Booking> databaseService) => _databaseService = databaseService;
 
-    public void Add(Booking booking) => DatabaseService.Add(booking);
+    public void Add(Booking booking) => _databaseService.Add(booking);
 
-    public void Update(Booking booking) => DatabaseService.Update(booking);
+    public void Update(Booking booking) => _databaseService.Update(booking);
 
-    public void Delete(Booking booking) => DatabaseService.Delete(booking);
+    public void Delete(Booking booking) => _databaseService.Delete(booking);
 
-    public IEnumerable<Booking> GetAll() => DatabaseService.GetAll();
+    public IEnumerable<Booking> GetAll() => _databaseService.GetAll();
 
-    public Booking? GetById(int flightId, int passengerId) => DatabaseService
+    public Booking? GetById(int flightId, int passengerId) => _databaseService
         .GetAll()
         .FirstOrDefault(b =>
             b.FlightId == flightId &&

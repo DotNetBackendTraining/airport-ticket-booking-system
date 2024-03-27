@@ -8,27 +8,27 @@ namespace AirportTicketBookingSystem.Infrastructure.Service;
 
 public class BookingService : IBookingService
 {
-    private IBookingRepository Repository { get; }
-    private IFlightService FlightService { get; }
-    private IPassengerService PassengerService { get; }
+    private readonly IBookingRepository _repository;
+    private readonly IFlightService _flightService;
+    private readonly IPassengerService _passengerService;
 
     public BookingService(
         IBookingRepository repository,
         IFlightService flightService,
         IPassengerService passengerService)
     {
-        Repository = repository;
-        FlightService = flightService;
-        PassengerService = passengerService;
+        _repository = repository;
+        _flightService = flightService;
+        _passengerService = passengerService;
     }
 
     private void CheckValidRelationsOrThrow(Booking booking)
     {
-        if (PassengerService.GetById(booking.PassengerId) == null)
+        if (_passengerService.GetById(booking.PassengerId) == null)
             throw new DatabaseRelationalException(
                 $"Passenger with ID '{booking.PassengerId}' was not found for the booking '{booking}'");
 
-        if (FlightService.GetById(booking.FlightId) == null)
+        if (_flightService.GetById(booking.FlightId) == null)
             throw new DatabaseRelationalException(
                 $"Flight with ID '{booking.FlightId}' was not found for the booking '{booking}'");
     }
@@ -36,22 +36,22 @@ public class BookingService : IBookingService
     public void Add(Booking booking)
     {
         CheckValidRelationsOrThrow(booking);
-        Repository.Add(booking);
+        _repository.Add(booking);
     }
 
     public void Update(Booking booking)
     {
         CheckValidRelationsOrThrow(booking);
-        Repository.Update(booking);
+        _repository.Update(booking);
     }
 
-    public void Delete(Booking booking) => Repository.Delete(booking);
+    public void Delete(Booking booking) => _repository.Delete(booking);
 
-    public Booking? GetById(int flightId, int passengerId) => Repository.GetById(flightId, passengerId);
+    public Booking? GetById(int flightId, int passengerId) => _repository.GetById(flightId, passengerId);
 
     public IEnumerable<Booking> Search(BookingSearchCriteria criteria)
     {
-        var query = Repository.GetAll();
+        var query = _repository.GetAll();
 
         if (criteria.PassengerId.HasValue)
             query = query.Where(b => b.PassengerId == criteria.PassengerId.Value);
@@ -64,7 +64,7 @@ public class BookingService : IBookingService
 
     private bool MatchingFlight(int flightId, FlightSearchCriteria flightCriteria)
     {
-        var flight = FlightService.GetById(flightId);
-        return FlightService.Filter([flight], flightCriteria).Any();
+        var flight = _flightService.GetById(flightId);
+        return _flightService.Filter([flight], flightCriteria).Any();
     }
 }

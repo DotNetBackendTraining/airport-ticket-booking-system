@@ -6,14 +6,14 @@ namespace AirportTicketBookingSystem.Infrastructure.Repository;
 
 public class AirportRepository : IAirportRepository
 {
-    private IDatabaseService<Airport> DatabaseService { get; }
-    public AirportRepository(IDatabaseService<Airport> databaseService) => DatabaseService = databaseService;
+    private readonly IDatabaseService<Airport> _databaseService;
+    public AirportRepository(IDatabaseService<Airport> databaseService) => _databaseService = databaseService;
 
-    public void Add(Airport airport) => DatabaseService.Add(airport);
+    public void Add(Airport airport) => _databaseService.Add(airport);
 
-    public IEnumerable<Airport> GetAll() => DatabaseService.GetAll();
+    public IEnumerable<Airport> GetAll() => _databaseService.GetAll();
 
-    public Airport? GetById(string id) => DatabaseService
+    public Airport? GetById(string id) => _databaseService
         .GetAll()
         .FirstOrDefault(a => a.Id == id);
 }

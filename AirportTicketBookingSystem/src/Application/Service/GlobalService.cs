@@ -8,19 +8,19 @@ namespace AirportTicketBookingSystem.Application.Service;
 
 public class GlobalService : IGlobalService
 {
-    private IFlightService FlightService { get; }
-    private IAirportService AirportService { get; }
+    private readonly IFlightService _flightService;
+    private readonly IAirportService _airportService;
 
     public GlobalService(IFlightService flightService,
         IAirportService airportService)
     {
-        FlightService = flightService;
-        AirportService = airportService;
+        _flightService = flightService;
+        _airportService = airportService;
     }
 
     public SearchResult<Flight> SearchFlights(FlightSearchCriteria criteria)
     {
-        var flights = FlightService.Search(criteria);
+        var flights = _flightService.Search(criteria);
         return new SearchResult<Flight>(
             Success: true,
             Message: "Flights search completed successfully",
@@ -29,7 +29,7 @@ public class GlobalService : IGlobalService
 
     public SearchResult<Airport> SearchAirports(AirportSearchCriteria criteria)
     {
-        var airports = AirportService.Search(criteria);
+        var airports = _airportService.Search(criteria);
         return new SearchResult<Airport>(
             Success: true,
             Message: "Airports search completed successfully",

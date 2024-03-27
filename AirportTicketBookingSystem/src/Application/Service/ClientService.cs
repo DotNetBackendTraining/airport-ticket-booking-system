@@ -9,19 +9,19 @@ namespace AirportTicketBookingSystem.Application.Service;
 
 public class ClientService : IClientService
 {
-    private IBookingService BookingService { get; }
-    private IPassengerService PassengerService { get; }
+    private readonly IBookingService _bookingService;
+    private readonly IPassengerService _passengerService;
 
     public ClientService(IBookingService bookingService,
         IPassengerService passengerService)
     {
-        BookingService = bookingService;
-        PassengerService = passengerService;
+        _bookingService = bookingService;
+        _passengerService = passengerService;
     }
 
     public SearchResult<Booking> GetAllBookings(int passengerId)
     {
-        var bookings = BookingService.Search(new BookingSearchCriteria { PassengerId = passengerId });
+        var bookings = _bookingService.Search(new BookingSearchCriteria { PassengerId = passengerId });
         return new SearchResult<Booking>(
             Success: true,
             Message: "Bookings search completed successfully",
@@ -32,7 +32,7 @@ public class ClientService : IClientService
     {
         try
         {
-            BookingService.Add(booking);
+            _bookingService.Add(booking);
             return new OperationResult<Booking>(
                 Success: true,
                 Message: "Booking creation completed successfully",
@@ -51,7 +51,7 @@ public class ClientService : IClientService
     {
         try
         {
-            BookingService.Update(updatedBooking);
+            _bookingService.Update(updatedBooking);
             return new OperationResult<Booking>(
                 Success: true,
                 Message: "Booking update completed successfully",
@@ -70,7 +70,7 @@ public class ClientService : IClientService
     {
         try
         {
-            BookingService.Delete(cancelledBooking);
+            _bookingService.Delete(cancelledBooking);
             return new OperationResult<Booking>(
                 Success: true,
                 Message: "Booking delete completed successfully",
@@ -86,5 +86,5 @@ public class ClientService : IClientService
     }
 
     public bool IsPassengerRegistered(int passengerId) =>
-        PassengerService.GetById(passengerId) != null;
+        _passengerService.GetById(passengerId) != null;
 }

@@ -7,16 +7,16 @@ namespace AirportTicketBookingSystem.Infrastructure.Service;
 
 public class AirportService : IAirportService
 {
-    private IAirportRepository Repository { get; }
-    public AirportService(IAirportRepository repository) => Repository = repository;
+    private readonly IAirportRepository _repository;
+    public AirportService(IAirportRepository repository) => _repository = repository;
 
-    public void Add(Airport airport) => Repository.Add(airport);
+    public void Add(Airport airport) => _repository.Add(airport);
 
-    public Airport? GetById(string id) => Repository.GetById(id);
+    public Airport? GetById(string id) => _repository.GetById(id);
 
     public IEnumerable<Airport> Search(AirportSearchCriteria criteria)
     {
-        return Filter(Repository.GetAll(), criteria);
+        return Filter(_repository.GetAll(), criteria);
     }
 
     public IEnumerable<Airport> Filter(IEnumerable<Airport> airports, AirportSearchCriteria criteria)

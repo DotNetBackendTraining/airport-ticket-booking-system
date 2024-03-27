@@ -10,25 +10,25 @@ namespace AirportTicketBookingSystem.Application.Service;
 
 public class ManagerService : IManagerService
 {
-    private IBookingService BookingService { get; }
-    private IFlightService FlightService { get; }
-    private IUploadService<Flight> FlightUploadService { get; }
-    private IReflectionService ReflectionService { get; }
+    private readonly IBookingService _bookingService;
+    private readonly IFlightService _flightService;
+    private readonly IUploadService<Flight> _flightUploadService;
+    private readonly IReflectionService _reflectionService;
 
     public ManagerService(IBookingService bookingService,
         IFlightService flightService,
         IUploadService<Flight> flightUploadService,
         IReflectionService reflectionService)
     {
-        BookingService = bookingService;
-        FlightService = flightService;
-        FlightUploadService = flightUploadService;
-        ReflectionService = reflectionService;
+        _bookingService = bookingService;
+        _flightService = flightService;
+        _flightUploadService = flightUploadService;
+        _reflectionService = reflectionService;
     }
 
     public SearchResult<Booking> SearchBookings(BookingSearchCriteria criteria)
     {
-        var bookings = BookingService.Search(criteria);
+        var bookings = _bookingService.Search(criteria);
         return new SearchResult<Booking>(
             Success: true,
             Message: "Bookings search completed successfully",
@@ -39,7 +39,7 @@ public class ManagerService : IManagerService
     {
         try
         {
-            FlightService.Add(flight);
+            _flightService.Add(flight);
             return new OperationResult<Flight>(
                 Success: true,
                 Message: "Flight creation completed successfully",
@@ -55,12 +55,12 @@ public class ManagerService : IManagerService
     }
 
     public IEnumerable<OperationResult<Flight>> BatchUploadFlights(string filepath) =>
-        FlightUploadService.BatchUpload(filepath);
+        _flightUploadService.BatchUpload(filepath);
 
     public IEnumerable<Type> GetDomainEntities() =>
-        ReflectionService.GetClassTypesInNamespace("AirportTicketBookingSystem.Domain")
+        _reflectionService.GetClassTypesInNamespace("AirportTicketBookingSystem.Domain")
             .Where(type => typeof(IEntity).IsAssignableFrom(type));
 
     public string ReportConstraints(Type type) =>
-        ReflectionService.ReportPropertiesWithAttributes(type);
+        _reflectionService.ReportPropertiesWithAttributes(type);
 }

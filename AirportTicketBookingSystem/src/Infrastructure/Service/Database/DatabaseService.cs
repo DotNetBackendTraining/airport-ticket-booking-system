@@ -12,17 +12,17 @@ namespace AirportTicketBookingSystem.Infrastructure.Service.Database;
 public class DatabaseService<TEntity> : IDatabaseService<TEntity>
     where TEntity : IEntity
 {
-    private IFileService<TEntity> FileService { get; }
-    public DatabaseService(IFileService<TEntity> fileService) => FileService = fileService;
+    private readonly IFileService<TEntity> _fileService;
+    public DatabaseService(IFileService<TEntity> fileService) => _fileService = fileService;
 
-    public IEnumerable<TEntity> GetAll() => FileService.ReadAll();
+    public IEnumerable<TEntity> GetAll() => _fileService.ReadAll();
 
     private bool Exists(TEntity entity) => GetAll().Any(e => e.Equals(entity));
 
     public async Task Add(TEntity entity)
     {
         if (Exists(entity)) throw new DatabaseOperationException($"Entity {entity} already exists in the database");
-        await FileService.AppendAllAsync(Enumerable.Repeat(entity, 1));
+        await _fileService.AppendAllAsync(Enumerable.Repeat(entity, 1));
     }
 
     public async Task Update(TEntity newEntity)
@@ -31,7 +31,7 @@ public class DatabaseService<TEntity> : IDatabaseService<TEntity>
             throw new DatabaseOperationException($"Entity {newEntity} was not found in the database");
         var cache = GetAll().ToList();
         var changes = cache.Select(e => e.Equals(newEntity) ? newEntity : e);
-        await FileService.WriteAllAsync(changes);
+        await _fileService.WriteAllAsync(changes);
     }
 
     public async Task Delete(TEntity entity)
@@ -40,6 +40,6 @@ public class DatabaseService<TEntity> : IDatabaseService<TEntity>
             throw new DatabaseOperationException($"Entity {entity} was not found in the database");
         var cache = GetAll().ToList();
         var changes = cache.Where(e => !e.Equals(entity));
-        await FileService.WriteAllAsync(changes);
+        await _fileService.WriteAllAsync(changes);
     }
 }

@@ -6,8 +6,8 @@ namespace AirportTicketBookingSystem.Application.Service;
 
 public class CsvUploadService<TEntity> : IUploadService<TEntity> where TEntity : IEntity
 {
-    private ICsvEntityConverter<TEntity> CsvEntityConverter { get; }
-    public CsvUploadService(ICsvEntityConverter<TEntity> csvEntityConverter) => CsvEntityConverter = csvEntityConverter;
+    private readonly ICsvEntityConverter<TEntity> _csvEntityConverter;
+    public CsvUploadService(ICsvEntityConverter<TEntity> csvEntityConverter) => _csvEntityConverter = csvEntityConverter;
 
     public IEnumerable<OperationResult<TEntity>> BatchUpload(string filepath)
     {
@@ -18,7 +18,7 @@ public class CsvUploadService<TEntity> : IUploadService<TEntity> where TEntity :
             TEntity? entity = default;
             try
             {
-                entity = CsvEntityConverter.CsvToEntity(line);
+                entity = _csvEntityConverter.CsvToEntity(line);
             }
             catch (FormatException e)
             {

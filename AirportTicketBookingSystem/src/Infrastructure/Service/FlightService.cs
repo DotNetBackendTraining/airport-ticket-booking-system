@@ -9,28 +9,28 @@ namespace AirportTicketBookingSystem.Infrastructure.Service;
 
 public class FlightService : IFlightService
 {
-    private IFlightRepository Repository { get; }
-    private IAirportService AirportService { get; }
+    private readonly IFlightRepository _repository;
+    private readonly IAirportService _airportService;
 
     public FlightService(IFlightRepository repository, IAirportService airportService)
     {
-        Repository = repository;
-        AirportService = airportService;
+        _repository = repository;
+        _airportService = airportService;
     }
 
     public void Add(Flight flight)
     {
         foreach (var id in new[] { flight.DepartureAirportId, flight.ArrivalAirportId })
-            if (AirportService.GetById(id) == null)
+            if (_airportService.GetById(id) == null)
                 throw new DatabaseRelationalException($"Airport with ID '{id}' was not found in the repository");
-        Repository.Add(flight);
+        _repository.Add(flight);
     }
 
-    public Flight? GetById(int flightId) => Repository.GetById(flightId);
+    public Flight? GetById(int flightId) => _repository.GetById(flightId);
 
     public IEnumerable<Flight> Search(FlightSearchCriteria criteria)
     {
-        return Filter(Repository.GetAll(), criteria);
+        return Filter(_repository.GetAll(), criteria);
     }
 
     public IEnumerable<Flight> Filter(IEnumerable<Flight> flights, FlightSearchCriteria criteria)
@@ -65,7 +65,7 @@ public class FlightService : IFlightService
 
     private bool MatchesAirport(string airportId, AirportSearchCriteria airportCriteria)
     {
-        var airport = AirportService.GetById(airportId);
-        return AirportService.Filter([airport], airportCriteria).Any();
+        var airport = _airportService.GetById(airportId);
+        return _airportService.Filter([airport], airportCriteria).Any();
     }
 }
