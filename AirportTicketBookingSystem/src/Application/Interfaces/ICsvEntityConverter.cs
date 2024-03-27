@@ -1,4 +1,6 @@
-namespace AirportTicketBookingSystem.Domain.Interfaces;
+using AirportTicketBookingSystem.Domain.Interfaces;
+
+namespace AirportTicketBookingSystem.Application.Interfaces;
 
 public interface ICsvEntityConverter<TEntity>
     where TEntity : IEntity

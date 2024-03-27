@@ -1,6 +1,6 @@
+using AirportTicketBookingSystem.Application.Interfaces;
 using AirportTicketBookingSystem.Domain.Interfaces;
 using FluentAssertions;
-using Xunit;
 
 namespace AirportTicketBookingSystem.Test.Infrastructure.Converter;
 
