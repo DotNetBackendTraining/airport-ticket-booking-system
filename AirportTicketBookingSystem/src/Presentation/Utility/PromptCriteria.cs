@@ -1,4 +1,3 @@
-using AirportTicketBookingSystem.Domain;
 using AirportTicketBookingSystem.Domain.Criteria;
 using AirportTicketBookingSystem.Domain.Criteria.Search;
 

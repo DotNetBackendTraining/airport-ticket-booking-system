@@ -13,22 +13,4 @@ namespace AirportTicketBookingSystem.Application.Result;
 public record SearchResult<TItem>(bool Success, string Message, IEnumerable<TItem> Items)
     : Result(Success, Message)
 {
-    /// <summary>
-    /// Retrieves a specific page of items from the search results.
-    /// </summary>
-    /// <param name="pageNumber">The one-based page number to retrieve.</param>
-    /// <param name="pageSize">The number of items per page.</param>
-    /// <returns>A subset of items corresponding to the specified page.</returns>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown if pageNumber or pageSize are less than 1.</exception>
-    public IEnumerable<TItem> GetPage(int pageNumber, int pageSize)
-    {
-        if (pageNumber < 1)
-            throw new ArgumentOutOfRangeException(nameof(pageNumber),
-                "Page number should be greater than or equal to 1.");
-
-        if (pageSize < 1)
-            throw new ArgumentOutOfRangeException(nameof(pageSize), "Page size should be greater than or equal to 1.");
-
-        return Items.Skip((pageNumber - 1) * pageSize).Take(pageSize);
-    }
 }
