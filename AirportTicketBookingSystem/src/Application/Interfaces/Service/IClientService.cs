@@ -1,7 +1,7 @@
 using AirportTicketBookingSystem.Application.Result;
 using AirportTicketBookingSystem.Domain;
 
-namespace AirportTicketBookingSystem.Application.Interfaces;
+namespace AirportTicketBookingSystem.Application.Interfaces.Service;
 
 /// <summary>
 /// Defines the service operations available to clients

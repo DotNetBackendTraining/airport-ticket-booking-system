@@ -1,4 +1,4 @@
-using AirportTicketBookingSystem.Application.Interfaces;
+using AirportTicketBookingSystem.Application.Interfaces.Service;
 using AirportTicketBookingSystem.Domain.Criteria.Search;
 using AirportTicketBookingSystem.Presentation.Utility;
 using Microsoft.Extensions.DependencyInjection;
