@@ -1,4 +1,4 @@
-using AirportTicketBookingSystem.Application.Contract;
+using AirportTicketBookingSystem.Application.Interfaces;
 using AirportTicketBookingSystem.Domain;
 using AirportTicketBookingSystem.Presentation.MenuSystem;
 using AirportTicketBookingSystem.Presentation.Utility;
