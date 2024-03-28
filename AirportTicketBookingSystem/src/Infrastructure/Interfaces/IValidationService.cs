@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
+using AirportTicketBookingSystem.Domain.Interfaces;
 
-namespace AirportTicketBookingSystem.Domain.Interfaces.Service;
+namespace AirportTicketBookingSystem.Infrastructure.Interfaces;
 
 public interface IValidationService
 {

@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using AirportTicketBookingSystem.Domain.Common;
 using AirportTicketBookingSystem.Domain.Interfaces;
-using AirportTicketBookingSystem.Domain.Interfaces.Service;
 using AirportTicketBookingSystem.Infrastructure.Interfaces;
 
 namespace AirportTicketBookingSystem.Infrastructure.Service.Database;
