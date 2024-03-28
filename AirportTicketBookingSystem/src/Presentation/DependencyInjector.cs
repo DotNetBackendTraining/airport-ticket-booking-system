@@ -106,7 +106,9 @@ public static class DependencyInjector
         services.AddSingleton<ICrudDatabaseService<Airport>, DatabaseValidationLayer<Airport>>(provider =>
         {
             var baseService = provider.GetRequiredService<DatabasePersistenceService<Airport>>();
-            var relationalLayer = new AirportRelationalLayer(baseService);
+            var relationalLayer = new AirportRelationalLayer(
+                baseService,
+                provider.GetRequiredService<IQueryDatabaseService<Flight>>());
             return new DatabaseValidationLayer<Airport>(
                 relationalLayer,
                 provider.GetRequiredService<IValidationService>());
