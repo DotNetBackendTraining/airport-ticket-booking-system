@@ -58,32 +58,46 @@ public static class DependencyInjector
             return new CsvFileService<Airport>(filepath, converter);
         });
 
-        services.AddSingleton<DatabaseService<Flight>>();
-        services.AddSingleton<DatabaseService<Booking>>();
-        services.AddSingleton<DatabaseService<Passenger>>();
-        services.AddSingleton<DatabaseService<Airport>>();
-
         services.AddSingleton<IValidationService, ValidationService>();
 
-        services.AddSingleton<IDatabaseService<Flight>>(provider =>
-            new ValidatedDatabaseService<Flight>(
-                provider.GetRequiredService<DatabaseService<Flight>>(),
-                provider.GetRequiredService<IValidationService>()));
+        services.AddSingleton<DatabasePersistenceService<Flight>>();
+        services.AddSingleton<DatabasePersistenceService<Booking>>();
+        services.AddSingleton<DatabasePersistenceService<Passenger>>();
+        services.AddSingleton<DatabasePersistenceService<Airport>>();
 
-        services.AddSingleton<IDatabaseService<Booking>>(provider =>
-            new ValidatedDatabaseService<Booking>(
-                provider.GetRequiredService<DatabaseService<Booking>>(),
-                provider.GetRequiredService<IValidationService>()));
+        services.AddSingleton<IQueryDatabaseService<Flight>, DatabasePersistenceService<Flight>>();
+        services.AddSingleton<IQueryDatabaseService<Booking>, DatabasePersistenceService<Booking>>();
+        services.AddSingleton<IQueryDatabaseService<Passenger>, DatabasePersistenceService<Passenger>>();
+        services.AddSingleton<IQueryDatabaseService<Airport>, DatabasePersistenceService<Airport>>();
 
-        services.AddSingleton<IDatabaseService<Passenger>>(provider =>
-            new ValidatedDatabaseService<Passenger>(
-                provider.GetRequiredService<DatabaseService<Passenger>>(),
-                provider.GetRequiredService<IValidationService>()));
-
-        services.AddSingleton<IDatabaseService<Airport>>(provider =>
-            new ValidatedDatabaseService<Airport>(
-                provider.GetRequiredService<DatabaseService<Airport>>(),
-                provider.GetRequiredService<IValidationService>()));
+        services.AddSingleton<ICrudDatabaseService<Flight>>(provider =>
+        {
+            var baseService = provider.GetRequiredService<DatabasePersistenceService<Flight>>();
+            return new DatabaseValidationLayer<Flight>(
+                baseService,
+                provider.GetRequiredService<IValidationService>());
+        });
+        services.AddSingleton<ICrudDatabaseService<Booking>, DatabaseValidationLayer<Booking>>(provider =>
+        {
+            var baseService = provider.GetRequiredService<DatabasePersistenceService<Booking>>();
+            return new DatabaseValidationLayer<Booking>(
+                baseService,
+                provider.GetRequiredService<IValidationService>());
+        });
+        services.AddSingleton<ICrudDatabaseService<Passenger>, DatabaseValidationLayer<Passenger>>(provider =>
+        {
+            var baseService = provider.GetRequiredService<DatabasePersistenceService<Passenger>>();
+            return new DatabaseValidationLayer<Passenger>(
+                baseService,
+                provider.GetRequiredService<IValidationService>());
+        });
+        services.AddSingleton<ICrudDatabaseService<Airport>, DatabaseValidationLayer<Airport>>(provider =>
+        {
+            var baseService = provider.GetRequiredService<DatabasePersistenceService<Airport>>();
+            return new DatabaseValidationLayer<Airport>(
+                baseService,
+                provider.GetRequiredService<IValidationService>());
+        });
     }
 
     private static void InjectRepositoryServices(IServiceCollection services)

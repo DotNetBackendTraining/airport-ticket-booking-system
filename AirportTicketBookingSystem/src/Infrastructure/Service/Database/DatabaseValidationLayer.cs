@@ -7,18 +7,18 @@ using AirportTicketBookingSystem.Infrastructure.Interfaces;
 namespace AirportTicketBookingSystem.Infrastructure.Service.Database;
 
 /// <summary>
-/// Enhances a database service with additional validation logic. This service validates entities before
-/// performing CRUD operations and propagates exceptions from the underlying database service.
+/// Validates attributes of entities before performing CRUD operations
+/// and propagates any exceptions from the underlying crud database service.
 /// </summary>
-/// <typeparam name="TEntity">The type of the entity this service manages.</typeparam>
-public class ValidatedDatabaseService<TEntity> : IDatabaseService<TEntity>
+/// <typeparam name="TEntity">Type of domain entity.</typeparam>
+public class DatabaseValidationLayer<TEntity> : ICrudDatabaseService<TEntity>
     where TEntity : IEntity
 {
-    private readonly IDatabaseService<TEntity> _databaseService;
+    private readonly ICrudDatabaseService<TEntity> _databaseService;
     private readonly IValidationService _validationService;
 
-    public ValidatedDatabaseService(
-        IDatabaseService<TEntity> databaseService,
+    public DatabaseValidationLayer(
+        ICrudDatabaseService<TEntity> databaseService,
         IValidationService validationService)
     {
         _databaseService = databaseService;
@@ -35,16 +35,6 @@ public class ValidatedDatabaseService<TEntity> : IDatabaseService<TEntity>
         {
             throw new DatabaseOperationException(e.Message);
         }
-    }
-
-    public bool Exists(TEntity entity)
-    {
-        return _databaseService.Exists(entity);
-    }
-
-    public IEnumerable<TEntity> GetAll()
-    {
-        return _databaseService.GetAll();
     }
 
     public async Task Add(TEntity entity)

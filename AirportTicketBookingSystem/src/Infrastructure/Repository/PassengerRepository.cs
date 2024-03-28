@@ -6,12 +6,20 @@ namespace AirportTicketBookingSystem.Infrastructure.Repository;
 
 public class PassengerRepository : IPassengerRepository
 {
-    private readonly IDatabaseService<Passenger> _databaseService;
-    public PassengerRepository(IDatabaseService<Passenger> databaseService) => _databaseService = databaseService;
+    private readonly IQueryDatabaseService<Passenger> _queryDatabaseService;
+    private readonly ICrudDatabaseService<Passenger> _crudDatabaseService;
 
-    public void Add(Passenger passenger) => _databaseService.Add(passenger);
+    public PassengerRepository(
+        IQueryDatabaseService<Passenger> queryDatabaseService,
+        ICrudDatabaseService<Passenger> crudDatabaseService)
+    {
+        _queryDatabaseService = queryDatabaseService;
+        _crudDatabaseService = crudDatabaseService;
+    }
 
-    public Passenger? GetById(int id) => _databaseService
+    public void Add(Passenger passenger) => _crudDatabaseService.Add(passenger);
+
+    public Passenger? GetById(int id) => _queryDatabaseService
         .GetAll()
         .FirstOrDefault(p => p.Id == id);
 }
