@@ -78,8 +78,9 @@ public static class DependencyInjector
                 baseService,
                 provider.GetRequiredService<IQueryDatabaseService<Airport>>(),
                 provider.GetRequiredService<IQueryDatabaseService<Booking>>());
+            var uniquenessLayer = new DatabaseUniquenessLayer<Flight>(baseService, relationalLayer);
             return new DatabaseValidationLayer<Flight>(
-                relationalLayer,
+                uniquenessLayer,
                 provider.GetRequiredService<IValidationService>());
         });
         services.AddSingleton<ICrudDatabaseService<Booking>, DatabaseValidationLayer<Booking>>(provider =>
@@ -89,8 +90,9 @@ public static class DependencyInjector
                 baseService,
                 provider.GetRequiredService<IQueryDatabaseService<Flight>>(),
                 provider.GetRequiredService<IQueryDatabaseService<Passenger>>());
+            var uniquenessLayer = new DatabaseUniquenessLayer<Booking>(baseService, relationalLayer);
             return new DatabaseValidationLayer<Booking>(
-                relationalLayer,
+                uniquenessLayer,
                 provider.GetRequiredService<IValidationService>());
         });
         services.AddSingleton<ICrudDatabaseService<Passenger>, DatabaseValidationLayer<Passenger>>(provider =>
@@ -99,8 +101,9 @@ public static class DependencyInjector
             var relationalLayer = new PassengerRelationalLayer(
                 baseService,
                 provider.GetRequiredService<IQueryDatabaseService<Booking>>());
+            var uniquenessLayer = new DatabaseUniquenessLayer<Passenger>(baseService, relationalLayer);
             return new DatabaseValidationLayer<Passenger>(
-                relationalLayer,
+                uniquenessLayer,
                 provider.GetRequiredService<IValidationService>());
         });
         services.AddSingleton<ICrudDatabaseService<Airport>, DatabaseValidationLayer<Airport>>(provider =>
@@ -109,8 +112,9 @@ public static class DependencyInjector
             var relationalLayer = new AirportRelationalLayer(
                 baseService,
                 provider.GetRequiredService<IQueryDatabaseService<Flight>>());
+            var uniquenessLayer = new DatabaseUniquenessLayer<Airport>(baseService, relationalLayer);
             return new DatabaseValidationLayer<Airport>(
-                relationalLayer,
+                uniquenessLayer,
                 provider.GetRequiredService<IValidationService>());
         });
     }
