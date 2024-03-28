@@ -17,6 +17,7 @@ public interface ICrudDatabaseService<in TEntity>
     /// <returns>A task representing the add operation.</returns>
     /// <exception cref="DatabaseOperationException">Thrown when an entity already exists in the database.
     /// Or when entity is invalid (against its own attributes).</exception>
+    /// <exception cref="DatabaseRelationalException">Thrown when a violation of relational constraints occurs.</exception>
     Task Add(TEntity entity);
 
     /// <summary>
@@ -26,10 +27,8 @@ public interface ICrudDatabaseService<in TEntity>
     /// <param name="newEntity">The new entity to replace the old entity.</param>
     /// <exception cref="DatabaseOperationException">Thrown when the old entity does not exist.
     /// Or when entity is invalid (against its own attributes).</exception>
+    /// <exception cref="DatabaseRelationalException">Thrown when a violation of relational constraints occurs.</exception>
     /// <returns>A task representing the update operation.</returns>
-    /// <remarks>
-    /// Before updating an entity, ensure that all dependent entities have been appropriately managed to avoid violating relational constraints.
-    /// </remarks>
     Task Update(TEntity newEntity);
 
     /// <summary>
@@ -37,9 +36,7 @@ public interface ICrudDatabaseService<in TEntity>
     /// </summary>
     /// <param name="entity">The entity to be removed.</param>
     /// <exception cref="DatabaseOperationException">Thrown when the entity does not exist.</exception>
+    /// <exception cref="DatabaseRelationalException">Thrown when a violation of relational constraints occurs.</exception>
     /// <returns>A task representing the delete operation.</returns>
-    /// <remarks>
-    /// Before deleting an entity, ensure that all dependent entities have been appropriately managed to avoid violating relational constraints.
-    /// </remarks>
     Task Delete(TEntity entity);
 }

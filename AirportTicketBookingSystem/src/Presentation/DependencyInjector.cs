@@ -10,6 +10,7 @@ using AirportTicketBookingSystem.Infrastructure.Interfaces;
 using AirportTicketBookingSystem.Infrastructure.Repository;
 using AirportTicketBookingSystem.Infrastructure.Service;
 using AirportTicketBookingSystem.Infrastructure.Service.Database;
+using AirportTicketBookingSystem.Infrastructure.Service.Database.RelationalLayers;
 using AirportTicketBookingSystem.Infrastructure.Service.Filters;
 using AirportTicketBookingSystem.Presentation.Controller;
 using Microsoft.Extensions.DependencyInjection;
@@ -73,29 +74,41 @@ public static class DependencyInjector
         services.AddSingleton<ICrudDatabaseService<Flight>>(provider =>
         {
             var baseService = provider.GetRequiredService<DatabasePersistenceService<Flight>>();
-            return new DatabaseValidationLayer<Flight>(
+            var relationalLayer = new FlightRelationalLayer(
                 baseService,
+                provider.GetRequiredService<IQueryDatabaseService<Airport>>(),
+                provider.GetRequiredService<IQueryDatabaseService<Booking>>());
+            return new DatabaseValidationLayer<Flight>(
+                relationalLayer,
                 provider.GetRequiredService<IValidationService>());
         });
         services.AddSingleton<ICrudDatabaseService<Booking>, DatabaseValidationLayer<Booking>>(provider =>
         {
             var baseService = provider.GetRequiredService<DatabasePersistenceService<Booking>>();
-            return new DatabaseValidationLayer<Booking>(
+            var relationalLayer = new BookingRelationalLayer(
                 baseService,
+                provider.GetRequiredService<IQueryDatabaseService<Flight>>(),
+                provider.GetRequiredService<IQueryDatabaseService<Passenger>>());
+            return new DatabaseValidationLayer<Booking>(
+                relationalLayer,
                 provider.GetRequiredService<IValidationService>());
         });
         services.AddSingleton<ICrudDatabaseService<Passenger>, DatabaseValidationLayer<Passenger>>(provider =>
         {
             var baseService = provider.GetRequiredService<DatabasePersistenceService<Passenger>>();
-            return new DatabaseValidationLayer<Passenger>(
+            var relationalLayer = new PassengerRelationalLayer(
                 baseService,
+                provider.GetRequiredService<IQueryDatabaseService<Booking>>());
+            return new DatabaseValidationLayer<Passenger>(
+                relationalLayer,
                 provider.GetRequiredService<IValidationService>());
         });
         services.AddSingleton<ICrudDatabaseService<Airport>, DatabaseValidationLayer<Airport>>(provider =>
         {
             var baseService = provider.GetRequiredService<DatabasePersistenceService<Airport>>();
+            var relationalLayer = new AirportRelationalLayer(baseService);
             return new DatabaseValidationLayer<Airport>(
-                baseService,
+                relationalLayer,
                 provider.GetRequiredService<IValidationService>());
         });
     }
