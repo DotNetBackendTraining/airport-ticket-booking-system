@@ -2,16 +2,19 @@ using AirportTicketBookingSystem.Application.Interfaces.Service;
 using AirportTicketBookingSystem.Domain;
 using AirportTicketBookingSystem.Presentation.MenuSystem;
 using AirportTicketBookingSystem.Presentation.Utility;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace AirportTicketBookingSystem.Presentation.Controller;
 
 public class ManagerController : GlobalController
 {
-    private IManagerService ManagerService => Provider.GetRequiredService<IManagerService>();
+    private readonly IManagerService _managerService;
 
-    public ManagerController(IServiceProvider serviceProvider) : base(serviceProvider)
+    public ManagerController(
+        IGlobalService globalService,
+        IManagerService managerService)
+        : base(globalService)
     {
+        _managerService = managerService;
     }
 
     public void Start()
@@ -28,7 +31,7 @@ public class ManagerController : GlobalController
     private void SearchBookings()
     {
         var criteria = PromptFilter.PromptBookingFilter();
-        var bookings = ManagerService.SearchBookings(criteria);
+        var bookings = _managerService.SearchBookings(criteria);
         Display.SearchResult(bookings);
     }
 
@@ -38,7 +41,7 @@ public class ManagerController : GlobalController
         var filepath = Console.ReadLine() ?? string.Empty;
         try
         {
-            var results = ManagerService.BatchUploadFlights(filepath).ToList();
+            var results = _managerService.BatchUploadFlights(filepath).ToList();
             Display.BatchOperationResults(results);
             if (results.All(res => !res.Success)) return;
 
@@ -48,7 +51,7 @@ public class ManagerController : GlobalController
             var saveResults = results
                 .Select(r => r.Item)
                 .OfType<Flight>()
-                .Select(f => ManagerService.AddFlight(f));
+                .Select(f => _managerService.AddFlight(f));
             Display.BatchOperationResults(saveResults);
         }
         catch (FileNotFoundException)
@@ -60,10 +63,10 @@ public class ManagerController : GlobalController
     private Menu PrintValidationsMenu()
     {
         var menu = new Menu("Available Models in the System");
-        foreach (var type in ManagerService.GetDomainEntities())
+        foreach (var type in _managerService.GetDomainEntities())
         {
             menu.AddItem(new MenuItem(
-                type.Name, () => Console.WriteLine(ManagerService.ReportConstraints(type))));
+                type.Name, () => Console.WriteLine(_managerService.ReportConstraints(type))));
         }
 
         return menu;

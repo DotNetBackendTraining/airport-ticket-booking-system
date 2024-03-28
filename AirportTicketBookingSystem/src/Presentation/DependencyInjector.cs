@@ -11,6 +11,7 @@ using AirportTicketBookingSystem.Infrastructure.Repository;
 using AirportTicketBookingSystem.Infrastructure.Service;
 using AirportTicketBookingSystem.Infrastructure.Service.Database;
 using AirportTicketBookingSystem.Infrastructure.Service.Filters;
+using AirportTicketBookingSystem.Presentation.Controller;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AirportTicketBookingSystem.Presentation;
@@ -106,6 +107,9 @@ public static class DependencyInjector
     {
         services.AddSingleton<IGlobalService, GlobalService>();
         services.AddSingleton<IClientService, ClientService>();
+
+        services.AddSingleton<GlobalController>();
+        services.AddSingleton<ClientController>();
     }
 
     private static void InjectManagerServices(IServiceCollection services)
@@ -114,6 +118,9 @@ public static class DependencyInjector
         services.AddSingleton<IUploadService<Flight>, CsvUploadService<Flight>>();
         services.AddSingleton<IReflectionService, ReflectionService>();
         services.AddSingleton<IManagerService, ManagerService>();
+
+        services.AddSingleton<GlobalController>();
+        services.AddSingleton<ManagerController>();
     }
 
     public static ServiceProvider CreateClientServiceProvider()
