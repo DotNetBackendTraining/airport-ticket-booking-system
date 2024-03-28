@@ -17,7 +17,7 @@ public class DatabaseService<TEntity> : IDatabaseService<TEntity>
 
     public IEnumerable<TEntity> GetAll() => _fileService.ReadAll();
 
-    private bool Exists(TEntity entity) => GetAll().Any(e => e.Equals(entity));
+    public bool Exists(TEntity entity) => GetAll().Any(e => e.Equals(entity));
 
     public async Task Add(TEntity entity)
     {

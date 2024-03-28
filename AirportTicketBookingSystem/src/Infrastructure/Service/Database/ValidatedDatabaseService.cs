@@ -37,6 +37,11 @@ public class ValidatedDatabaseService<TEntity> : IDatabaseService<TEntity>
         }
     }
 
+    public bool Exists(TEntity entity)
+    {
+        return _databaseService.Exists(entity);
+    }
+
     public IEnumerable<TEntity> GetAll()
     {
         return _databaseService.GetAll();
