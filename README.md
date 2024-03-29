@@ -1,5 +1,7 @@
 # **Airport Ticket Booking System**
 
+[![.NET](https://github.com/izzat5233/airport-ticket-booking-system/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/izzat5233/airport-ticket-booking-system/actions/workflows/build-and-test.yml)
+
 ## **Objective:**
 
 Develop a .NET console application for an airport ticket booking system. This application should enable passengers to
