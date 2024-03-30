@@ -1,58 +1,35 @@
 using AirportTicketBookingSystem.Application.Interfaces.Service;
 using AirportTicketBookingSystem.Application.Result;
 using AirportTicketBookingSystem.Domain;
-using AirportTicketBookingSystem.Domain.Common;
 using AirportTicketBookingSystem.Domain.Criteria.Search;
-using AirportTicketBookingSystem.Domain.Interfaces;
-using AirportTicketBookingSystem.Domain.Interfaces.Service;
 
 namespace AirportTicketBookingSystem.Application.Service;
 
 public class ManagerService : IManagerService
 {
-    private readonly IBookingService _bookingService;
-    private readonly IFlightService _flightService;
+    private readonly ISearchService _searchService;
+    private readonly IFlightManagementService _flightManagementService;
     private readonly IUploadService<Flight> _flightUploadService;
     private readonly IReflectionService _reflectionService;
 
-    public ManagerService(IBookingService bookingService,
-        IFlightService flightService,
+
+    public ManagerService(
+        ISearchService searchService,
+        IFlightManagementService flightManagementService,
         IUploadService<Flight> flightUploadService,
         IReflectionService reflectionService)
     {
-        _bookingService = bookingService;
-        _flightService = flightService;
+        _searchService = searchService;
+        _flightManagementService = flightManagementService;
         _flightUploadService = flightUploadService;
         _reflectionService = reflectionService;
     }
 
-    public SearchResult<Booking> SearchBookings(BookingSearchCriteria criteria)
-    {
-        var bookings = _bookingService.Search(criteria);
-        return new SearchResult<Booking>(
-            Success: true,
-            Message: "Bookings search completed successfully",
-            Items: bookings);
-    }
+    public SearchResult<Booking> SearchBookings(BookingSearchCriteria criteria) =>
+        _searchService.SearchBookings(criteria);
 
-    public OperationResult<Flight> AddFlight(Flight flight)
-    {
-        try
-        {
-            _flightService.Add(flight);
-            return new OperationResult<Flight>(
-                Success: true,
-                Message: "Flight creation completed successfully",
-                Item: flight);
-        }
-        catch (DatabaseException e)
-        {
-            return new OperationResult<Flight>(
-                Success: false,
-                Message: "Flight creation failed:  " + e.Message,
-                Item: flight);
-        }
-    }
+    public OperationResult<Flight> AddFlight(Flight flight) =>
+        _flightManagementService.AddFlight(flight);
 
     public IEnumerable<OperationResult<Flight>> BatchUploadFlights(string filepath) =>
         _flightUploadService.BatchUpload(filepath);

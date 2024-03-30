@@ -138,6 +138,9 @@ public static class DependencyInjector
 
     private static void InjectClientServices(IServiceCollection services)
     {
+        services.AddSingleton<IBookingManagementService, BookingManagementService>();
+        services.AddSingleton<IPassengerRegistrationService, PassengerRegistrationService>();
+
         services.AddSingleton<IGlobalService, GlobalService>();
         services.AddSingleton<IClientService, ClientService>();
 
@@ -147,9 +150,12 @@ public static class DependencyInjector
 
     private static void InjectManagerServices(IServiceCollection services)
     {
-        services.AddSingleton<IGlobalService, GlobalService>();
-        services.AddSingleton<IUploadService<Flight>, CsvUploadService<Flight>>();
+        services.AddSingleton<ISearchService, SearchService>();
+        services.AddSingleton<IFlightManagementService, FlightManagementService>();
         services.AddSingleton<IReflectionService, ReflectionService>();
+        services.AddSingleton<IUploadService<Flight>, CsvUploadService<Flight>>();
+
+        services.AddSingleton<IGlobalService, GlobalService>();
         services.AddSingleton<IManagerService, ManagerService>();
 
         services.AddSingleton<GlobalController>();

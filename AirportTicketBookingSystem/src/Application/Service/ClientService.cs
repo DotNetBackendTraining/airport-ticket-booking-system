@@ -1,90 +1,34 @@
 using AirportTicketBookingSystem.Application.Interfaces.Service;
 using AirportTicketBookingSystem.Application.Result;
 using AirportTicketBookingSystem.Domain;
-using AirportTicketBookingSystem.Domain.Common;
-using AirportTicketBookingSystem.Domain.Criteria.Search;
-using AirportTicketBookingSystem.Domain.Interfaces.Service;
 
 namespace AirportTicketBookingSystem.Application.Service;
 
 public class ClientService : IClientService
 {
-    private readonly IBookingService _bookingService;
-    private readonly IPassengerService _passengerService;
+    private readonly IBookingManagementService _bookingManagementService;
+    private readonly IPassengerRegistrationService _passengerRegistrationService;
 
-    public ClientService(IBookingService bookingService,
-        IPassengerService passengerService)
+    public ClientService(
+        IBookingManagementService bookingManagementService,
+        IPassengerRegistrationService passengerRegistrationService)
     {
-        _bookingService = bookingService;
-        _passengerService = passengerService;
+        _bookingManagementService = bookingManagementService;
+        _passengerRegistrationService = passengerRegistrationService;
     }
 
-    public SearchResult<Booking> GetAllBookings(int passengerId)
-    {
-        var bookings = _bookingService.Search(new BookingSearchCriteria { PassengerId = passengerId });
-        return new SearchResult<Booking>(
-            Success: true,
-            Message: "Bookings search completed successfully",
-            Items: bookings);
-    }
+    public SearchResult<Booking> GetAllBookings(int passengerId) =>
+        _bookingManagementService.GetAllBookings(passengerId);
 
-    public OperationResult<Booking> AddBooking(Booking booking)
-    {
-        try
-        {
-            _bookingService.Add(booking);
-            return new OperationResult<Booking>(
-                Success: true,
-                Message: "Booking creation completed successfully",
-                Item: booking);
-        }
-        catch (DatabaseException e)
-        {
-            return new OperationResult<Booking>(
-                Success: false,
-                Message: "Booking creation failed:  " + e.Message,
-                Item: booking);
-        }
-    }
+    public OperationResult<Booking> AddBooking(Booking booking) =>
+        _bookingManagementService.AddBooking(booking);
 
-    public OperationResult<Booking> UpdateBooking(Booking updatedBooking)
-    {
-        try
-        {
-            _bookingService.Update(updatedBooking);
-            return new OperationResult<Booking>(
-                Success: true,
-                Message: "Booking update completed successfully",
-                Item: updatedBooking);
-        }
-        catch (DatabaseException e)
-        {
-            return new OperationResult<Booking>(
-                Success: false,
-                Message: "Booking update failed:  " + e.Message,
-                Item: updatedBooking);
-        }
-    }
+    public OperationResult<Booking> UpdateBooking(Booking updatedBooking) =>
+        _bookingManagementService.UpdateBooking(updatedBooking);
 
-    public OperationResult<Booking> CancelBooking(Booking cancelledBooking)
-    {
-        try
-        {
-            _bookingService.Delete(cancelledBooking);
-            return new OperationResult<Booking>(
-                Success: true,
-                Message: "Booking delete completed successfully",
-                Item: cancelledBooking);
-        }
-        catch (DatabaseException e)
-        {
-            return new OperationResult<Booking>(
-                Success: false,
-                Message: "Booking delete failed:  " + e.Message,
-                Item: cancelledBooking);
-        }
-    }
+    public OperationResult<Booking> CancelBooking(Booking cancelledBooking) =>
+        _bookingManagementService.CancelBooking(cancelledBooking);
 
     public bool IsPassengerRegistered(int passengerId) =>
-        _passengerService.GetById(passengerId) != null;
+        _passengerRegistrationService.IsPassengerRegistered(passengerId);
 }
