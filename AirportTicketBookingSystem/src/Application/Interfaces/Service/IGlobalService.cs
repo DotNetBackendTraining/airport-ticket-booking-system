@@ -5,21 +5,11 @@ using AirportTicketBookingSystem.Domain.Criteria.Search;
 namespace AirportTicketBookingSystem.Application.Interfaces.Service;
 
 /// <summary>
-/// Defines the service operations available to anyone, including flight search functionalities.
+/// Defines the operations available to anyone.
 /// </summary>
 public interface IGlobalService
 {
-    /// <summary>
-    /// Searches for flights that match the specified criteria.
-    /// </summary>
-    /// <param name="criteria">The criteria used to filter flights.</param>
-    /// <returns>A SearchResult object containing a collection of flights that match the criteria.</returns>
-    public SearchResult<Flight> SearchFlights(FlightSearchCriteria criteria);
+    SearchResult<Flight> SearchFlights(FlightSearchCriteria criteria);
 
-    /// <summary>
-    /// Searches for airports that match the specified criteria.
-    /// </summary>
-    /// <param name="criteria">The criteria used to filter airports.</param>
-    /// <returns>A SearchResult object containing a collection of airports that match the criteria.</returns>
-    public SearchResult<Airport> SearchAirports(AirportSearchCriteria criteria);
+    SearchResult<Airport> SearchAirports(AirportSearchCriteria criteria);
 }

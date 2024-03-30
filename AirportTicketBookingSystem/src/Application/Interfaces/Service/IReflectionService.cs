@@ -10,14 +10,14 @@ public interface IReflectionService
     /// </summary>
     /// <param name="type">The type to reflect over and report on.</param>
     /// <returns>A formatted string report detailing each property of the specified type and its associated attributes.</returns>
-    public string ReportPropertiesWithAttributes(Type type);
+    string ReportPropertiesWithAttributes(Type type);
 
     /// <summary>
     /// Retrieves all class types within a specified namespace.
     /// </summary>
     /// <param name="namespaceFilter">The namespace to search for class types.</param>
     /// <returns>An enumerable of <see cref="Type"/> objects representing each class found within the specified namespace.</returns>
-    public IEnumerable<Type> GetClassTypesInNamespace(string namespaceFilter);
+    IEnumerable<Type> GetClassTypesInNamespace(string namespaceFilter);
 
     /// <summary>
     /// Retrieves a collection of all domain entities available in the system.
@@ -25,5 +25,5 @@ public interface IReflectionService
     /// <returns>
     /// An enumerable of <see cref="Type"/> objects representing each domain class in the system.
     /// </returns>
-    public IEnumerable<Type> GetDomainEntityTypes();
+    IEnumerable<Type> GetDomainEntityTypes();
 }
