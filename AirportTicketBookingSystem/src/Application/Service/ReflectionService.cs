@@ -2,11 +2,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using System.Text;
 using AirportTicketBookingSystem.Application.Interfaces.Service;
+using AirportTicketBookingSystem.Domain.Interfaces;
 
 namespace AirportTicketBookingSystem.Application.Service;
 
 public class ReflectionService : IReflectionService
 {
+    public const string EntitiesNamespace = "AirportTicketBookingSystem.Domain";
+
     public string ReportPropertiesWithAttributes(Type type)
     {
         var sb = new StringBuilder();
@@ -44,5 +47,11 @@ public class ReflectionService : IReflectionService
             .GetTypes()
             .Where(type => type is { IsClass: true, IsAbstract: false, Namespace: not null } &&
                            type.Namespace.StartsWith(namespaceFilter, StringComparison.Ordinal));
+    }
+
+    public IEnumerable<Type> GetDomainEntityTypes()
+    {
+        return GetClassTypesInNamespace(EntitiesNamespace)
+            .Where(type => typeof(IEntity).IsAssignableFrom(type));
     }
 }

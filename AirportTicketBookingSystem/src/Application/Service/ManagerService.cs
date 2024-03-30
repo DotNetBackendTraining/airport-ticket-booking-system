@@ -58,8 +58,7 @@ public class ManagerService : IManagerService
         _flightUploadService.BatchUpload(filepath);
 
     public IEnumerable<Type> GetDomainEntities() =>
-        _reflectionService.GetClassTypesInNamespace("AirportTicketBookingSystem.Domain")
-            .Where(type => typeof(IEntity).IsAssignableFrom(type));
+        _reflectionService.GetDomainEntityTypes();
 
     public string ReportConstraints(Type type) =>
         _reflectionService.ReportPropertiesWithAttributes(type);
