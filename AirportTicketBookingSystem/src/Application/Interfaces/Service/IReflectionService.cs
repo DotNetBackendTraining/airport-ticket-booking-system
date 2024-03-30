@@ -13,13 +13,6 @@ public interface IReflectionService
     string ReportPropertiesWithAttributes(Type type);
 
     /// <summary>
-    /// Retrieves all class types within a specified namespace.
-    /// </summary>
-    /// <param name="namespaceFilter">The namespace to search for class types.</param>
-    /// <returns>An enumerable of <see cref="Type"/> objects representing each class found within the specified namespace.</returns>
-    IEnumerable<Type> GetClassTypesInNamespace(string namespaceFilter);
-
-    /// <summary>
     /// Retrieves a collection of all domain entities available in the system.
     /// </summary>
     /// <returns>

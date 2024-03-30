@@ -40,18 +40,18 @@ public class ReflectionService : IReflectionService
         return sb.ToString();
     }
 
-    public IEnumerable<Type> GetClassTypesInNamespace(string namespaceFilter)
+    public IEnumerable<Type> GetDomainEntityTypes()
+    {
+        return GetClassTypesInNamespace(EntitiesNamespace)
+            .Where(type => typeof(IEntity).IsAssignableFrom(type));
+    }
+
+    private IEnumerable<Type> GetClassTypesInNamespace(string namespaceFilter)
     {
         return Assembly
             .GetExecutingAssembly()
             .GetTypes()
             .Where(type => type is { IsClass: true, IsAbstract: false, Namespace: not null } &&
                            type.Namespace.StartsWith(namespaceFilter, StringComparison.Ordinal));
-    }
-
-    public IEnumerable<Type> GetDomainEntityTypes()
-    {
-        return GetClassTypesInNamespace(EntitiesNamespace)
-            .Where(type => typeof(IEntity).IsAssignableFrom(type));
     }
 }
