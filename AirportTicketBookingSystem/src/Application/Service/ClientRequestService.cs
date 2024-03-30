@@ -1,15 +1,16 @@
 using AirportTicketBookingSystem.Application.Interfaces.Service;
+using AirportTicketBookingSystem.Application.Interfaces.Service.Request;
 using AirportTicketBookingSystem.Application.Result;
 using AirportTicketBookingSystem.Domain;
 
 namespace AirportTicketBookingSystem.Application.Service;
 
-public class ClientService : IClientService
+public class ClientRequestService : IClientRequestService
 {
     private readonly IBookingManagementService _bookingManagementService;
     private readonly IPassengerRegistrationService _passengerRegistrationService;
 
-    public ClientService(
+    public ClientRequestService(
         IBookingManagementService bookingManagementService,
         IPassengerRegistrationService passengerRegistrationService)
     {

@@ -1,4 +1,4 @@
-using AirportTicketBookingSystem.Application.Interfaces.Service;
+using AirportTicketBookingSystem.Application.Interfaces.Service.Request;
 using AirportTicketBookingSystem.Domain;
 using AirportTicketBookingSystem.Presentation.MenuSystem;
 using AirportTicketBookingSystem.Presentation.Utility;
@@ -7,14 +7,14 @@ namespace AirportTicketBookingSystem.Presentation.Controller;
 
 public class ClientController : GlobalController
 {
-    private readonly IClientService _clientService;
+    private readonly IClientRequestService _clientRequestService;
 
     public ClientController(
-        IGlobalService globalService,
-        IClientService clientService)
-        : base(globalService)
+        IGlobalRequestService globalRequestService,
+        IClientRequestService clientRequestService)
+        : base(globalRequestService)
     {
-        _clientService = clientService;
+        _clientRequestService = clientRequestService;
     }
 
     private int? _passengerId;
@@ -23,7 +23,7 @@ public class ClientController : GlobalController
     private int IsRegistered()
     {
         var res = PromptHelper.TryPromptForInput("Please Enter Your Passenger ID:  ", int.Parse, out var id);
-        if (res && _clientService.IsPassengerRegistered(id)) return id;
+        if (res && _clientRequestService.IsPassengerRegistered(id)) return id;
 
         Console.WriteLine("You Can't Continue Without Your Passenger ID!");
         Environment.Exit(0);
@@ -49,7 +49,7 @@ public class ClientController : GlobalController
         if (flightClass == null) return;
 
         var booking = new Booking(flightId, PassengerId, flightClass.Value);
-        var result = _clientService.AddBooking(booking);
+        var result = _clientRequestService.AddBooking(booking);
         Display.OperationResult(result);
     }
 
@@ -63,7 +63,7 @@ public class ClientController : GlobalController
     }
 
     private void ShowBookings() =>
-        Display.SearchResult(_clientService.GetAllBookings(PassengerId));
+        Display.SearchResult(_clientRequestService.GetAllBookings(PassengerId));
 
     private void ModifyBooking()
     {
@@ -79,7 +79,7 @@ public class ClientController : GlobalController
         }
 
         booking = new Booking(booking.FlightId, booking.PassengerId, flightClass.Value);
-        Display.OperationResult(_clientService.UpdateBooking(booking));
+        Display.OperationResult(_clientRequestService.UpdateBooking(booking));
     }
 
     private void CancelBooking()
@@ -88,7 +88,7 @@ public class ClientController : GlobalController
         if (booking == null) return;
 
         var res = PromptHelper.PromptYesNo("Are you sure you want to delete this booking (y/n) ?  ");
-        if (res) Display.OperationResult(_clientService.CancelBooking(booking));
+        if (res) Display.OperationResult(_clientRequestService.CancelBooking(booking));
         else Console.WriteLine("Nothing happened.");
     }
 
@@ -98,7 +98,7 @@ public class ClientController : GlobalController
         var res = PromptHelper.TryPromptForInput("Please Enter The Flight ID:  ", int.Parse, out var flightId);
         if (!res) return null;
 
-        var list = _clientService.GetAllBookings(PassengerId).Items
+        var list = _clientRequestService.GetAllBookings(PassengerId).Items
             .Where(b => b.FlightId == flightId).Take(1).ToList();
         if (list.Count > 0) return list[0];
 

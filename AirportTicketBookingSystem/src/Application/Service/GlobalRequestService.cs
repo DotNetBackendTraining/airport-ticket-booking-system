@@ -1,14 +1,15 @@
 using AirportTicketBookingSystem.Application.Interfaces.Service;
+using AirportTicketBookingSystem.Application.Interfaces.Service.Request;
 using AirportTicketBookingSystem.Application.Result;
 using AirportTicketBookingSystem.Domain;
 using AirportTicketBookingSystem.Domain.Criteria.Search;
 
 namespace AirportTicketBookingSystem.Application.Service;
 
-public class GlobalService : IGlobalService
+public class GlobalRequestService : IGlobalRequestService
 {
     private readonly ISearchService _searchService;
-    public GlobalService(ISearchService searchService) => _searchService = searchService;
+    public GlobalRequestService(ISearchService searchService) => _searchService = searchService;
 
     public SearchResult<Flight> SearchFlights(FlightSearchCriteria criteria) =>
         _searchService.SearchFlights(criteria);

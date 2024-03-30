@@ -1,11 +1,12 @@
 using AirportTicketBookingSystem.Application.Interfaces.Service;
+using AirportTicketBookingSystem.Application.Interfaces.Service.Request;
 using AirportTicketBookingSystem.Application.Result;
 using AirportTicketBookingSystem.Domain;
 using AirportTicketBookingSystem.Domain.Criteria.Search;
 
 namespace AirportTicketBookingSystem.Application.Service;
 
-public class ManagerService : IManagerService
+public class ManagerRequestService : IManagerRequestService
 {
     private readonly ISearchService _searchService;
     private readonly IFlightManagementService _flightManagementService;
@@ -13,7 +14,7 @@ public class ManagerService : IManagerService
     private readonly IReflectionService _reflectionService;
 
 
-    public ManagerService(
+    public ManagerRequestService(
         ISearchService searchService,
         IFlightManagementService flightManagementService,
         IUploadService<Flight> flightUploadService,

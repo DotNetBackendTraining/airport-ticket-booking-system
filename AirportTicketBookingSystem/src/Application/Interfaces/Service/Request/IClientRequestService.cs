@@ -1,12 +1,12 @@
 using AirportTicketBookingSystem.Application.Result;
 using AirportTicketBookingSystem.Domain;
 
-namespace AirportTicketBookingSystem.Application.Interfaces.Service;
+namespace AirportTicketBookingSystem.Application.Interfaces.Service.Request;
 
 /// <summary>
 /// Defines the operations available to clients.
 /// </summary>
-public interface IClientService
+public interface IClientRequestService
 {
     SearchResult<Booking> GetAllBookings(int passengerId);
 

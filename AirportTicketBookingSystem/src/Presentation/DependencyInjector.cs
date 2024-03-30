@@ -1,5 +1,6 @@
 using AirportTicketBookingSystem.Application.Interfaces;
 using AirportTicketBookingSystem.Application.Interfaces.Service;
+using AirportTicketBookingSystem.Application.Interfaces.Service.Request;
 using AirportTicketBookingSystem.Application.Service;
 using AirportTicketBookingSystem.Domain;
 using AirportTicketBookingSystem.Domain.Criteria.Search;
@@ -141,8 +142,8 @@ public static class DependencyInjector
         services.AddSingleton<IBookingManagementService, BookingManagementService>();
         services.AddSingleton<IPassengerRegistrationService, PassengerRegistrationService>();
 
-        services.AddSingleton<IGlobalService, GlobalService>();
-        services.AddSingleton<IClientService, ClientService>();
+        services.AddSingleton<IGlobalRequestService, GlobalRequestService>();
+        services.AddSingleton<IClientRequestService, ClientRequestService>();
 
         services.AddSingleton<GlobalController>();
         services.AddSingleton<ClientController>();
@@ -155,8 +156,8 @@ public static class DependencyInjector
         services.AddSingleton<IReflectionService, ReflectionService>();
         services.AddSingleton<IUploadService<Flight>, CsvUploadService<Flight>>();
 
-        services.AddSingleton<IGlobalService, GlobalService>();
-        services.AddSingleton<IManagerService, ManagerService>();
+        services.AddSingleton<IGlobalRequestService, GlobalRequestService>();
+        services.AddSingleton<IManagerRequestService, ManagerRequestService>();
 
         services.AddSingleton<GlobalController>();
         services.AddSingleton<ManagerController>();
