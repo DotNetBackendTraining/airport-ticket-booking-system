@@ -17,7 +17,7 @@ public class AirportRepository : IAirportRepository
         _crudDatabaseService = crudDatabaseService;
     }
 
-    public void Add(Airport airport) => _crudDatabaseService.Add(airport);
+    public void Add(Airport airport) => _crudDatabaseService.AddAsync(airport);
 
     public IEnumerable<Airport> GetAll() => _queryDatabaseService.GetAll();
 

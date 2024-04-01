@@ -13,7 +13,7 @@ namespace AirportTicketBookingSystem.Test.Infrastructure.Service.Database.Relati
 public class BookingRelationalLayerTests
 {
     [Theory, AutoMoqData]
-    public async Task AddOrUpdate_ShouldThrowIfFlightDoesNotExist(
+    public async Task AddAsyncOrUpdateAsync_ShouldThrowIfFlightDoesNotExist(
         Booking booking,
         [Frozen] Mock<IQueryDatabaseService<Flight>> flightQueryServiceMock,
         BookingRelationalLayer relationalLayer)
@@ -22,15 +22,15 @@ public class BookingRelationalLayerTests
             .Setup(s => s.GetAll())
             .Returns([]);
 
-        var addAction = () => relationalLayer.Add(booking);
-        var updateAction = () => relationalLayer.Update(booking);
+        var addAction = () => relationalLayer.AddAsync(booking);
+        var updateAction = () => relationalLayer.UpdateAsync(booking);
 
         await addAction.Should().ThrowAsync<DatabaseRelationalException>();
         await updateAction.Should().ThrowAsync<DatabaseRelationalException>();
     }
 
     [Theory, AutoMoqData]
-    public async Task AddOrUpdate_ShouldThrowIfPassengerDoesNotExist(
+    public async Task AddAsyncOrUpdateAsync_ShouldThrowIfPassengerDoesNotExist(
         Booking booking,
         [Frozen] Mock<IQueryDatabaseService<Passenger>> passengerQueryServiceMock,
         BookingRelationalLayer relationalLayer)
@@ -39,8 +39,8 @@ public class BookingRelationalLayerTests
             .Setup(s => s.GetAll())
             .Returns([]);
 
-        var addAction = () => relationalLayer.Add(booking);
-        var updateAction = () => relationalLayer.Update(booking);
+        var addAction = () => relationalLayer.AddAsync(booking);
+        var updateAction = () => relationalLayer.UpdateAsync(booking);
 
         await addAction.Should().ThrowAsync<DatabaseRelationalException>();
         await updateAction.Should().ThrowAsync<DatabaseRelationalException>();

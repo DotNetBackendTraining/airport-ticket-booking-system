@@ -17,7 +17,7 @@ public class FlightRepository : IFlightRepository
         _crudDatabaseService = crudDatabaseService;
     }
 
-    public void Add(Flight flight) => _crudDatabaseService.Add(flight);
+    public void Add(Flight flight) => _crudDatabaseService.AddAsync(flight);
 
     public IEnumerable<Flight> GetAll() => _queryDatabaseService.GetAll();
 

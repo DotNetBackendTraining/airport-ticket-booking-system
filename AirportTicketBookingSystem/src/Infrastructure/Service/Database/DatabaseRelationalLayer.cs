@@ -17,36 +17,36 @@ public abstract class DatabaseRelationalLayer<TEntity> : ICrudDatabaseService<TE
     protected DatabaseRelationalLayer(ICrudDatabaseService<TEntity> databaseService) =>
         _databaseService = databaseService;
 
-    public async Task Add(TEntity entity)
+    public async Task AddAsync(TEntity entity)
     {
         ValidateAddOrThrow(entity);
-        await _databaseService.Add(entity);
+        await _databaseService.AddAsync(entity);
     }
 
-    public async Task Update(TEntity newEntity)
+    public async Task UpdateAsync(TEntity newEntity)
     {
         ValidateUpdateOrThrow(newEntity);
-        await _databaseService.Update(newEntity);
+        await _databaseService.UpdateAsync(newEntity);
     }
 
-    public async Task Delete(TEntity entity)
+    public async Task DeleteAsync(TEntity entity)
     {
         ValidateDeleteOrThrow(entity);
-        await _databaseService.Delete(entity);
+        await _databaseService.DeleteAsync(entity);
     }
 
     /// <summary>
-    /// Throws <see cref="DatabaseRelationalException"/> if <see cref="Add"/> operation is not allowed.
+    /// Throws <see cref="DatabaseRelationalException"/> if <see cref="AddAsync"/> operation is not allowed.
     /// </summary>
     protected abstract void ValidateAddOrThrow(TEntity entity);
 
     /// <summary>
-    /// Throws <see cref="DatabaseRelationalException"/> if <see cref="Update"/> operation is not allowed.
+    /// Throws <see cref="DatabaseRelationalException"/> if <see cref="UpdateAsync"/> operation is not allowed.
     /// </summary>
     protected abstract void ValidateUpdateOrThrow(TEntity newEntity);
 
     /// <summary>
-    /// Throws <see cref="DatabaseRelationalException"/> if <see cref="Delete"/> operation is not allowed.
+    /// Throws <see cref="DatabaseRelationalException"/> if <see cref="DeleteAsync"/> operation is not allowed.
     /// </summary>
     protected abstract void ValidateDeleteOrThrow(TEntity entity);
 }

@@ -18,19 +18,19 @@ public class DatabasePersistenceService<TEntity> : IQueryDatabaseService<TEntity
 
     public bool Exists(TEntity entity) => GetAll().Any(e => e.Equals(entity));
 
-    public async Task Add(TEntity entity)
+    public async Task AddAsync(TEntity entity)
     {
         await _fileService.AppendAllAsync(Enumerable.Repeat(entity, 1));
     }
 
-    public async Task Update(TEntity newEntity)
+    public async Task UpdateAsync(TEntity newEntity)
     {
         var cache = GetAll().ToList();
         var changes = cache.Select(e => e.Equals(newEntity) ? newEntity : e);
         await _fileService.WriteAllAsync(changes);
     }
 
-    public async Task Delete(TEntity entity)
+    public async Task DeleteAsync(TEntity entity)
     {
         var cache = GetAll().ToList();
         var changes = cache.Where(e => !e.Equals(entity));

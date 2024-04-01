@@ -36,20 +36,20 @@ public class DatabaseValidationLayer<TEntity> : ICrudDatabaseService<TEntity>
         }
     }
 
-    public async Task Add(TEntity entity)
+    public async Task AddAsync(TEntity entity)
     {
         ValidateOrThrow(entity);
-        await _databaseService.Add(entity);
+        await _databaseService.AddAsync(entity);
     }
 
-    public async Task Update(TEntity newEntity)
+    public async Task UpdateAsync(TEntity newEntity)
     {
         ValidateOrThrow(newEntity);
-        await _databaseService.Update(newEntity);
+        await _databaseService.UpdateAsync(newEntity);
     }
 
-    public async Task Delete(TEntity entity)
+    public async Task DeleteAsync(TEntity entity)
     {
-        await _databaseService.Delete(entity);
+        await _databaseService.DeleteAsync(entity);
     }
 }

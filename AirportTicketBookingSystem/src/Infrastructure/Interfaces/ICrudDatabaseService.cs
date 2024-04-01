@@ -18,7 +18,7 @@ public interface ICrudDatabaseService<in TEntity>
     /// <exception cref="DatabaseOperationException">Thrown when an entity already exists in the database.
     /// Or when entity is invalid (against its own attributes).</exception>
     /// <exception cref="DatabaseRelationalException">Thrown when a violation of relational constraints occurs.</exception>
-    Task Add(TEntity entity);
+    Task AddAsync(TEntity entity);
 
     /// <summary>
     /// Updates an existing entity with a new entity in the database.
@@ -29,7 +29,7 @@ public interface ICrudDatabaseService<in TEntity>
     /// Or when entity is invalid (against its own attributes).</exception>
     /// <exception cref="DatabaseRelationalException">Thrown when a violation of relational constraints occurs.</exception>
     /// <returns>A task representing the update operation.</returns>
-    Task Update(TEntity newEntity);
+    Task UpdateAsync(TEntity newEntity);
 
     /// <summary>
     /// Deletes an entity of type <typeparamref name="TEntity"/> from the database.
@@ -38,5 +38,5 @@ public interface ICrudDatabaseService<in TEntity>
     /// <exception cref="DatabaseOperationException">Thrown when the entity does not exist.</exception>
     /// <exception cref="DatabaseRelationalException">Thrown when a violation of relational constraints occurs.</exception>
     /// <returns>A task representing the delete operation.</returns>
-    Task Delete(TEntity entity);
+    Task DeleteAsync(TEntity entity);
 }

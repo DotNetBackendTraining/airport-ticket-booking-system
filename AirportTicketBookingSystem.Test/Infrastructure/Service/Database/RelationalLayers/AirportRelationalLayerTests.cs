@@ -13,19 +13,19 @@ namespace AirportTicketBookingSystem.Test.Infrastructure.Service.Database.Relati
 public class AirportRelationalLayerTests
 {
     [Theory, AutoMoqData]
-    public async Task AddOrUpdate_ShouldNeverThrow(
+    public async Task AddAsyncOrUpdateAsync_ShouldNeverThrow(
         Airport airport,
         AirportRelationalLayer relationalLayer)
     {
-        var addAction = () => relationalLayer.Add(airport);
-        var updateAction = () => relationalLayer.Update(airport);
+        var addAction = () => relationalLayer.AddAsync(airport);
+        var updateAction = () => relationalLayer.UpdateAsync(airport);
 
         await addAction.Should().NotThrowAsync();
         await updateAction.Should().NotThrowAsync();
     }
 
     [Theory, AutoMoqData]
-    public async Task Delete_ShouldThrowIfRelatedFlightExist(
+    public async Task DeleteAsync_ShouldThrowIfRelatedFlightExist(
         [Frozen] string fixedAirportId,
         Flight flight,
         Airport airport,
@@ -36,7 +36,7 @@ public class AirportRelationalLayerTests
             .Setup(s => s.GetAll())
             .Returns([flight]);
 
-        var action = () => relationalLayer.Delete(airport);
+        var action = () => relationalLayer.DeleteAsync(airport);
 
         await action.Should().ThrowAsync<DatabaseRelationalException>();
     }

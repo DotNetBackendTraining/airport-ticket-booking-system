@@ -23,27 +23,27 @@ public class DatabaseUniquenessLayer<TEntity> : ICrudDatabaseService<TEntity>
         _crudService = crudService;
     }
 
-    public async Task Add(TEntity entity)
+    public async Task AddAsync(TEntity entity)
     {
         if (_queryService.Exists(entity))
             throw new DatabaseOperationException($"Entity {entity} already exists in the database");
 
-        await _crudService.Add(entity);
+        await _crudService.AddAsync(entity);
     }
 
-    public async Task Update(TEntity newEntity)
+    public async Task UpdateAsync(TEntity newEntity)
     {
         if (!_queryService.Exists(newEntity))
             throw new DatabaseOperationException($"Entity {newEntity} was not found in the database");
 
-        await _crudService.Update(newEntity);
+        await _crudService.UpdateAsync(newEntity);
     }
 
-    public async Task Delete(TEntity entity)
+    public async Task DeleteAsync(TEntity entity)
     {
         if (!_queryService.Exists(entity))
             throw new DatabaseOperationException($"Entity {entity} was not found in the database");
 
-        await _crudService.Delete(entity);
+        await _crudService.DeleteAsync(entity);
     }
 }

@@ -43,17 +43,17 @@ public class DatabasePersistenceServiceTests
     }
 
     [Theory, AutoMoqData]
-    public async Task Add_ShouldCallAppendAllAsync_WithEntity(
+    public async Task AddAsync_ShouldCallAppendAllAsync_WithEntity(
         Entity entity,
         [Frozen] Mock<IFileService<Entity>> fileServiceMock,
         DatabasePersistenceService<Entity> persistenceService)
     {
-        await persistenceService.Add(entity);
+        await persistenceService.AddAsync(entity);
         fileServiceMock.Verify(s => s.AppendAllAsync(It.Is<IEnumerable<Entity>>(e => e.Contains(entity))), Times.Once);
     }
 
     [Theory, AutoMoqData]
-    public async Task Update_ShouldReplaceExistingEntityAndCallWriteAllAsync(
+    public async Task UpdateAsync_ShouldReplaceExistingEntityAndCallWriteAllAsync(
         List<Entity> entities,
         Entity newEntity,
         [Frozen] Mock<IFileService<Entity>> fileServiceMock,
@@ -65,7 +65,7 @@ public class DatabasePersistenceServiceTests
             .Setup(s => s.ReadAll())
             .Returns(entities.ToList());
 
-        await persistenceService.Update(newEntity);
+        await persistenceService.UpdateAsync(newEntity);
 
         fileServiceMock.Verify(s => s.WriteAllAsync(It.Is<IEnumerable<Entity>>(e =>
                 e.Contains(newEntity) && !e.Any(e => e.Id == entityToUpdate.Id && !e.Equals(newEntity)))),
@@ -73,7 +73,7 @@ public class DatabasePersistenceServiceTests
     }
 
     [Theory, AutoMoqData]
-    public async Task Delete_ShouldCallWriteAllAsync_WithoutDeletedEntity(
+    public async Task DeleteAsync_ShouldCallWriteAllAsync_WithoutDeletedEntity(
         List<Entity> entities,
         [Frozen] Mock<IFileService<Entity>> fileServiceMock,
         DatabasePersistenceService<Entity> persistenceService)
@@ -82,7 +82,7 @@ public class DatabasePersistenceServiceTests
         fileServiceMock.Setup(s
             => s.ReadAll()).Returns(entities);
 
-        await persistenceService.Delete(entityToDelete);
+        await persistenceService.DeleteAsync(entityToDelete);
 
         fileServiceMock
             .Verify(s => s.WriteAllAsync(It.Is<IEnumerable<Entity>>(e => !e.Contains(entityToDelete))),
