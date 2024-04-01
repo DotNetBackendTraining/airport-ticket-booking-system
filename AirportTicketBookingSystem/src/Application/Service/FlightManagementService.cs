@@ -11,11 +11,11 @@ public class FlightManagementService : IFlightManagementService
     private readonly IFlightService _flightService;
     public FlightManagementService(IFlightService flightService) => _flightService = flightService;
 
-    public OperationResult<Flight> AddFlight(Flight flight)
+    public async Task<OperationResult<Flight>> AddFlightAsync(Flight flight)
     {
         try
         {
-            _flightService.Add(flight);
+            await _flightService.AddAsync(flight);
             return new OperationResult<Flight>(
                 Success: true,
                 Message: "Flight creation completed successfully",

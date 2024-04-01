@@ -5,5 +5,5 @@ namespace AirportTicketBookingSystem.Application.Interfaces.Service;
 
 public interface IFlightManagementService
 {
-    OperationResult<Flight> AddFlight(Flight flight);
+    Task<OperationResult<Flight>> AddFlightAsync(Flight flight);
 }

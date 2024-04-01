@@ -18,7 +18,7 @@ public class AirportService : IAirportService
         _filteringService = filteringService;
     }
 
-    public void Add(Airport airport) => _repository.Add(airport);
+    public async Task AddAsync(Airport airport) => await _repository.AddAsync(airport);
 
     public Airport? GetById(string id) => _repository.GetById(id);
 

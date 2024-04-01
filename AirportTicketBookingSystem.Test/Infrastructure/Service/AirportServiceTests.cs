@@ -14,13 +14,13 @@ namespace AirportTicketBookingSystem.Test.Infrastructure.Service;
 public class AirportServiceTests
 {
     [Theory, AutoMoqData]
-    public void Add_ShouldCallRepository(
+    public async Task AddAsync_ShouldCallRepository(
         Airport entity,
         [Frozen] Mock<IAirportRepository> repositoryMock,
         AirportService service)
     {
-        service.Add(entity);
-        repositoryMock.Verify(r => r.Add(entity), Times.Once);
+        await service.AddAsync(entity);
+        repositoryMock.Verify(r => r.AddAsync(entity), Times.Once);
     }
 
     [Theory, AutoMoqData]

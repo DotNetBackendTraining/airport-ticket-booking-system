@@ -21,11 +21,11 @@ public class BookingManagementService : IBookingManagementService
             Items: bookings);
     }
 
-    public OperationResult<Booking> AddBooking(Booking booking)
+    public async Task<OperationResult<Booking>> AddBookingAsync(Booking booking)
     {
         try
         {
-            _bookingService.Add(booking);
+            await _bookingService.AddAsync(booking);
             return new OperationResult<Booking>(
                 Success: true,
                 Message: "Booking creation completed successfully",
@@ -40,11 +40,11 @@ public class BookingManagementService : IBookingManagementService
         }
     }
 
-    public OperationResult<Booking> UpdateBooking(Booking updatedBooking)
+    public async Task<OperationResult<Booking>> UpdateBookingAsync(Booking updatedBooking)
     {
         try
         {
-            _bookingService.Update(updatedBooking);
+            await _bookingService.UpdateAsync(updatedBooking);
             return new OperationResult<Booking>(
                 Success: true,
                 Message: "Booking update completed successfully",
@@ -59,11 +59,11 @@ public class BookingManagementService : IBookingManagementService
         }
     }
 
-    public OperationResult<Booking> CancelBooking(Booking cancelledBooking)
+    public async Task<OperationResult<Booking>> CancelBookingAsync(Booking cancelledBooking)
     {
         try
         {
-            _bookingService.Delete(cancelledBooking);
+            await _bookingService.DeleteAsync(cancelledBooking);
             return new OperationResult<Booking>(
                 Success: true,
                 Message: "Booking delete completed successfully",

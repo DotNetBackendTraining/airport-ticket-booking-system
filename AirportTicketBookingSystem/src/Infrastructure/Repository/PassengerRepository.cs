@@ -17,7 +17,7 @@ public class PassengerRepository : IPassengerRepository
         _crudDatabaseService = crudDatabaseService;
     }
 
-    public void Add(Passenger passenger) => _crudDatabaseService.AddAsync(passenger);
+    public async Task AddAsync(Passenger passenger) => await _crudDatabaseService.AddAsync(passenger);
 
     public Passenger? GetById(int id) => _queryDatabaseService
         .GetAll()

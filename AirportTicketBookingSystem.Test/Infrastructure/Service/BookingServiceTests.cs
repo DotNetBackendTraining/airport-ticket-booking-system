@@ -14,33 +14,33 @@ namespace AirportTicketBookingSystem.Test.Infrastructure.Service;
 public class BookingServiceTests
 {
     [Theory, AutoMoqData]
-    public void Add_ShouldCallRepository(
+    public async Task AddAsync_ShouldCallRepository(
         Booking entity,
         [Frozen] Mock<IBookingRepository> repositoryMock,
         BookingService service)
     {
-        service.Add(entity);
-        repositoryMock.Verify(r => r.Add(entity), Times.Once);
+        await service.AddAsync(entity);
+        repositoryMock.Verify(r => r.AddAsync(entity), Times.Once);
     }
 
     [Theory, AutoMoqData]
-    public void Update_ShouldCallRepository(
+    public async Task UpdateAsync_ShouldCallRepository(
         Booking entity,
         [Frozen] Mock<IBookingRepository> repositoryMock,
         BookingService service)
     {
-        service.Update(entity);
-        repositoryMock.Verify(r => r.Update(entity), Times.Once);
+        await service.UpdateAsync(entity);
+        repositoryMock.Verify(r => r.UpdateAsync(entity), Times.Once);
     }
 
     [Theory, AutoMoqData]
-    public void Delete_ShouldCallRepository(
+    public async Task DeleteAsync_ShouldCallRepository(
         Booking entity,
         [Frozen] Mock<IBookingRepository> repositoryMock,
         BookingService service)
     {
-        service.Delete(entity);
-        repositoryMock.Verify(r => r.Delete(entity), Times.Once);
+        await service.DeleteAsync(entity);
+        repositoryMock.Verify(r => r.DeleteAsync(entity), Times.Once);
     }
 
     [Theory, AutoMoqData]

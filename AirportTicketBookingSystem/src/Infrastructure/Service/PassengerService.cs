@@ -9,7 +9,7 @@ public class PassengerService : IPassengerService
     private readonly IPassengerRepository _repository;
     public PassengerService(IPassengerRepository repository) => _repository = repository;
 
-    public void Add(Passenger passenger) => _repository.Add(passenger);
+    public async Task AddAsync(Passenger passenger) => await _repository.AddAsync(passenger);
 
     public Passenger? GetById(int id) => _repository.GetById(id);
 }

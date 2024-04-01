@@ -15,7 +15,7 @@ public interface IBookingService
     /// <param name="booking">The booking to add.</param>
     /// <exception cref="DatabaseOperationException">Thrown when an identical booking already exists in the repository.</exception>
     /// <exception cref="DatabaseRelationalException">Thrown when the <c>flightId</c> or <c>passengerId</c> in the booking do not exist in the repository.</exception>
-    public void Add(Booking booking);
+    public Task AddAsync(Booking booking);
 
     /// <summary>
     /// Updates an existing booking in the repository.
@@ -23,14 +23,14 @@ public interface IBookingService
     /// <param name="booking">The booking with updated information.</param>
     /// <exception cref="DatabaseOperationException">Thrown when the booking to update does not exist in the repository.</exception>
     /// <exception cref="DatabaseRelationalException">Thrown when the <c>flightId</c> or <c>passengerId</c> in the booking do not exist in the repository.</exception>
-    public void Update(Booking booking);
+    public Task UpdateAsync(Booking booking);
 
     /// <summary>
     /// Deletes a booking from the repository based on flight and passenger identifiers.
     /// </summary>
     /// <param name="booking">The booking to delete.</param>
     /// <exception cref="DatabaseOperationException">Thrown when the booking to delete does not exist in the repository.</exception>
-    public void Delete(Booking booking);
+    public Task DeleteAsync(Booking booking);
 
     /// <summary>
     /// Retrieves a booking by flight and passenger identifiers.

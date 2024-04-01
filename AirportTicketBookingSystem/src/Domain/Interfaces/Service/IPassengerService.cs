@@ -12,7 +12,7 @@ public interface IPassengerService
     /// </summary>
     /// <param name="passenger">The passenger to add.</param>
     /// <exception cref="DatabaseOperationException">Thrown when a passenger with the same identifier already exists in the repository.</exception>
-    public void Add(Passenger passenger);
+    public Task AddAsync(Passenger passenger);
 
     /// <summary>
     /// Retrieves a passenger by their unique identifier.

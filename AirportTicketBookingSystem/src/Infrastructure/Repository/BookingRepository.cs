@@ -17,11 +17,11 @@ public class BookingRepository : IBookingRepository
         _crudDatabaseService = crudDatabaseService;
     }
 
-    public void Add(Booking booking) => _crudDatabaseService.AddAsync(booking);
+    public async Task AddAsync(Booking booking) => await _crudDatabaseService.AddAsync(booking);
 
-    public void Update(Booking booking) => _crudDatabaseService.UpdateAsync(booking);
+    public async Task UpdateAsync(Booking booking) => await _crudDatabaseService.UpdateAsync(booking);
 
-    public void Delete(Booking booking) => _crudDatabaseService.DeleteAsync(booking);
+    public async Task DeleteAsync(Booking booking) => await _crudDatabaseService.DeleteAsync(booking);
 
     public IEnumerable<Booking> GetAll() => _queryDatabaseService.GetAll();
 

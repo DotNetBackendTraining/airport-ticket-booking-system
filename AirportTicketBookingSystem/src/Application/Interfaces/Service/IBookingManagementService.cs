@@ -12,9 +12,9 @@ public interface IBookingManagementService
     /// <returns>A SearchResult containing a collection of bookings for the specified passenger.</returns>
     SearchResult<Booking> GetAllBookings(int passengerId);
 
-    OperationResult<Booking> AddBooking(Booking booking);
+    Task<OperationResult<Booking>> AddBookingAsync(Booking booking);
 
-    OperationResult<Booking> UpdateBooking(Booking updatedBooking);
+    Task<OperationResult<Booking>> UpdateBookingAsync(Booking updatedBooking);
 
-    OperationResult<Booking> CancelBooking(Booking cancelledBooking);
+    Task<OperationResult<Booking>> CancelBookingAsync(Booking cancelledBooking);
 }

@@ -18,7 +18,7 @@ public class FlightService : IFlightService
         _filteringService = filteringService;
     }
 
-    public void Add(Flight flight) => _repository.Add(flight);
+    public async Task AddAsync(Flight flight) => await _repository.AddAsync(flight);
 
     public Flight? GetById(int flightId) => _repository.GetById(flightId);
 

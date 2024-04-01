@@ -15,15 +15,7 @@ public interface IFlightService
     /// <param name="flight">The flight to add.</param>
     /// <exception cref="DatabaseOperationException">Thrown when a flight with the same identifier already exists in the repository.</exception>
     /// <exception cref="DatabaseRelationalException">Thrown when <c>DepartureAirportId</c> or <c>ArrivalAirportId</c> do not exist in the repository.</exception>
-    public void Add(Flight flight);
-
-    /// <summary>
-    /// Asynchronously adds multiple flights to the repository.
-    /// </summary>
-    /// <param name="flights">The collection of flights to add.</param>
-    /// <returns>An empty collection of tasks.</returns>
-    [Obsolete("Method not implemented yet")]
-    public IEnumerable<Task> AddAllAsync(IEnumerable<Flight> flights) => Enumerable.Empty<Task>();
+    public Task AddAsync(Flight flight);
 
     /// <summary>
     /// Retrieves a flight by its identifier.

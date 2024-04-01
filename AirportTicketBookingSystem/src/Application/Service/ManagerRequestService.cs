@@ -29,8 +29,8 @@ public class ManagerRequestService : IManagerRequestService
     public SearchResult<Booking> SearchBookings(BookingSearchCriteria criteria) =>
         _searchService.SearchBookings(criteria);
 
-    public OperationResult<Flight> AddFlight(Flight flight) =>
-        _flightManagementService.AddFlight(flight);
+    public async Task<OperationResult<Flight>> AddFlightAsync(Flight flight) =>
+        await _flightManagementService.AddFlightAsync(flight);
 
     public IEnumerable<OperationResult<Flight>> BatchUploadFlights(string filepath) =>
         _flightUploadService.BatchUpload(filepath);

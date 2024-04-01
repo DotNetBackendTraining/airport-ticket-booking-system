@@ -49,8 +49,9 @@ public class ClientController : GlobalController
         if (flightClass == null) return;
 
         var booking = new Booking(flightId, PassengerId, flightClass.Value);
-        var result = _clientRequestService.AddBooking(booking);
-        Display.OperationResult(result);
+        var task = _clientRequestService.AddBookingAsync(booking);
+        task.Wait();
+        Display.OperationResult(task.Result);
     }
 
     private Menu ManageBookingsMenu()
@@ -79,7 +80,9 @@ public class ClientController : GlobalController
         }
 
         booking = new Booking(booking.FlightId, booking.PassengerId, flightClass.Value);
-        Display.OperationResult(_clientRequestService.UpdateBooking(booking));
+        var task = _clientRequestService.UpdateBookingAsync(booking);
+        task.Wait();
+        Display.OperationResult(task.Result);
     }
 
     private void CancelBooking()
@@ -88,8 +91,15 @@ public class ClientController : GlobalController
         if (booking == null) return;
 
         var res = PromptHelper.PromptYesNo("Are you sure you want to delete this booking (y/n) ?  ");
-        if (res) Display.OperationResult(_clientRequestService.CancelBooking(booking));
-        else Console.WriteLine("Nothing happened.");
+        if (!res)
+        {
+            Console.WriteLine("Nothing happened.");
+            return;
+        }
+
+        var task = _clientRequestService.CancelBookingAsync(booking);
+        task.Wait();
+        Display.OperationResult(task.Result);
     }
 
     private Booking? FindBooking()

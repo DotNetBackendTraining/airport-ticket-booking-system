@@ -14,7 +14,7 @@ public interface IAirportService
     /// </summary>
     /// <param name="airport">The airport to add.</param>
     /// <exception cref="DatabaseOperationException">Thrown when an airport with the same identifier already exists in the repository.</exception>
-    void Add(Airport airport);
+    Task AddAsync(Airport airport);
 
     /// <summary>
     /// Retrieves an airport by its identifier.

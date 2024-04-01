@@ -21,14 +21,14 @@ public class ClientRequestService : IClientRequestService
     public SearchResult<Booking> GetAllBookings(int passengerId) =>
         _bookingManagementService.GetAllBookings(passengerId);
 
-    public OperationResult<Booking> AddBooking(Booking booking) =>
-        _bookingManagementService.AddBooking(booking);
+    public async Task<OperationResult<Booking>> AddBookingAsync(Booking booking) =>
+        await _bookingManagementService.AddBookingAsync(booking);
 
-    public OperationResult<Booking> UpdateBooking(Booking updatedBooking) =>
-        _bookingManagementService.UpdateBooking(updatedBooking);
+    public async Task<OperationResult<Booking>> UpdateBookingAsync(Booking updatedBooking) =>
+        await _bookingManagementService.UpdateBookingAsync(updatedBooking);
 
-    public OperationResult<Booking> CancelBooking(Booking cancelledBooking) =>
-        _bookingManagementService.CancelBooking(cancelledBooking);
+    public async Task<OperationResult<Booking>> CancelBookingAsync(Booking cancelledBooking) =>
+        await _bookingManagementService.CancelBookingAsync(cancelledBooking);
 
     public bool IsPassengerRegistered(int passengerId) =>
         _passengerRegistrationService.IsPassengerRegistered(passengerId);

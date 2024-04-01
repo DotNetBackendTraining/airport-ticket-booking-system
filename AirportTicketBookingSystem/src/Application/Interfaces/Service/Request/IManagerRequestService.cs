@@ -11,7 +11,7 @@ public interface IManagerRequestService
 {
     SearchResult<Booking> SearchBookings(BookingSearchCriteria criteria);
 
-    OperationResult<Flight> AddFlight(Flight flight);
+    Task<OperationResult<Flight>> AddFlightAsync(Flight flight);
 
     IEnumerable<OperationResult<Flight>> BatchUploadFlights(string filepath);
 

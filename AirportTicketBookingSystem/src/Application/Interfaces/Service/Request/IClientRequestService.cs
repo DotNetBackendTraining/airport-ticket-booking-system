@@ -10,11 +10,11 @@ public interface IClientRequestService
 {
     SearchResult<Booking> GetAllBookings(int passengerId);
 
-    OperationResult<Booking> AddBooking(Booking booking);
+    Task<OperationResult<Booking>> AddBookingAsync(Booking booking);
 
-    OperationResult<Booking> UpdateBooking(Booking updatedBooking);
+    Task<OperationResult<Booking>> UpdateBookingAsync(Booking updatedBooking);
 
-    OperationResult<Booking> CancelBooking(Booking cancelledBooking);
+    Task<OperationResult<Booking>> CancelBookingAsync(Booking cancelledBooking);
 
     bool IsPassengerRegistered(int passengerId);
 }

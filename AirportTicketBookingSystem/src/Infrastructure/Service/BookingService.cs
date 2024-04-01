@@ -18,11 +18,11 @@ public class BookingService : IBookingService
         _filteringService = filteringService;
     }
 
-    public void Add(Booking booking) => _repository.Add(booking);
+    public async Task AddAsync(Booking booking) => await _repository.AddAsync(booking);
 
-    public void Update(Booking booking) => _repository.Update(booking);
+    public async Task UpdateAsync(Booking booking) => await _repository.UpdateAsync(booking);
 
-    public void Delete(Booking booking) => _repository.Delete(booking);
+    public async Task DeleteAsync(Booking booking) => await _repository.DeleteAsync(booking);
 
     public Booking? GetById(int flightId, int passengerId) => _repository.GetById(flightId, passengerId);
 

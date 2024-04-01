@@ -48,11 +48,14 @@ public class ManagerController : GlobalController
             var save = PromptHelper.PromptYesNo("Would you like to save valid flights to system (y/n)?  ");
             if (!save) return;
 
-            var saveResults = results
+            var saveTasks = results
                 .Select(r => r.Item)
                 .OfType<Flight>()
-                .Select(f => _managerRequestService.AddFlight(f));
-            Display.BatchOperationResults(saveResults);
+                .Select(f => _managerRequestService.AddFlightAsync(f))
+                .ToList();
+
+            saveTasks.ForEach(t => t.Wait());
+            Display.BatchOperationResults(saveTasks.Select(t => t.Result));
         }
         catch (FileNotFoundException)
         {
